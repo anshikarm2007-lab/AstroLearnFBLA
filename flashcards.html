@@ -15,7 +15,7 @@
     <nav class="navbar">
         <div class="container mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <span class="text-3xl animate-pulse">⭐</span>
+                <img src="sticker.webp" alt="AstroLearn Logo" class="h-8 w-8 object-contain">
                 <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
                     AstroLearn
                 </a>
@@ -25,6 +25,7 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="game.html" class="nav-link protected-link">Space Quest</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
             </div>
             <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
@@ -35,6 +36,7 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="game.html" class="nav-link protected-link">Space Quest</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
             </div>
         </div>
@@ -112,7 +114,7 @@
         <div class="container mx-auto px-6 py-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
-                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                    <p class="text-sm text-[#F5F7FA]/70 flex items-center gap-1"><img src="sticker.webp" alt="AstroLearn Logo" class="h-5 w-5 object-contain"> Powered by AstroLearn</p>
                 </div>
                 <div class="flex space-x-6">
                     <a href="about.html" class="footer-link">About</a>
@@ -442,12 +444,69 @@
 
             document.querySelectorAll('.subject-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    loadFlashcards(btn.dataset.subject);
+                    showFlashcardSets(btn.dataset.subject);
                 });
             });
         }
+        
+        function showFlashcardSets(subjectId) {
+            const grade = getGradeLevel();
+            const subject = subjects.find(s => s.id === subjectId);
+            
+            // Create 5 flashcard sets
+            const sets = [
+                { id: 1, name: `Set 1: ${getSetName(subjectId, grade, 1)}`, icon: '📚' },
+                { id: 2, name: `Set 2: ${getSetName(subjectId, grade, 2)}`, icon: '📖' },
+                { id: 3, name: `Set 3: ${getSetName(subjectId, grade, 3)}`, icon: '📕' },
+                { id: 4, name: `Set 4: ${getSetName(subjectId, grade, 4)}`, icon: '📗' },
+                { id: 5, name: `Set 5: ${getSetName(subjectId, grade, 5)}`, icon: '📘' }
+            ];
+            
+            document.getElementById('subjectSelector').parentElement.innerHTML = `
+                <div class="glass-card p-6 mb-8">
+                    <button onclick="location.reload()" class="btn-secondary mb-4">← Back to Subjects</button>
+                    <h2 class="text-2xl font-bold mb-4 text-center">${subject.name} - Grade ${grade} Flashcard Sets</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4" id="flashcardSets">
+                        ${sets.map(set => `
+                            <button class="glass-card p-6 text-center hover:scale-105 transition-transform set-btn" 
+                                    data-subject="${subjectId}" 
+                                    data-set="${set.id}"
+                                    style="border: 2px solid ${subject.color}33;">
+                                <div class="text-4xl mb-2">${set.icon}</div>
+                                <div class="font-bold">${set.name}</div>
+                                <div class="text-sm text-[#F5F7FA]/70 mt-2">10 cards</div>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            document.querySelectorAll('.set-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    loadFlashcards(btn.dataset.subject, parseInt(btn.dataset.set));
+                });
+            });
+        }
+        
+        function getSetName(subjectId, grade, setNum) {
+            const names = {
+                math: { 6: ['Fractions', 'Decimals', 'Geometry', 'Ratios', 'Statistics'], 
+                        9: ['Algebra', 'Equations', 'Functions', 'Polynomials', 'Radicals'],
+                        12: ['Limits', 'Derivatives', 'Integrals', 'Applications', 'Advanced'] },
+                science: { 6: ['Cells', 'Matter', 'Solar System', 'Ecosystems', 'Energy'],
+                          9: ['Biology', 'Genetics', 'Chemistry', 'Physics', 'Ecology'],
+                          12: ['Organic Chem', 'Molecular Bio', 'Electromagnetism', 'Thermodynamics', 'Evolution'] },
+                reading: { 6: ['Comprehension', 'Vocabulary', 'Story Elements', 'Inferences', 'Poetry'],
+                          9: ['Literary Analysis', 'Character', 'Critical Reading', 'Shakespeare', 'Writing'],
+                          12: ['Theory', 'Rhetoric', 'Modern Lit', 'Writing', 'Research'] },
+                language: { 6: ['Greetings', 'Numbers', 'Colors', 'Family', 'Verbs'],
+                           9: ['Present Tense', 'Past Tense', 'Future', 'Subjunctive', 'Conversation'],
+                           12: ['Grammar', 'Literature', 'Writing', 'Culture', 'Translation'] }
+            };
+            return names[subjectId]?.[grade]?.[setNum - 1] || `Set ${setNum}`;
+        }
 
-        function loadFlashcards(subjectId) {
+        function loadFlashcards(subjectId, setNum = 1) {
             const grade = getGradeLevel();
             const subjectData = flashcardsByGrade[grade]?.[subjectId];
             
@@ -457,18 +516,54 @@
             }
 
             currentSubject = subjectId;
-            currentCards = [...subjectData];
+            
+            // Generate 10 cards for the selected set
+            // Each set gets 10 cards from the available data
+            const cardsPerSet = 10;
+            const startIndex = (setNum - 1) * cardsPerSet;
+            const endIndex = Math.min(startIndex + cardsPerSet, subjectData.length);
+            
+            // If we don't have enough cards, repeat some or generate additional ones
+            let selectedCards = subjectData.slice(startIndex, endIndex);
+            if (selectedCards.length < cardsPerSet) {
+                // Repeat cards or generate additional ones
+                const needed = cardsPerSet - selectedCards.length;
+                const additional = subjectData.slice(0, needed);
+                selectedCards = [...selectedCards, ...additional];
+            }
+            
+            currentCards = selectedCards.slice(0, cardsPerSet);
             currentCardIndex = 0;
             isFlipped = false;
 
-            // Shuffle cards
-            shuffleArray(currentCards);
+            // Track flashcard activity
+            addToRecentActivity({
+                type: 'flashcard',
+                action: 'Viewed',
+                title: `${getSetName(subjectId, grade, setNum)} Flashcard Set`,
+                subject: subjectId,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Update progress
+            updateSubjectProgress(subjectId);
 
             document.getElementById('flashcardContainer').classList.remove('hidden');
             const subject = subjects.find(s => s.id === subjectId);
-            document.getElementById('currentSubjectTitle').textContent = `${subject.name} Study Guide`;
+            document.getElementById('currentSubjectTitle').textContent = `${subject.name} - ${getSetName(subjectId, grade, setNum)} (Set ${setNum})`;
             
             updateCard();
+        }
+        
+        function addToRecentActivity(activity) {
+            const activities = JSON.parse(localStorage.getItem('astrolearn_recent_activities') || '[]');
+            activities.unshift(activity);
+            if (activities.length > 50) activities.pop();
+            localStorage.setItem('astrolearn_recent_activities', JSON.stringify(activities));
+        }
+        
+        function updateSubjectProgress(subject) {
+            window.dispatchEvent(new CustomEvent('progressUpdated', { detail: { subject } }));
         }
 
         function updateCard() {

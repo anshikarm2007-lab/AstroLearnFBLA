@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Details - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <img src="sticker.webp" alt="AstroLearn Logo" class="h-8 w-8 object-contain">
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="schedule.html" class="btn-secondary py-2 px-4 text-sm">Back to Schedule</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Session Details Section -->
+    <section class="container mx-auto px-6 py-16 max-w-4xl">
+        <div class="glass-card p-8 mb-6">
+            <div class="text-center mb-8">
+                <div class="text-6xl mb-4">🚀</div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4" id="sessionTitle">
+                    <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                        Live Tutoring Session
+                    </span>
+                </h1>
+            </div>
+
+            <!-- Session Information -->
+            <div class="space-y-6 mb-8">
+                <div class="flex items-start gap-4 p-4 bg-[#4FC3F7]/10 rounded-lg border border-[#4FC3F7]/30">
+                    <span class="text-2xl">📚</span>
+                    <div>
+                        <h3 class="font-bold text-lg mb-1">Subject</h3>
+                        <p class="text-[#F5F7FA]/90" id="sessionSubject">Math</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4 p-4 bg-[#FF6EC7]/10 rounded-lg border border-[#FF6EC7]/30">
+                    <span class="text-2xl">👨‍🏫</span>
+                    <div>
+                        <h3 class="font-bold text-lg mb-1">Tutor / Host</h3>
+                        <p class="text-[#F5F7FA]/90" id="tutorName">Ava J.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4 p-4 bg-[#482880]/30 rounded-lg border border-[#482880]/50">
+                    <span class="text-2xl">🕐</span>
+                    <div>
+                        <h3 class="font-bold text-lg mb-1">Date & Time</h3>
+                        <p class="text-[#F5F7FA]/90" id="sessionTime">Monday 5 PM</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demo Message -->
+            <div class="bg-[#4FC3F7]/10 border border-[#4FC3F7]/30 rounded-lg p-6 mb-6">
+                <p class="text-lg text-[#F5F7FA]/90 text-center">
+                    <strong>📝 Note:</strong> This is a demo live session for the student learning hub.
+                </p>
+            </div>
+
+            <!-- Video Conferencing Note -->
+            <div class="bg-[#FF6EC7]/10 border border-[#FF6EC7]/30 rounded-lg p-6 mb-8">
+                <h3 class="font-bold text-lg mb-2 flex items-center gap-2">
+                    <span>📹</span>
+                    <span>Video Conferencing Integration</span>
+                </h3>
+                <p class="text-[#F5F7FA]/90 text-sm leading-relaxed">
+                    This is a prototype demonstration. In a production version, real video conferencing 
+                    (Zoom, Google Meet, Microsoft Teams, or similar platforms) would be integrated here 
+                    to enable live tutoring sessions with real-time video, audio, screen sharing, and 
+                    collaborative tools.
+                </p>
+            </div>
+
+            <!-- Join Button -->
+            <div class="text-center">
+                <button id="joinNowBtn" class="btn-primary px-12 py-4 text-xl">
+                    🚀 Join Now / Enter Study Room
+                </button>
+            </div>
+        </div>
+
+        <!-- Session Features -->
+        <div class="glass-card p-8">
+            <h2 class="text-2xl font-bold mb-6 text-center">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    What You'll Experience
+                </span>
+            </h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="p-6 bg-[#4FC3F7]/10 rounded-lg border border-[#4FC3F7]/30">
+                    <div class="text-4xl mb-3">💬</div>
+                    <h3 class="font-bold text-lg mb-2">Group Chat</h3>
+                    <p class="text-sm text-[#F5F7FA]/80">
+                        Interact with the tutor and other students through real-time chat messaging.
+                    </p>
+                </div>
+                <div class="p-6 bg-[#FF6EC7]/10 rounded-lg border border-[#FF6EC7]/30">
+                    <div class="text-4xl mb-3">👥</div>
+                    <h3 class="font-bold text-lg mb-2">See Participants</h3>
+                    <p class="text-sm text-[#F5F7FA]/80">
+                        View all participants in the session and see who's currently active.
+                    </p>
+                </div>
+                <div class="p-6 bg-[#482880]/30 rounded-lg border border-[#482880]/50">
+                    <div class="text-4xl mb-3">📹</div>
+                    <h3 class="font-bold text-lg mb-2">Video Meeting</h3>
+                    <p class="text-sm text-[#F5F7FA]/80">
+                        Join the live video meeting with camera and microphone controls.
+                    </p>
+                </div>
+                <div class="p-6 bg-[#4FC3F7]/10 rounded-lg border border-[#4FC3F7]/30">
+                    <div class="text-4xl mb-3">🖥️</div>
+                    <h3 class="font-bold text-lg mb-2">Screen Sharing</h3>
+                    <p class="text-sm text-[#F5F7FA]/80">
+                        Share your screen to get help with specific problems or concepts.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer mt-16">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70 flex items-center gap-1"><img src="sticker.webp" alt="AstroLearn Logo" class="h-5 w-5 object-contain"> Powered by AstroLearn</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Get session parameters from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const subject = urlParams.get('subject') || 'Math';
+        const tutor = urlParams.get('tutor') || 'Ava J.';
+        const time = urlParams.get('time') || 'Monday 5 PM';
+
+        // Update page content
+        document.getElementById('sessionTitle').innerHTML = `<span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">${subject} Tutoring Session</span>`;
+        document.getElementById('sessionSubject').textContent = subject;
+        document.getElementById('tutorName').textContent = tutor;
+        document.getElementById('sessionTime').textContent = time;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initFloatingStars();
+            
+            // Join Now button - redirect to live session
+            const joinNowBtn = document.getElementById('joinNowBtn');
+            if (joinNowBtn) {
+                joinNowBtn.addEventListener('click', () => {
+                    const url = `live-session.html?subject=${encodeURIComponent(subject)}&tutor=${encodeURIComponent(tutor)}&time=${encodeURIComponent(time)}`;
+                    window.location.href = url;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+

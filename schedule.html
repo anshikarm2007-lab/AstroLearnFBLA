@@ -15,7 +15,7 @@
     <nav class="navbar">
         <div class="container mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <span class="text-3xl animate-pulse">⭐</span>
+                <img src="sticker.webp" alt="AstroLearn Logo" class="h-8 w-8 object-contain">
                 <h1 class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
                     AstroLearn
                 </h1>
@@ -25,6 +25,7 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link active protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="game.html" class="nav-link protected-link">Space Quest</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
             </div>
             <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
@@ -35,24 +36,71 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="game.html" class="nav-link protected-link">Space Quest</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-center block" id="authBtnMobile">Sign In</a>
             </div>
         </div>
     </nav>
 
     <!-- Schedule Header -->
-    <section class="container mx-auto px-6 py-16 text-center">
-        <h1 class="text-5xl md:text-7xl font-bold mb-4">
-            <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
-                Galaxy Timetable
-            </span>
-        </h1>
-        <p class="text-xl text-[#F5F7FA]/80">Upcoming Study Missions</p>
+    <section class="container mx-auto px-6 py-12">
+        <div class="text-center mb-12">
+            <div class="inline-block mb-6">
+                <div class="text-6xl mb-4 animate-float">📅</div>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Galaxy Timetable
+                </span>
+            </h1>
+            <p class="text-xl text-[#F5F7FA]/80 mb-2">Upcoming Study Missions</p>
+            <p class="text-sm text-[#F5F7FA]/60">Join live tutoring sessions and group study opportunities</p>
+        </div>
+        
+        <!-- Group Study Opportunities Section -->
+        <div class="glass-card p-8 md:p-10 max-w-5xl mx-auto mb-12 border-2 border-[#4FC3F7]/30">
+            <div class="text-center mb-6">
+                <h2 class="text-3xl md:text-4xl font-bold mb-3">
+                    <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                        Live Tutoring Sessions
+                    </span>
+                </h2>
+                <p class="text-lg text-[#F5F7FA]/90 max-w-2xl mx-auto">
+                    Join interactive live tutoring sessions where you can collaborate with tutors and other students. 
+                    Each session includes video conferencing, group chat, screen sharing, and real-time collaboration tools.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6 mt-8">
+                <div class="p-6 bg-gradient-to-br from-[#4FC3F7]/20 to-[#4FC3F7]/5 rounded-xl border border-[#4FC3F7]/30 hover:border-[#4FC3F7]/50 transition-all hover:scale-105">
+                    <div class="text-4xl mb-3">💬</div>
+                    <h3 class="font-bold text-lg mb-2 text-[#4FC3F7]">Group Chat</h3>
+                    <p class="text-sm text-[#F5F7FA]/80 leading-relaxed">Send messages and interact with everyone in real-time during sessions</p>
+                </div>
+                <div class="p-6 bg-gradient-to-br from-[#FF6EC7]/20 to-[#FF6EC7]/5 rounded-xl border border-[#FF6EC7]/30 hover:border-[#FF6EC7]/50 transition-all hover:scale-105">
+                    <div class="text-4xl mb-3">👥</div>
+                    <h3 class="font-bold text-lg mb-2 text-[#FF6EC7]">See Participants</h3>
+                    <p class="text-sm text-[#F5F7FA]/80 leading-relaxed">View all participants and see who's active in the session</p>
+                </div>
+                <div class="p-6 bg-gradient-to-br from-[#482880]/30 to-[#482880]/10 rounded-xl border border-[#482880]/40 hover:border-[#482880]/60 transition-all hover:scale-105">
+                    <div class="text-4xl mb-3">🖥️</div>
+                    <h3 class="font-bold text-lg mb-2 text-[#9D7CFF]">Screen Share</h3>
+                    <p class="text-sm text-[#F5F7FA]/80 leading-relaxed">Share your screen to get help with specific problems</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Sessions Grid -->
     <section class="container mx-auto px-6 pb-16">
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="sessionsGrid">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold mb-2 text-center">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Upcoming Sessions
+                </span>
+            </h2>
+            <p class="text-center text-[#F5F7FA]/70">Click on any session to view details and join</p>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="sessionsGrid">
             <!-- Sessions will be populated by JS -->
         </div>
     </section>
@@ -62,7 +110,7 @@
         <div class="container mx-auto px-6 py-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
-                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                    <p class="text-sm text-[#F5F7FA]/70 flex items-center gap-1"><img src="sticker.webp" alt="AstroLearn Logo" class="h-5 w-5 object-contain"> Powered by AstroLearn</p>
                 </div>
                 <div class="flex space-x-6">
                     <a href="about.html" class="footer-link">About</a>
@@ -87,15 +135,45 @@
         function loadSessions() {
             const grid = document.getElementById('sessionsGrid');
             grid.innerHTML = sessions.map(session => `
-                <div class="planet-card glass-card p-6 relative overflow-hidden" style="animation-delay: ${Math.random() * 2}s">
-                    <div class="absolute top-4 right-4 text-4xl opacity-50">${session.icon}</div>
-                    <div class="planet-circle mb-4" style="background: radial-gradient(circle, ${session.planetColor}, ${session.planetColor}88)">
-                        <div class="planet-inner"></div>
+                <div class="glass-card p-6 relative overflow-hidden group hover:scale-105 transition-all duration-300 border-2" style="background: linear-gradient(135deg, rgba(11, 15, 47, 0.8) 0%, rgba(72, 40, 128, 0.6) 100%); border-color: ${session.planetColor}30;" onmouseover="this.style.borderColor='${session.planetColor}70'" onmouseout="this.style.borderColor='${session.planetColor}30'">
+                    <!-- Decorative background icon -->
+                    <div class="absolute top-4 right-4 text-6xl opacity-10 group-hover:opacity-20 transition-opacity">${session.icon}</div>
+                    
+                    <!-- Subject header with icon -->
+                    <div class="flex items-center gap-4 mb-6 relative z-10">
+                        <div class="w-16 h-16 rounded-full flex items-center justify-center text-3xl" style="background: linear-gradient(135deg, ${session.planetColor}, ${session.planetColor}88); box-shadow: 0 0 20px ${session.planetColor}40;">
+                            ${session.icon}
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-1" style="color: ${session.planetColor}">${session.subject}</h3>
+                            <div class="h-1 w-12 rounded-full" style="background: linear-gradient(90deg, ${session.planetColor}, ${session.planetColor}88);"></div>
+                        </div>
                     </div>
-                    <h3 class="text-2xl font-bold mb-2">${session.subject}</h3>
-                    <p class="text-[#F5F7FA]/70 mb-1">👨‍🏫 Tutor: ${session.tutor}</p>
-                    <p class="text-[#F5F7FA]/70 mb-4">🕐 ${session.time}</p>
-                    <button class="btn-primary w-full">Join Mission</button>
+                    
+                    <!-- Session details -->
+                    <div class="space-y-3 mb-6 relative z-10">
+                        <div class="flex items-center gap-3 p-3 bg-[#0B0F2F]/50 rounded-lg">
+                            <div class="text-2xl">👨‍🏫</div>
+                            <div>
+                                <p class="text-xs text-[#F5F7FA]/60 mb-1">Tutor</p>
+                                <p class="font-semibold text-[#F5F7FA]">${session.tutor}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-[#0B0F2F]/50 rounded-lg">
+                            <div class="text-2xl">🕐</div>
+                            <div>
+                                <p class="text-xs text-[#F5F7FA]/60 mb-1">Time</p>
+                                <p class="font-semibold text-[#F5F7FA]">${session.time}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Join button -->
+                    <a href="session-details.html?subject=${encodeURIComponent(session.subject)}&tutor=${encodeURIComponent(session.tutor)}&time=${encodeURIComponent(session.time)}" 
+                       class="btn-primary w-full block text-center py-3 font-semibold relative z-10 hover:shadow-lg transition-all" 
+                       style="background: linear-gradient(135deg, ${session.planetColor}, ${session.planetColor}dd);">
+                        Join Session →
+                    </a>
                 </div>
             `).join('');
         }

@@ -250,7 +250,12 @@ function initializeStudyRooms() {
         const joinBtn = roomCard.querySelector('.join-room-btn');
         if (!joinBtn.disabled) {
             joinBtn.addEventListener('click', () => {
-                alert(`Joining: ${room.title}\n\nThis is a demo. In the full version, this would join the collaborative study room.`);
+                const params = new URLSearchParams({
+                    title: encodeURIComponent(room.title),
+                    topic: encodeURIComponent(room.topic),
+                    host: encodeURIComponent('Study Leader')
+                });
+                window.location.href = `study-room.html?${params.toString()}`;
             });
         }
         

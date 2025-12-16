@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Placeholder Videos - AstroLearn</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .info-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; }
+        h2 { color: #666; margin-top: 20px; }
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .video-list {
+            list-style: none;
+            padding: 0;
+        }
+        .video-list li {
+            padding: 8px;
+            background: #f9f9f9;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="info-box">
+        <h1>📹 Video Setup Instructions</h1>
+        <p>This page helps you set up placeholder videos for the AstroLearn website.</p>
+    </div>
+
+    <div class="info-box">
+        <h2>Required Video Files</h2>
+        <p>Place the following MP4 files in the <code>assets/videos/</code> folder:</p>
+        <ul class="video-list">
+            <li>📄 <code>algebra-intro.mp4</code> - Introduction to Algebra</li>
+            <li>📄 <code>cell-biology.mp4</code> - Cell Biology Explained</li>
+            <li>📄 <code>ww2-overview.mp4</code> - World War II Overview</li>
+            <li>📄 <code>periodic-table.mp4</code> - Periodic Table Mastery</li>
+            <li>📄 <code>shakespeare-sonnets.mp4</code> - Shakespeare's Sonnets</li>
+            <li>📄 <code>calculus-fundamentals.mp4</code> - Calculus Fundamentals</li>
+        </ul>
+    </div>
+
+    <div class="info-box">
+        <h2>Option 1: Using ffmpeg (Recommended)</h2>
+        <p>If you have ffmpeg installed, run the PowerShell script:</p>
+        <code>.\create-placeholder-videos.ps1</code>
+        <p>This will create minimal valid MP4 placeholder videos.</p>
+    </div>
+
+    <div class="info-box">
+        <h2>Option 2: Manual Creation</h2>
+        <p>You can create simple placeholder videos using:</p>
+        <ul>
+            <li>Screen recording software (OBS, QuickTime, etc.)</li>
+            <li>Video editing software (even 5-10 second clips work)</li>
+            <li>Online video generators</li>
+            <li>Free educational video resources (with proper attribution)</li>
+        </ul>
+    </div>
+
+    <div class="info-box">
+        <h2>Option 3: Demo Mode</h2>
+        <p>The video player will work even without video files - it will display a placeholder message explaining that this is a demo. The player interface is fully functional and ready for real videos.</p>
+    </div>
+
+    <div class="info-box">
+        <h2>Video Specifications</h2>
+        <ul>
+            <li><strong>Format:</strong> MP4 (H.264 codec recommended)</li>
+            <li><strong>Resolution:</strong> 640x360 or higher</li>
+            <li><strong>Duration:</strong> Any length (even 5-10 seconds for demo)</li>
+            <li><strong>File Size:</strong> Keep reasonable for faster loading</li>
+        </ul>
+    </div>
+</body>
+</html>
+

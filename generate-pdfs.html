@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate PDFs - AstroLearn</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .info-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #4FC3F7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #3aa8d4;
+        }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="info-box">
+        <h1>📄 Generate PDF Study Guides</h1>
+        <p>Click the button below to generate all PDF files with real educational content.</p>
+        <button onclick="generateAllPDFs()">Generate All PDFs</button>
+        <div id="status" class="status" style="display: none;"></div>
+    </div>
+
+    <script>
+        const { jsPDF } = window.jspdf;
+
+        function generateAllPDFs() {
+            const status = document.getElementById('status');
+            status.style.display = 'block';
+            status.innerHTML = 'Generating PDFs...';
+            
+            try {
+                generateAlgebraStudyGuide();
+                generateMathPracticeProblems();
+                generateChemistryFormulaSheet();
+                generateScienceExperimentGuide();
+                generateHistoryTimelineChart();
+                generateVocabularyFlashcardSet();
+                generateBusinessFundamentals();
+                generatePracticeQuiz();
+                
+                status.innerHTML = '✅ All PDFs generated successfully! Check the assets/pdfs/ folder.';
+                status.style.background = '#e8f5e9';
+            } catch (error) {
+                status.innerHTML = '❌ Error: ' + error.message;
+                status.style.background = '#ffebee';
+                console.error(error);
+            }
+        }
+
+        function generateAlgebraStudyGuide() {
+            const doc = new jsPDF();
+            
+            // Title
+            doc.setFontSize(20);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Algebra Study Guide', 105, 20, { align: 'center' });
+            
+            // Introduction
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            let y = 35;
+            doc.text('This study guide covers fundamental algebra concepts, formulas, and practice problems.', 20, y);
+            y += 10;
+            
+            // Basic Formulas Section
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Basic Formulas', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            const formulas = [
+                'Linear Equation: y = mx + b',
+                'Slope Formula: m = (y₂ - y₁) / (x₂ - x₁)',
+                'Quadratic Formula: x = (-b ± √(b² - 4ac)) / 2a',
+                'Distance Formula: d = √((x₂ - x₁)² + (y₂ - y₁)²)',
+                'Midpoint Formula: M = ((x₁ + x₂)/2, (y₁ + y₂)/2)'
+            ];
+            
+            formulas.forEach(formula => {
+                doc.text('• ' + formula, 25, y);
+                y += 7;
+            });
+            
+            y += 5;
+            
+            // Worked Examples
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Worked Examples', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            doc.text('Example 1: Solve for x in 2x + 5 = 13', 25, y);
+            y += 7;
+            doc.text('Solution: 2x = 13 - 5 = 8, therefore x = 4', 30, y);
+            y += 10;
+            
+            doc.text('Example 2: Factor x² + 5x + 6', 25, y);
+            y += 7;
+            doc.text('Solution: (x + 2)(x + 3) = x² + 5x + 6', 30, y);
+            y += 10;
+            
+            // Practice Problems
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Practice Problems', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            const problems = [
+                '1. Solve: 3x - 7 = 14',
+                '2. Simplify: 2x + 3x - 5x',
+                '3. Solve: x² - 9 = 0',
+                '4. Find the slope: (2, 3) and (5, 9)',
+                '5. Solve the system: x + y = 5, 2x - y = 1'
+            ];
+            
+            problems.forEach(problem => {
+                doc.text(problem, 25, y);
+                y += 7;
+            });
+            
+            y += 5;
+            doc.text('Answer Key: 1) x = 7, 2) 0, 3) x = 3 or -3, 4) m = 2, 5) x = 2, y = 3', 25, y);
+            
+            // Footer
+            doc.setFontSize(10);
+            doc.setTextColor(128, 128, 128);
+            doc.text('AstroLearn - Algebra Study Guide', 105, 280, { align: 'center' });
+            
+            doc.save('assets/pdfs/Algebra_Study_Guide.pdf');
+        }
+
+        function generateMathPracticeProblems() {
+            const doc = new jsPDF();
+            
+            doc.setFontSize(20);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Math Practice Problems', 105, 20, { align: 'center' });
+            
+            let y = 35;
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            
+            // Algebra Problems
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Algebra Problems', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            const algProblems = [
+                '1. Solve for x: 5x + 3 = 23',
+                '2. Simplify: (2x + 3)(x - 4)',
+                '3. Solve: x² - 5x + 6 = 0',
+                '4. Find x: 3x/2 = 9',
+                '5. Solve: 2x + 3y = 12, x - y = 1'
+            ];
+            
+            algProblems.forEach(prob => {
+                doc.text(prob, 25, y);
+                y += 7;
+            });
+            
+            y += 10;
+            
+            // Geometry Problems
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Geometry Problems', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            const geoProblems = [
+                '6. Find the area of a rectangle: length = 8, width = 5',
+                '7. Calculate the perimeter of a square with side = 6',
+                '8. Find the area of a circle with radius = 4 (use π = 3.14)',
+                '9. Calculate the volume of a cube with side = 3',
+                '10. Find the area of a triangle: base = 10, height = 6'
+            ];
+            
+            geoProblems.forEach(prob => {
+                doc.text(prob, 25, y);
+                y += 7;
+            });
+            
+            y += 10;
+            
+            // Answer Key
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Answer Key', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            doc.text('1) x = 4, 2) 2x² - 5x - 12, 3) x = 2 or 3, 4) x = 6, 5) x = 3, y = 2', 25, y);
+            y += 7;
+            doc.text('6) 40, 7) 24, 8) 50.24, 9) 27, 10) 30', 25, y);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(128, 128, 128);
+            doc.text('AstroLearn - Math Practice Problems', 105, 280, { align: 'center' });
+            
+            doc.save('assets/pdfs/Math_Practice_Problems.pdf');
+        }
+
+        function generateChemistryFormulaSheet() {
+            const doc = new jsPDF();
+            
+            doc.setFontSize(20);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Chemistry Formula Sheet', 105, 20, { align: 'center' });
+            
+            let y = 35;
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            
+            // Basic Formulas
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Basic Chemical Formulas', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            const formulas = [
+                'Density: ρ = m/V (mass/volume)',
+                'Molarity: M = n/V (moles/liter)',
+                'Percent Composition: % = (mass element / mass compound) × 100',
+                'Ideal Gas Law: PV = nRT',
+                'pH: pH = -log[H⁺]',
+                'Energy: E = hν (Planck constant × frequency)'
+            ];
+            
+            formulas.forEach(formula => {
+                doc.text('• ' + formula, 25, y);
+                y += 7;
+            });
+            
+            y += 5;
+            
+            // Common Elements
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Common Elements', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            const elements = [
+                'H - Hydrogen (Atomic #1)',
+                'C - Carbon (Atomic #6)',
+                'N - Nitrogen (Atomic #7)',
+                'O - Oxygen (Atomic #8)',
+                'Na - Sodium (Atomic #11)',
+                'Cl - Chlorine (Atomic #17)'
+            ];
+            
+            elements.forEach(element => {
+                doc.text('• ' + element, 25, y);
+                y += 7;
+            });
+            
+            y += 5;
+            
+            // Common Compounds
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Common Compounds', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            doc.text('• H₂O - Water', 25, y);
+            y += 7;
+            doc.text('• CO₂ - Carbon Dioxide', 25, y);
+            y += 7;
+            doc.text('• NaCl - Sodium Chloride (Salt)', 25, y);
+            y += 7;
+            doc.text('• C₆H₁₂O₆ - Glucose', 25, y);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(128, 128, 128);
+            doc.text('AstroLearn - Chemistry Formula Sheet', 105, 280, { align: 'center' });
+            
+            doc.save('assets/pdfs/Chemistry_Formula_Sheet.pdf');
+        }
+
+        function generateScienceExperimentGuide() {
+            const doc = new jsPDF();
+            
+            doc.setFontSize(20);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Science Experiment Guide', 105, 20, { align: 'center' });
+            
+            let y = 35;
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.text('This guide provides step-by-step instructions for common science experiments.', 20, y);
+            y += 15;
+            
+            // Experiment 1
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Experiment 1: Photosynthesis in Plants', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            doc.text('Materials:', 25, y);
+            y += 7;
+            doc.text('• Plant leaves, iodine solution, beaker, water', 30, y);
+            y += 10;
+            
+            doc.text('Procedure:', 25, y);
+            y += 7;
+            doc.text('1. Place leaf in boiling water for 2 minutes', 30, y);
+            y += 7;
+            doc.text('2. Remove and place in alcohol to remove chlorophyll', 30, y);
+            y += 7;
+            doc.text('3. Add iodine solution and observe color change', 30, y);
+            y += 10;
+            
+            doc.text('Observation: Blue-black color indicates presence of starch', 25, y);
+            y += 15;
+            
+            // Experiment 2
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Experiment 2: Density of Liquids', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            doc.text('Materials: Water, oil, graduated cylinder, scale', 25, y);
+            y += 10;
+            
+            doc.text('Procedure:', 25, y);
+            y += 7;
+            doc.text('1. Measure 50ml of water and record mass', 30, y);
+            y += 7;
+            doc.text('2. Calculate density: ρ = mass/volume', 30, y);
+            y += 7;
+            doc.text('3. Repeat with oil and compare results', 30, y);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(128, 128, 128);
+            doc.text('AstroLearn - Science Experiment Guide', 105, 280, { align: 'center' });
+            
+            doc.save('assets/pdfs/Science_Experiment_Guide.pdf');
+        }
+
+        function generateHistoryTimelineChart() {
+            const doc = new jsPDF();
+            
+            doc.setFontSize(20);
+            doc.setTextColor(79, 195, 247);
+            doc.text('History Timeline Chart', 105, 20, { align: 'center' });
+            
+            let y = 35;
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            
+            // Timeline Events
+            const events = [
+                { year: '1776', event: 'American Declaration of Independence' },
+                { year: '1789', event: 'French Revolution begins' },
+                { year: '1861-1865', event: 'American Civil War' },
+                { year: '1914-1918', event: 'World War I' },
+                { year: '1929', event: 'Great Depression begins' },
+                { year: '1939-1945', event: 'World War II' },
+                { year: '1969', event: 'Moon Landing' },
+                { year: '1989', event: 'Fall of Berlin Wall' }
+            ];
+            
+            events.forEach(item => {
+                doc.setFontSize(14);
+                doc.setTextColor(79, 195, 247);
+                doc.text(item.year, 20, y);
+                doc.setFontSize(11);
+                doc.setTextColor(0, 0, 0);
+                doc.text(item.event, 50, y);
+                y += 10;
+            });
+            
+            y += 10;
+            
+            // Key Concepts
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Key Historical Concepts', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            const concepts = [
+                '• Causes and effects of major wars',
+                '• Impact of revolutions on society',
+                '• Economic factors in historical events',
+                '• Social and cultural changes over time'
+            ];
+            
+            concepts.forEach(concept => {
+                doc.text(concept, 25, y);
+                y += 7;
+            });
+            
+            doc.setFontSize(10);
+            doc.setTextColor(128, 128, 128);
+            doc.text('AstroLearn - History Timeline Chart', 105, 280, { align: 'center' });
+            
+            doc.save('assets/pdfs/History_Timeline_Chart.pdf');
+        }
+
+        function generateVocabularyFlashcardSet() {
+            const doc = new jsPDF();
+            
+            doc.setFontSize(20);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Vocabulary Flashcard Set', 105, 20, { align: 'center' });
+            
+            let y = 35;
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            
+            const vocab = [
+                { word: 'Analyze', def: 'To examine in detail' },
+                { word: 'Synthesize', def: 'To combine parts into a whole' },
+                { word: 'Evaluate', def: 'To judge or assess' },
+                { word: 'Hypothesis', def: 'A proposed explanation' },
+                { word: 'Variable', def: 'A factor that can change' },
+                { word: 'Constant', def: 'A value that does not change' },
+                { word: 'Evidence', def: 'Information supporting a claim' },
+                { word: 'Conclusion', def: 'Final decision or judgment' }
+            ];
+            
+            vocab.forEach(item => {
+                doc.setFontSize(13);
+                doc.setTextColor(79, 195, 247);
+                doc.text(item.word, 20, y);
+                doc.setFontSize(11);
+                doc.setTextColor(0, 0, 0);
+                doc.text('→ ' + item.def, 60, y);
+                y += 10;
+            });
+            
+            doc.setFontSize(10);
+            doc.setTextColor(128, 128, 128);
+            doc.text('AstroLearn - Vocabulary Flashcard Set', 105, 280, { align: 'center' });
+            
+            doc.save('assets/pdfs/Vocabulary_Flashcard_Set.pdf');
+        }
+
+        function generateBusinessFundamentals() {
+            const doc = new jsPDF();
+            
+            doc.setFontSize(20);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Business Fundamentals', 105, 20, { align: 'center' });
+            
+            let y = 35;
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            
+            // Key Terms
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Key Business Terms', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            const terms = [
+                'Revenue: Total income from sales',
+                'Profit: Revenue minus expenses',
+                'Market: Group of potential customers',
+                'Marketing: Promoting products or services',
+                'Supply Chain: Process from production to consumer',
+                'ROI: Return on Investment'
+            ];
+            
+            terms.forEach(term => {
+                doc.text('• ' + term, 25, y);
+                y += 7;
+            });
+            
+            y += 5;
+            
+            // Real-World Examples
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Real-World Examples', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            doc.text('Example 1: A company sells 100 products at $10 each.', 25, y);
+            y += 7;
+            doc.text('Revenue = 100 × $10 = $1,000', 30, y);
+            y += 10;
+            
+            doc.text('Example 2: If expenses are $700, profit = $1,000 - $700 = $300', 25, y);
+            y += 10;
+            
+            // Business Concepts
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Important Concepts', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            doc.text('• Supply and Demand: Prices adjust based on availability', 25, y);
+            y += 7;
+            doc.text('• Competition: Multiple businesses offering similar products', 25, y);
+            y += 7;
+            doc.text('• Customer Service: Supporting customers before and after purchase', 25, y);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(128, 128, 128);
+            doc.text('AstroLearn - Business Fundamentals', 105, 280, { align: 'center' });
+            
+            doc.save('assets/pdfs/Business_Fundamentals.pdf');
+        }
+
+        function generatePracticeQuiz() {
+            const doc = new jsPDF();
+            
+            doc.setFontSize(20);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Practice Quiz', 105, 20, { align: 'center' });
+            
+            let y = 35;
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.text('Multiple Choice Questions - Answer all questions', 20, y);
+            y += 15;
+            
+            // Questions
+            const questions = [
+                {
+                    q: '1. What is the solution to 2x + 5 = 13?',
+                    options: ['A) x = 3', 'B) x = 4', 'C) x = 5', 'D) x = 6'],
+                    answer: 'B'
+                },
+                {
+                    q: '2. What is the capital of France?',
+                    options: ['A) London', 'B) Berlin', 'C) Paris', 'D) Madrid'],
+                    answer: 'C'
+                },
+                {
+                    q: '3. What is H₂O?',
+                    options: ['A) Carbon Dioxide', 'B) Water', 'C) Oxygen', 'D) Hydrogen'],
+                    answer: 'B'
+                },
+                {
+                    q: '4. Who wrote "Romeo and Juliet"?',
+                    options: ['A) Charles Dickens', 'B) William Shakespeare', 'C) Mark Twain', 'D) Jane Austen'],
+                    answer: 'B'
+                },
+                {
+                    q: '5. What is the square root of 64?',
+                    options: ['A) 6', 'B) 7', 'C) 8', 'D) 9'],
+                    answer: 'C'
+                }
+            ];
+            
+            questions.forEach(item => {
+                doc.setFontSize(11);
+                doc.setTextColor(0, 0, 0);
+                doc.text(item.q, 20, y);
+                y += 7;
+                item.options.forEach(opt => {
+                    doc.text(opt, 25, y);
+                    y += 6;
+                });
+                y += 5;
+            });
+            
+            y += 5;
+            
+            // Answer Key
+            doc.setFontSize(16);
+            doc.setTextColor(79, 195, 247);
+            doc.text('Answer Key', 20, y);
+            y += 10;
+            
+            doc.setFontSize(11);
+            doc.setTextColor(0, 0, 0);
+            questions.forEach((item, index) => {
+                doc.text(`${index + 1}. ${item.answer}`, 25, y);
+                y += 7;
+            });
+            
+            doc.setFontSize(10);
+            doc.setTextColor(128, 128, 128);
+            doc.text('AstroLearn - Practice Quiz', 105, 280, { align: 'center' });
+            
+            doc.save('assets/pdfs/Practice_Quiz.pdf');
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <img src="sticker.webp" alt="AstroLearn Logo" class="h-8 w-8 object-contain">
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="game.html" class="nav-link protected-link">Space Quest</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="game.html" class="nav-link protected-link">Space Quest</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Video Player Section -->
+    <section class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+            <!-- Back Button -->
+            <a href="resources.html" class="inline-flex items-center gap-2 text-[#4FC3F7] hover:text-[#FF6EC7] transition-colors mb-6">
+                <span>←</span>
+                <span>Back to Resources</span>
+            </a>
+
+            <!-- Video Info -->
+            <div class="glass-card p-6 mb-6">
+                <h1 class="text-3xl md:text-4xl font-bold mb-2" id="videoTitle">Loading...</h1>
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="px-3 py-1 rounded-full text-sm font-semibold" id="videoSubject" style="background: rgba(79, 195, 247, 0.2); color: #4FC3F7;">
+                        Subject
+                    </span>
+                    <span class="text-sm text-[#F5F7FA]/70" id="videoDuration">Duration</span>
+                </div>
+                <p class="text-lg text-[#F5F7FA]/90" id="videoDescription">Description will load here...</p>
+            </div>
+
+            <!-- Video Player -->
+            <div class="glass-card p-6 mb-6">
+                <div class="relative w-full" style="padding-bottom: 56.25%; background: #000; border-radius: 0.5rem; overflow: hidden;">
+                    <video id="videoPlayer" class="absolute top-0 left-0 w-full h-full" controls preload="metadata" style="object-fit: contain;">
+                        <source id="videoSource" src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <!-- Loading indicator (hidden when video loads) -->
+                    <div id="videoLoading" class="absolute inset-0 flex items-center justify-center bg-[#0B0F2F]">
+                        <div class="text-center">
+                            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4FC3F7] mx-auto mb-4"></div>
+                            <p class="text-[#F5F7FA]/70">Loading video...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Videos -->
+            <div class="glass-card p-6">
+                <h2 class="text-2xl font-bold mb-4">
+                    <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                        Related Videos
+                    </span>
+                </h2>
+                <div class="grid md:grid-cols-2 gap-4" id="relatedVideos">
+                    <!-- Related videos will be populated by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70 flex items-center gap-1"><img src="sticker.webp" alt="AstroLearn Logo" class="h-5 w-5 object-contain"> Powered by AstroLearn</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!checkAuth()) {
+                return;
+            }
+            updateNavigation();
+            initFloatingStars();
+            setupMobileMenu();
+            loadVideo();
+        });
+
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        }
+
+        // Video data
+        const videoDatabase = {
+            1: {
+                title: "Introduction to Algebra",
+                subject: "Math",
+                duration: "15:30",
+                description: "Learn the basics of algebraic expressions, variables, and equations. This video covers fundamental concepts that form the foundation of algebra.",
+                filename: "algebra-intro.mp4",
+                related: [2, 6]
+            },
+            2: {
+                title: "Cell Biology Explained",
+                subject: "Science",
+                duration: "22:45",
+                description: "Understanding cell structure and function. Explore the organelles, their roles, and how cells work together in living organisms.",
+                filename: "cell-biology.mp4",
+                related: [1, 4]
+            },
+            3: {
+                title: "World War II Overview",
+                subject: "History",
+                duration: "28:20",
+                description: "Comprehensive guide to WWII events, key battles, and historical significance. Understand the causes, major events, and outcomes of the war.",
+                filename: "ww2-overview.mp4",
+                related: [5, 2]
+            },
+            4: {
+                title: "Periodic Table Mastery",
+                subject: "Chemistry",
+                duration: "18:15",
+                description: "Master the elements and their properties. Learn how to read the periodic table and understand chemical relationships.",
+                filename: "periodic-table.mp4",
+                related: [2, 1]
+            },
+            5: {
+                title: "Shakespeare's Sonnets",
+                subject: "Literature",
+                duration: "25:10",
+                description: "Analyze and appreciate classic poetry. Explore the themes, language, and literary devices used in Shakespeare's sonnets.",
+                filename: "shakespeare-sonnets.mp4",
+                related: [3, 6]
+            },
+            6: {
+                title: "Calculus Fundamentals",
+                subject: "Math",
+                duration: "35:00",
+                description: "Introduction to derivatives and integrals. Learn the core concepts of calculus and how to apply them to solve problems.",
+                filename: "calculus-fundamentals.mp4",
+                related: [1, 4]
+            }
+        };
+
+        function loadVideo() {
+            // Get video ID from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const videoId = parseInt(urlParams.get('id')) || 1;
+
+            const video = videoDatabase[videoId];
+            if (!video) {
+                document.getElementById('videoTitle').textContent = 'Video Not Found';
+                return;
+            }
+
+            // Update page content
+            document.getElementById('videoTitle').textContent = video.title;
+            document.getElementById('videoSubject').textContent = video.subject;
+            document.getElementById('videoDuration').textContent = video.duration;
+            document.getElementById('videoDescription').textContent = video.description;
+            document.title = `${video.title} - AstroLearn`;
+
+            // Set video source
+            const videoPlayer = document.getElementById('videoPlayer');
+            const videoSource = document.getElementById('videoSource');
+            const videoLoading = document.getElementById('videoLoading');
+            
+            videoSource.src = `assets/videos/${video.filename}`;
+            videoPlayer.load();
+            
+            // Hide loading indicator when video can play
+            videoPlayer.addEventListener('canplay', () => {
+                if (videoLoading) {
+                    videoLoading.style.display = 'none';
+                }
+            });
+
+            // Handle video loading states
+            videoPlayer.addEventListener('loadstart', () => {
+                console.log('Video loading started');
+            });
+
+            videoPlayer.addEventListener('loadedmetadata', () => {
+                console.log('Video metadata loaded successfully');
+            });
+
+            videoPlayer.addEventListener('canplay', () => {
+                console.log('Video ready to play');
+            });
+
+            // Handle video errors gracefully
+            videoPlayer.addEventListener('error', (e) => {
+                console.error('Video error:', e);
+                const error = videoPlayer.error;
+                let errorMessage = 'Video file not found or cannot be played.';
+                
+                if (error) {
+                    switch(error.code) {
+                        case error.MEDIA_ERR_ABORTED:
+                            errorMessage = 'Video loading was aborted.';
+                            break;
+                        case error.MEDIA_ERR_NETWORK:
+                            errorMessage = 'Network error while loading video.';
+                            break;
+                        case error.MEDIA_ERR_DECODE:
+                            errorMessage = 'Video decoding error.';
+                            break;
+                        case error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+                            errorMessage = 'Video format not supported or file not found.';
+                            break;
+                    }
+                }
+                
+                // Show placeholder message if video file doesn't exist
+                const container = videoPlayer.parentElement;
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#0B0F2F] to-[#482880] text-[#F5F7FA] z-10';
+                errorMsg.innerHTML = `
+                    <div class="text-center p-8 max-w-md">
+                        <div class="text-6xl mb-4">📹</div>
+                        <h3 class="text-2xl font-bold mb-2">${video.title}</h3>
+                        <p class="text-[#F5F7FA]/70 mb-4">Video Player Ready</p>
+                        <p class="text-sm text-[#F5F7FA]/60 mb-4">${errorMessage}</p>
+                        <div class="bg-[#482880]/50 p-4 rounded-lg mt-4">
+                            <p class="text-xs text-[#F5F7FA]/80 mb-2"><strong>To play this video:</strong></p>
+                            <p class="text-xs text-[#F5F7FA]/60">Add the file <code class="bg-[#0B0F2F] px-2 py-1 rounded">${video.filename}</code> to the <code class="bg-[#0B0F2F] px-2 py-1 rounded">assets/videos/</code> folder</p>
+                            <p class="text-xs text-[#F5F7FA]/50 mt-2">Duration: ${video.duration} | Subject: ${video.subject}</p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(errorMsg);
+                videoPlayer.style.display = 'none';
+            });
+
+            // Load related videos
+            loadRelatedVideos(video.related, videoId);
+        }
+
+        function loadRelatedVideos(relatedIds, currentId) {
+            const container = document.getElementById('relatedVideos');
+            const relatedVideos = relatedIds.map(id => videoDatabase[id]).filter(v => v);
+
+            if (relatedVideos.length === 0) {
+                container.innerHTML = '<p class="text-[#F5F7FA]/70">No related videos available.</p>';
+                return;
+            }
+
+            container.innerHTML = relatedVideos.map(video => `
+                <a href="video-player.html?id=${Object.keys(videoDatabase).find(key => videoDatabase[key] === video)}" 
+                   class="glass-card p-4 hover:scale-105 transition-transform block">
+                    <div class="flex items-center gap-4">
+                        <div class="text-4xl">${getSubjectIcon(video.subject)}</div>
+                        <div class="flex-1">
+                            <h3 class="font-bold mb-1">${video.title}</h3>
+                            <p class="text-sm text-[#F5F7FA]/70">${video.subject} • ${video.duration}</p>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        function getSubjectIcon(subject) {
+            const icons = {
+                'Math': '🔭',
+                'Science': '🧬',
+                'Chemistry': '⚗️',
+                'History': '🌍',
+                'Literature': '📚'
+            };
+            return icons[subject] || '📹';
+        }
+    </script>
+</body>
+</html>
+

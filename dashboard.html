@@ -15,7 +15,7 @@
     <nav class="navbar">
         <div class="container mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <span class="text-3xl animate-pulse">⭐</span>
+                <img src="sticker.webp" alt="AstroLearn Logo" class="h-8 w-8 object-contain">
                 <h1 class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
                     AstroLearn
                 </h1>
@@ -25,6 +25,7 @@
                 <a href="dashboard.html" class="nav-link active protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="game.html" class="nav-link protected-link">Space Quest</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
             </div>
             <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
@@ -35,6 +36,7 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="game.html" class="nav-link protected-link">Space Quest</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-center block" id="authBtnMobile">Sign In</a>
             </div>
         </div>
@@ -80,14 +82,11 @@
 
         <!-- Stats Section -->
         <div class="grid md:grid-cols-3 gap-6 mb-12">
-            <div class="glass-card p-6">
-                <h3 class="text-lg font-bold mb-4">Fuel Level</h3>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" style="width: 72%">
-                        <div class="progress-glow"></div>
-                    </div>
-                </div>
-                <p class="text-2xl font-bold mt-2 text-[#4FC3F7]">72%</p>
+            <div class="glass-card p-6 text-center">
+                <div class="text-4xl mb-2">⭐</div>
+                <h3 class="text-lg font-bold mb-2">XP Points</h3>
+                <p class="text-3xl font-bold text-[#4FC3F7]" id="xpPoints">0</p>
+                <p class="text-xs text-[#F5F7FA]/60 mt-2">Earn XP by completing lessons and quizzes</p>
             </div>
             <div class="glass-card p-6 text-center">
                 <div class="text-4xl mb-2">🎯</div>
@@ -145,13 +144,45 @@
                 </div>
             </div>
 
-        <!-- Recent Activity -->
-        <div class="glass-card p-8">
+        <!-- Completed Activities & Progress -->
+        <div class="glass-card p-8 mb-12">
             <h2 class="text-3xl font-bold mb-6">
                 <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
-                    Recent Activity
+                    Completed Activities & Learning Progress
                 </span>
             </h2>
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="p-6 bg-[#4FC3F7]/10 rounded-lg border border-[#4FC3F7]/30">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <span>✅</span>
+                        <span>Completed This Week</span>
+                    </h3>
+                    <div class="space-y-3" id="completedActivities">
+                        <!-- Completed activities will be populated by JS -->
+                    </div>
+                </div>
+                <div class="p-6 bg-[#FF6EC7]/10 rounded-lg border border-[#FF6EC7]/30">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <span>📈</span>
+                        <span>Progress Overview</span>
+                    </h3>
+                    <div class="space-y-4" id="progressOverview">
+                        <!-- Progress overview will be populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="glass-card p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold">
+                    <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                        Recent Activity
+                    </span>
+                </h2>
+                <button id="expandActivityBtn" class="btn-secondary text-sm" style="display: none;">Show All</button>
+            </div>
             <div class="space-y-4" id="activityList">
                 <!-- Activity will be populated by JS -->
             </div>
@@ -163,7 +194,7 @@
         <div class="container mx-auto px-6 py-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
-                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                    <p class="text-sm text-[#F5F7FA]/70 flex items-center gap-1"><img src="sticker.webp" alt="AstroLearn Logo" class="h-5 w-5 object-contain"> Powered by AstroLearn</p>
                 </div>
                 <div class="flex space-x-6">
                     <a href="about.html" class="footer-link">About</a>
@@ -175,6 +206,7 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="lesson.js"></script>
     <script>
         // Check authentication before loading page
         document.addEventListener('DOMContentLoaded', () => {
@@ -258,6 +290,33 @@
             }
             
             updateNavigation();
+            
+            // Load dashboard content
+            loadSubjects();
+            loadActivity();
+            loadCompletedActivities();
+            loadProgressOverview();
+            loadSkillLegend();
+            loadConstellation();
+            initFloatingStars();
+            
+            // Listen for progress updates
+            window.addEventListener('progressUpdated', (e) => {
+                loadSubjects(); // Refresh subject progress
+                loadProgressOverview(); // Refresh progress overview
+                updateXPPoints(); // Refresh XP points
+            });
+            
+            // Listen for storage changes
+            window.addEventListener('storage', (e) => {
+                loadSubjects();
+                loadActivity();
+                loadCompletedActivities();
+                loadProgressOverview();
+                if (e.key === 'astrolearn_xp_points' || e.key === 'astrolearn_completed_lessons') {
+                    updateXPPoints(); // Refresh XP points when lessons/quizzes are completed
+                }
+            });
         });
 
         // Count total completed missions/lessons
@@ -390,29 +449,177 @@
                 progress: calculateSubjectProgress(subject.id)
             }));
             
-            grid.innerHTML = subjectsWithProgress.map(subject => `
-                <a href="${subject.link}" class="subject-card-link">
-                    <div class="glass-card p-6 text-center hover:scale-105 transition-transform" style="border: 2px solid ${subject.color}33;">
-                        <div class="text-5xl mb-4">${subject.icon}</div>
-                        <h3 class="text-xl font-bold mb-3">${subject.name}</h3>
-                        <div class="progress-bar-container mb-2" style="height: 8px;">
-                            <div class="progress-bar" style="width: ${subject.progress}%; background: linear-gradient(90deg, ${subject.color}, ${subject.color}88);"></div>
+            grid.innerHTML = subjectsWithProgress.map(subject => {
+                const subjectId = subject.id;
+                const preferences = JSON.parse(localStorage.getItem('astrolearn_preferences') || '{}');
+                const grade = preferences.grade || 9;
+                const lessons = getLessonsForSubject(subjectId, grade);
+                const completedLessons = JSON.parse(localStorage.getItem('astrolearn_completed_lessons') || '[]');
+                const completedCount = lessons.filter(l => completedLessons.includes(l.id)).length;
+                
+                return `
+                    <div class="subject-mission-card" data-subject="${subjectId}">
+                        <div class="glass-card p-6 text-center hover:scale-105 transition-transform" style="border: 2px solid ${subject.color}33;">
+                            <div class="text-5xl mb-4">${subject.icon}</div>
+                            <h3 class="text-xl font-bold mb-3">${subject.name}</h3>
+                            <div class="progress-bar-container mb-2" style="height: 8px;">
+                                <div class="progress-bar" style="width: ${subject.progress}%; background: linear-gradient(90deg, ${subject.color}, ${subject.color}88);"></div>
+                            </div>
+                            <p class="text-sm text-[#F5F7FA]/70 mb-2">${subject.progress}% Complete</p>
+                            <p class="text-xs text-[#F5F7FA]/60 mb-4">${completedCount} of ${lessons.length} lessons completed</p>
+                            <a href="${subject.link}" class="btn-primary py-2 px-6 inline-block">
+                                Begin
+                            </a>
                         </div>
-                        <p class="text-sm text-[#F5F7FA]/70">${subject.progress}% Complete</p>
                     </div>
-                </a>
-            `).join('');
+                `;
+            }).join('');
             
             // Update missions completed count
             updateMissionsCompleted();
+            
+            // Update XP points
+            updateXPPoints();
+        }
+        
+        // XP Points System
+        function getXPPoints() {
+            const xp = localStorage.getItem('astrolearn_xp_points');
+            return xp ? parseInt(xp) : 0;
+        }
+        
+        function addXPPoints(amount) {
+            const currentXP = getXPPoints();
+            const newXP = currentXP + amount;
+            localStorage.setItem('astrolearn_xp_points', newXP.toString());
+            updateXPPoints();
+            return newXP;
+        }
+        
+        function updateXPPoints() {
+            const xpElement = document.getElementById('xpPoints');
+            if (xpElement) {
+                const xp = getXPPoints();
+                xpElement.textContent = xp.toLocaleString();
+            }
         }
 
-        function loadActivity() {
+        function loadActivity(showAll = false) {
             const list = document.getElementById('activityList');
-            list.innerHTML = recentActivity.map(activity => `
-                <div class="flex items-center p-4 glass-card rounded-lg">
-                    <span class="text-2xl mr-4">${activity.icon}</span>
-                    <p class="text-lg">${activity.activity}</p>
+            const activities = JSON.parse(localStorage.getItem('astrolearn_recent_activities') || '[]');
+            const displayCount = showAll ? activities.length : 4;
+            const activitiesToShow = activities.slice(0, displayCount);
+            
+            if (activities.length === 0) {
+                list.innerHTML = '<p class="text-center text-[#F5F7FA]/70 p-4">No recent activity. Start learning to see your progress!</p>';
+                return;
+            }
+            
+            const activityIcons = {
+                lesson: '📚',
+                quiz: '📝',
+                flashcard: '🔖'
+            };
+            
+            list.innerHTML = activitiesToShow.map(activity => {
+                const icon = activityIcons[activity.type] || '⭐';
+                const subjectName = activity.subject ? activity.subject.charAt(0).toUpperCase() + activity.subject.slice(1) : '';
+                const timeAgo = getTimeAgo(activity.timestamp);
+                let activityText = '';
+                
+                if (activity.type === 'lesson') {
+                    activityText = `Completed ${activity.title} in ${subjectName}`;
+                } else if (activity.type === 'quiz') {
+                    activityText = `Completed ${activity.title} quiz in ${subjectName} (Score: ${activity.score}%)`;
+                } else if (activity.type === 'flashcard') {
+                    activityText = `Viewed ${activity.title} in ${subjectName}`;
+                } else {
+                    activityText = activity.title || activity.activity || 'Activity';
+                }
+                
+                return `
+                    <div class="flex items-center p-4 glass-card rounded-lg hover:scale-102 transition-transform">
+                        <span class="text-2xl mr-4">${icon}</span>
+                        <div class="flex-1">
+                            <p class="text-lg">${activityText}</p>
+                            <p class="text-sm text-[#F5F7FA]/60">${timeAgo}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Add expand/collapse button if there are more than 4 activities
+            if (activities.length > 4) {
+                const expandBtn = document.getElementById('expandActivityBtn');
+                if (expandBtn) {
+                    expandBtn.style.display = 'block';
+                    expandBtn.textContent = showAll ? 'Show Less' : `Show All (${activities.length - 4} more)`;
+                    expandBtn.onclick = () => loadActivity(!showAll);
+                }
+            } else {
+                const expandBtn = document.getElementById('expandActivityBtn');
+                if (expandBtn) expandBtn.style.display = 'none';
+            }
+        }
+        
+        function getTimeAgo(timestamp) {
+            if (!timestamp) return 'Recently';
+            const now = new Date();
+            const then = new Date(timestamp);
+            const diffMs = now - then;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+            if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+            if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+            return then.toLocaleDateString();
+        }
+
+        // Load completed activities
+        function loadCompletedActivities() {
+            const container = document.getElementById('completedActivities');
+            const completed = [
+                { activity: "Algebra Lesson 5", date: "Today", icon: "✅" },
+                { activity: "Biology Quiz - Cell Structure", date: "Yesterday", icon: "🎯" },
+                { activity: "Math Practice Problems Set 3", date: "2 days ago", icon: "📐" },
+                { activity: "Reading Comprehension Exercise", date: "3 days ago", icon: "📚" }
+            ];
+            
+            container.innerHTML = completed.map(item => `
+                <div class="flex items-center justify-between p-3 bg-[#0B0F2F]/50 rounded-lg">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xl">${item.icon}</span>
+                        <div>
+                            <p class="font-semibold">${item.activity}</p>
+                            <p class="text-xs text-[#F5F7FA]/60">${item.date}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load progress overview
+        function loadProgressOverview() {
+            const container = document.getElementById('progressOverview');
+            const progress = [
+                { subject: "Math", progress: 72, color: "#4FC3F7" },
+                { subject: "Science", progress: 58, color: "#FF6EC7" },
+                { subject: "Reading", progress: 65, color: "#4FC3F7" },
+                { subject: "Language", progress: 45, color: "#FF6EC7" }
+            ];
+            
+            container.innerHTML = progress.map(item => `
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-semibold">${item.subject}</span>
+                        <span class="text-sm" style="color: ${item.color}">${item.progress}%</span>
+                    </div>
+                    <div class="progress-bar-container" style="height: 10px;">
+                        <div class="progress-bar" style="width: ${item.progress}%; background: linear-gradient(90deg, ${item.color}, ${item.color}88);"></div>
+                    </div>
                 </div>
             `).join('');
         }
@@ -676,6 +883,8 @@
             if (isLoggedIn()) {
                 loadSubjects();
                 loadActivity();
+                loadCompletedActivities();
+                loadProgressOverview();
                 drawConstellation();
                 loadSkillLegend();
                 updateMissionsCompleted();
@@ -696,8 +905,10 @@
             if (!document.hidden) {
                 updateMissionsCompleted();
                 loadSubjects();
+                updateXPPoints();
             }
         });
+        
     </script>
 </body>
 </html>

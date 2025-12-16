@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Room - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .chat-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .chat-message {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .chat-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+        .chat-container::-webkit-scrollbar-thumb {
+            background: rgba(79, 195, 247, 0.5);
+            border-radius: 3px;
+        }
+        .participant-card {
+            transition: transform 0.2s;
+        }
+        .participant-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <img src="sticker.webp" alt="AstroLearn Logo" class="h-8 w-8 object-contain">
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="community.html" class="nav-link">Community</a>
+            </div>
+            <a href="community.html" class="btn-secondary py-2 px-4 text-sm">Back to Community</a>
+        </div>
+    </nav>
+
+    <!-- Study Room Header -->
+    <section class="container mx-auto px-6 py-8">
+        <div class="glass-card p-8 mb-6">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-2" id="roomTitle">
+                        <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                            Group Study Room
+                        </span>
+                    </h1>
+                    <div class="space-y-2 text-lg">
+                        <p class="text-[#F5F7FA]/90"><strong>Topic:</strong> <span id="roomTopic">Algebra Review</span></p>
+                        <p class="text-[#F5F7FA]/90"><strong>Host:</strong> <span id="roomHost">Study Group Leader</span></p>
+                        <p class="text-[#F5F7FA]/90"><strong>Participants:</strong> <span id="participantCount">5/10</span></p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg font-semibold">🟢 Active</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo Notice -->
+        <div class="glass-card p-6 mb-6 bg-[#4FC3F7]/10 border border-[#4FC3F7]/30">
+            <p class="text-[#F5F7FA]/90 text-center">
+                <strong>📹 Demo Mode:</strong> This is a prototype demonstration. In a production version, 
+                video conferencing (Zoom, Google Meet, or similar) would be integrated here for real-time 
+                group study sessions with screen sharing and collaborative tools.
+            </p>
+        </div>
+
+        <!-- Main Study Room Layout -->
+        <div class="grid md:grid-cols-3 gap-6 mb-6">
+            <!-- Video/Content Area -->
+            <div class="md:col-span-2 space-y-4">
+                <!-- Main Video Area -->
+                <div class="glass-card p-6 bg-gradient-to-br from-[#0B0F2F]/50 to-[#482880]/50">
+                    <div class="text-center py-12">
+                        <div class="text-6xl mb-4">📹</div>
+                        <p class="text-xl text-[#F5F7FA]/80 mb-2">Video Conference Area</p>
+                        <p class="text-sm text-[#F5F7FA]/60 mb-4">
+                            In production, this would display live video from all participants.
+                        </p>
+                        <div class="flex flex-wrap gap-3 justify-center" id="videoGrid">
+                            <!-- Video participants will be added here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shared Whiteboard/Notes Area -->
+                <div class="glass-card p-6">
+                    <h3 class="text-xl font-bold mb-4">📝 Shared Notes & Whiteboard</h3>
+                    <div class="bg-[#0B0F2F]/50 rounded-lg p-4 min-h-[200px] border border-[#4FC3F7]/30">
+                        <textarea 
+                            id="sharedNotes" 
+                            placeholder="Collaborative notes area... Everyone can edit and see changes in real-time."
+                            class="w-full bg-transparent text-[#F5F7FA] resize-none focus:outline-none min-h-[150px]"
+                        ></textarea>
+                    </div>
+                    <p class="text-xs text-[#F5F7FA]/60 mt-2">
+                        In production, this would be a real-time collaborative whiteboard with drawing tools.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-4">
+                <!-- Participants List -->
+                <div class="glass-card p-6">
+                    <h3 class="text-xl font-bold mb-4">👥 Participants</h3>
+                    <div class="space-y-3" id="participantsList">
+                        <!-- Participants will be added here -->
+                    </div>
+                </div>
+
+                <!-- Chat -->
+                <div class="glass-card p-6 flex flex-col" style="height: 500px;">
+                    <h3 class="text-xl font-bold mb-4">💬 Group Chat</h3>
+                    <div class="chat-container flex-1 mb-4 space-y-3" id="chatMessages">
+                        <div class="chat-message">
+                            <div class="flex items-start gap-2">
+                                <span class="text-xl">👤</span>
+                                <div class="flex-1">
+                                    <p class="text-xs text-[#F5F7FA]/60 mb-1">Study Leader</p>
+                                    <p class="text-sm bg-[#4FC3F7]/20 p-2 rounded-lg">Welcome everyone! Let's start by reviewing the homework problems.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <input 
+                            type="text" 
+                            id="chatInput" 
+                            placeholder="Type a message..." 
+                            class="flex-1 bg-[#0B0F2F]/50 border border-[#4FC3F7]/30 rounded-lg px-4 py-2 text-[#F5F7FA] focus:outline-none focus:border-[#4FC3F7]"
+                        >
+                        <button id="sendChatBtn" class="btn-primary px-4 py-2">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Study Resources -->
+        <div class="glass-card p-6">
+            <h2 class="text-2xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Study Resources
+                </span>
+            </h2>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="p-4 bg-[#4FC3F7]/10 rounded-lg">
+                    <h3 class="font-bold mb-2">📚 Materials</h3>
+                    <ul class="text-sm text-[#F5F7FA]/80 space-y-1">
+                        <li>• Chapter 5 Notes</li>
+                        <li>• Practice Problems</li>
+                        <li>• Formula Sheet</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-[#FF6EC7]/10 rounded-lg">
+                    <h3 class="font-bold mb-2">🎯 Goals</h3>
+                    <ul class="text-sm text-[#F5F7FA]/80 space-y-1">
+                        <li>• Review key concepts</li>
+                        <li>• Solve practice problems</li>
+                        <li>• Prepare for quiz</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-[#482880]/30 rounded-lg">
+                    <h3 class="font-bold mb-2">⏰ Session Time</h3>
+                    <p class="text-sm text-[#F5F7FA]/80">60 minutes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer mt-16">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70 flex items-center gap-1"><img src="sticker.webp" alt="AstroLearn Logo" class="h-5 w-5 object-contain"> Powered by AstroLearn</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Get room parameters from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const roomTitle = urlParams.get('title') || 'Algebra Study Group';
+        const roomTopic = urlParams.get('topic') || 'Algebra Review';
+        const roomHost = urlParams.get('host') || 'Study Leader';
+
+        // Update page content
+        document.getElementById('roomTitle').innerHTML = `<span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">${roomTitle}</span>`;
+        document.getElementById('roomTopic').textContent = roomTopic;
+        document.getElementById('roomHost').textContent = roomHost;
+
+        // Mock participants
+        const mockParticipants = [
+            { name: roomHost, role: 'Host', avatar: '👨‍🎓' },
+            { name: 'Alex M.', role: 'Student', avatar: '👤' },
+            { name: 'Sarah K.', role: 'Student', avatar: '👩' },
+            { name: 'Jordan L.', role: 'Student', avatar: '🧑' },
+            { name: 'You', role: 'Student', avatar: '👤' }
+        ];
+
+        // Display participants
+        function loadParticipants() {
+            const participantsList = document.getElementById('participantsList');
+            const videoGrid = document.getElementById('videoGrid');
+            
+            participantsList.innerHTML = '';
+            videoGrid.innerHTML = '';
+            
+            mockParticipants.forEach((participant, index) => {
+                // Participant card
+                const card = document.createElement('div');
+                card.className = 'participant-card flex items-center gap-3 p-3 bg-[#4FC3F7]/10 rounded-lg';
+                card.innerHTML = `
+                    <span class="text-2xl">${participant.avatar}</span>
+                    <div class="flex-1">
+                        <p class="font-semibold">${participant.name}</p>
+                        <p class="text-xs text-[#F5F7FA]/60">${participant.role}</p>
+                    </div>
+                `;
+                participantsList.appendChild(card);
+
+                // Video grid item
+                const videoItem = document.createElement('div');
+                videoItem.className = 'bg-[#0B0F2F]/50 rounded-lg p-4 border border-[#4FC3F7]/30';
+                videoItem.innerHTML = `
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">${participant.avatar}</div>
+                        <p class="text-sm">${participant.name}</p>
+                    </div>
+                `;
+                videoGrid.appendChild(videoItem);
+            });
+
+            document.getElementById('participantCount').textContent = `${mockParticipants.length}/10`;
+        }
+
+        // Chat functionality
+        const chatInput = document.getElementById('chatInput');
+        const sendChatBtn = document.getElementById('sendChatBtn');
+        const chatMessages = document.getElementById('chatMessages');
+
+        function addMessage(sender, message, avatar = '👤') {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message';
+            messageDiv.innerHTML = `
+                <div class="flex items-start gap-2">
+                    <span class="text-xl">${avatar}</span>
+                    <div class="flex-1">
+                        <p class="text-xs text-[#F5F7FA]/60 mb-1">${sender}</p>
+                        <p class="text-sm bg-[#4FC3F7]/20 p-2 rounded-lg">${message}</p>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message) {
+                addMessage('You', message, '👤');
+                chatInput.value = '';
+                
+                // Simulate other participants responding
+                setTimeout(() => {
+                    const responses = [
+                        { sender: 'Alex M.', message: 'Great idea! Let\'s work on problem 3 together.', avatar: '👤' },
+                        { sender: 'Sarah K.', message: 'I have a question about the formula we just reviewed.', avatar: '👩' },
+                        { sender: roomHost, message: 'Perfect! Let\'s break it down step by step.', avatar: '👨‍🎓' }
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addMessage(randomResponse.sender, randomResponse.message, randomResponse.avatar);
+                }, 1000 + Math.random() * 2000);
+            }
+        }
+
+        sendChatBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Shared notes auto-save simulation
+        const sharedNotes = document.getElementById('sharedNotes');
+        sharedNotes.addEventListener('input', () => {
+            // In production, this would sync with other participants in real-time
+            console.log('Notes updated (would sync in production)');
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initFloatingStars();
+            loadParticipants();
+        });
+    </script>
+</body>
+</html>
+
