@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astronaut Station - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-3xl animate-pulse">⭐</span>
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </h1>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link active protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center block" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <section class="container mx-auto px-6 py-12">
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-8 mb-12">
+            <div class="astronaut-avatar">
+                <div class="text-6xl">👨‍🚀</div>
+            </div>
+            <div class="flex-1">
+                <h1 class="text-4xl md:text-6xl font-bold mb-2">
+                    <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent" id="welcomeMessage">
+                        Welcome back, Cadet
+                    </span>
+                </h1>
+                <p class="text-xl text-[#F5F7FA]/70 mb-4" id="welcomeSubtext">Ready for your next mission?</p>
+                <div class="flex flex-wrap gap-3">
+                    <a href="learning-path.html" class="inline-flex items-center gap-2 btn-secondary py-2 px-4 text-sm" id="changePathBtn">
+                        <span>⚙️</span>
+                        <span>Change Learning Path</span>
+                    </a>
+                    <div id="guestModeBadge" class="hidden inline-flex items-center gap-2 glass-card px-4 py-2 text-sm">
+                        <span>🌟</span>
+                        <span>Guest Explorer Mode</span>
+                    </div>
+                </div>
+                    </div>
+                </div>
+
+        <!-- Choose a Subject Section -->
+        <div class="glass-card p-8 mb-12">
+            <h2 class="text-3xl font-bold mb-6 text-center">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Choose Your Mission
+                </span>
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="subjectsGrid">
+                <!-- Subjects will be populated by JS -->
+                    </div>
+                </div>
+
+        <!-- Stats Section -->
+        <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <div class="glass-card p-6">
+                <h3 class="text-lg font-bold mb-4">Fuel Level</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 72%">
+                        <div class="progress-glow"></div>
+                    </div>
+                </div>
+                <p class="text-2xl font-bold mt-2 text-[#4FC3F7]">72%</p>
+            </div>
+            <div class="glass-card p-6 text-center">
+                <div class="text-4xl mb-2">🎯</div>
+                <h3 class="text-lg font-bold mb-2">Missions Completed</h3>
+                <p class="text-3xl font-bold text-[#FF6EC7]" id="missionsCompletedCount">0</p>
+                        </div>
+            <div class="glass-card p-6 text-center">
+                <div class="text-4xl mb-2">🔥</div>
+                <h3 class="text-lg font-bold mb-2">Streak</h3>
+                <p class="text-3xl font-bold text-[#4FC3F7]">5 days</p>
+                        </div>
+                    </div>
+
+        <!-- Skill Constellation Map -->
+        <div class="glass-card p-8 mb-12">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold text-center md:text-left">
+                    <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                        Skill Constellation Map
+                    </span>
+                </h2>
+                <div class="mt-4 md:mt-0 flex gap-4 text-sm">
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 rounded-full bg-[#4FC3F7] mr-2"></div>
+                        <span>Mastered</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 rounded-full bg-[#FF6EC7] mr-2"></div>
+                        <span>In Progress</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 rounded-full bg-[#482880] mr-2"></div>
+                        <span>Locked</span>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-[#F5F7FA]/70 mb-6">
+                Each star represents a skill. Connect the dots to see your learning journey across subjects.
+            </p>
+            <div class="constellation-map-container relative">
+                <div class="constellation-map" id="constellationMap">
+                    <!-- Constellation will be drawn by JS -->
+                </div>
+                <div id="skillTooltip" class="skill-tooltip hidden">
+                    <div class="glass-card p-4">
+                        <h3 class="font-bold text-lg mb-2" id="tooltipName"></h3>
+                        <p class="text-sm text-[#F5F7FA]/70 mb-1" id="tooltipSubject"></p>
+                        <p class="text-sm font-bold" id="tooltipLevel"></p>
+                        <p class="text-xs text-[#F5F7FA]/60 mt-2" id="tooltipStatus"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 grid md:grid-cols-4 gap-4" id="skillLegend">
+                <!-- Skill details will be populated by JS -->
+                </div>
+            </div>
+
+        <!-- Recent Activity -->
+        <div class="glass-card p-8">
+            <h2 class="text-3xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Recent Activity
+                </span>
+            </h2>
+            <div class="space-y-4" id="activityList">
+                <!-- Activity will be populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Check authentication before loading page
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!checkAuth()) {
+                return; // Will redirect to login or onboarding
+            }
+            
+            // Double-check onboarding completion
+            const onboardingComplete = localStorage.getItem('astrolearn_onboarding_complete') === 'true';
+            if (!onboardingComplete) {
+                window.location.href = 'learning-path.html';
+                return;
+            }
+            
+            // Check if guest mode
+            const isGuest = localStorage.getItem('astrolearn_guest_mode') === 'true';
+            
+            // Update welcome message with user's first name
+            let firstName = localStorage.getItem('astrolearn_user_firstname');
+            
+            // If no first name found, try to get it from user data store
+            if (!firstName && !isGuest) {
+                try {
+                    const email = localStorage.getItem('astrolearn_user_email');
+                    if (email) {
+                        const storedData = localStorage.getItem('astrolearn_users');
+                        if (storedData) {
+                            const userData = JSON.parse(storedData);
+                            if (userData[email] && userData[email].firstName) {
+                                firstName = userData[email].firstName;
+                                // Update for future use
+                                localStorage.setItem('astrolearn_user_firstname', firstName);
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error loading user data:', e);
+                }
+            }
+            
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            const welcomeSubtext = document.getElementById('welcomeSubtext');
+            const changePathBtn = document.getElementById('changePathBtn');
+            const guestModeBadge = document.getElementById('guestModeBadge');
+            
+            if (welcomeMessage) {
+                if (isGuest) {
+                    welcomeMessage.textContent = `Welcome, Guest Explorer`;
+                    if (welcomeSubtext) {
+                        welcomeSubtext.textContent = 'Explore AstroLearn in guest mode. Sign up to save your progress!';
+                    }
+                    if (changePathBtn) {
+                        changePathBtn.style.display = 'none';
+                    }
+                    if (guestModeBadge) {
+                        guestModeBadge.classList.remove('hidden');
+                    }
+                } else if (firstName) {
+                    welcomeMessage.textContent = `Welcome back, Cadet ${firstName}`;
+                    if (welcomeSubtext) {
+                        welcomeSubtext.textContent = 'Ready for your next mission?';
+                    }
+                    if (changePathBtn) {
+                        changePathBtn.style.display = 'inline-flex';
+                    }
+                    if (guestModeBadge) {
+                        guestModeBadge.classList.add('hidden');
+                    }
+                } else {
+                    welcomeMessage.textContent = `Welcome back, Cadet`;
+                    if (welcomeSubtext) {
+                        welcomeSubtext.textContent = 'Ready for your next mission?';
+                    }
+                    if (changePathBtn) {
+                        changePathBtn.style.display = 'inline-flex';
+                    }
+                    if (guestModeBadge) {
+                        guestModeBadge.classList.add('hidden');
+                    }
+                }
+            }
+            
+            updateNavigation();
+        });
+
+        // Count total completed missions/lessons
+        function getTotalCompletedMissions() {
+            const completedLessons = JSON.parse(localStorage.getItem('astrolearn_completed_lessons') || '[]');
+            return completedLessons.length;
+        }
+
+        // Update missions completed count
+        function updateMissionsCompleted() {
+            const missionsCountElement = document.getElementById('missionsCompletedCount');
+            if (missionsCountElement) {
+                const count = getTotalCompletedMissions();
+                missionsCountElement.textContent = count;
+            }
+        }
+
+        // Calculate progress for a subject based on completed lessons
+        function calculateSubjectProgress(subjectId) {
+            const completedLessons = JSON.parse(localStorage.getItem('astrolearn_completed_lessons') || '[]');
+            const preferences = JSON.parse(localStorage.getItem('astrolearn_preferences') || '{}');
+            const grade = preferences.grade || 9;
+            
+            // Define lessons for each subject by grade (must match exactly with subject pages)
+            const lessonsBySubject = {
+                math: {
+                    6: ["Introduction to Fractions", "Decimal Operations", "Basic Geometry Shapes", "Ratios and Proportions"],
+                    7: ["Integers and Operations", "Expressions and Equations"],
+                    8: ["Linear Equations", "Systems of Equations"],
+                    9: ["Algebra Basics", "Quadratic Equations"],
+                    10: ["Algebra Basics", "Quadratic Equations"],
+                    11: ["Algebra Basics", "Quadratic Equations"],
+                    12: ["Algebra Basics", "Quadratic Equations"]
+                },
+                science: {
+                    6: ["Introduction to Matter"],
+                    7: ["Introduction to Matter"],
+                    8: ["Introduction to Matter"],
+                    9: ["Cell Biology", "Genetics"],
+                    10: ["Cell Biology", "Genetics"],
+                    11: ["Cell Biology", "Genetics"],
+                    12: ["Cell Biology", "Genetics"]
+                },
+                reading: {
+                    6: ["Basic Reading Comprehension", "Story Elements", "Vocabulary Building", "Main Idea and Details", "Character Analysis", "Reading Strategies"],
+                    7: ["Advanced Comprehension", "Literary Devices", "Theme and Symbolism", "Point of View", "Text Structure", "Inference Skills"],
+                    8: ["Literary Analysis", "Poetry Analysis", "Author's Purpose", "Textual Evidence", "Comparative Reading", "Critical Thinking"],
+                    9: ["Reading Comprehension", "Literary Analysis"],
+                    10: ["Advanced Literary Analysis", "Rhetorical Analysis", "Classical Literature", "American Literature", "World Literature", "Literary Criticism"],
+                    11: ["AP Literature Analysis", "British Literature", "Advanced Poetry", "Drama Analysis", "Literary Theory", "Research and Writing"],
+                    12: ["Advanced Literary Theory", "Contemporary Literature", "Postmodern Analysis", "Comparative Literature", "Literary Research Methods", "Thesis Development"]
+                },
+                language: {
+                    6: ["Spanish Basics", "French Greetings"],
+                    7: ["Spanish Basics", "French Greetings"],
+                    8: ["Spanish Basics", "French Greetings"],
+                    9: ["Spanish Basics", "French Greetings"],
+                    10: ["Spanish Basics", "French Greetings"],
+                    11: ["Spanish Basics", "French Greetings"],
+                    12: ["Spanish Basics", "French Greetings"]
+                }
+            };
+            
+            const lessons = lessonsBySubject[subjectId]?.[grade] || lessonsBySubject[subjectId]?.[9] || [];
+            if (lessons.length === 0) return 0;
+            
+            let completedCount = 0;
+            lessons.forEach(lessonTitle => {
+                const lessonKey = `${subjectId}_${grade}_${lessonTitle}`;
+                if (completedLessons.includes(lessonKey)) {
+                    completedCount++;
+                }
+            });
+            
+            return Math.round((completedCount / lessons.length) * 100);
+        }
+
+        // All available subjects
+        const allSubjects = [
+            { id: 'math', name: "Math", icon: "🔭", link: "math.html", color: "#4FC3F7", progress: 0 },
+            { id: 'science', name: "Science", icon: "🧬", link: "science.html", color: "#FF6EC7", progress: 0 },
+            { id: 'reading', name: "Reading", icon: "📚", link: "reading.html", color: "#FF6EC7", progress: 0 },
+            { id: 'language', name: "Foreign Language", icon: "🌍", link: "language.html", color: "#4FC3F7", progress: 0 }
+        ];
+        
+        // Get filtered subjects based on learning path selection
+        function getSelectedSubjects() {
+            const prefs = localStorage.getItem('astrolearn_preferences');
+            if (prefs) {
+                try {
+                    const preferences = JSON.parse(prefs);
+                    if (preferences.subjects && Array.isArray(preferences.subjects) && preferences.subjects.length > 0) {
+                        // Filter subjects based on selected ones
+                        return allSubjects.filter(subject => preferences.subjects.includes(subject.id));
+                    }
+                } catch (e) {
+                    console.error('Error parsing preferences:', e);
+                }
+            }
+            // If no preferences or guest mode, show all subjects
+            return allSubjects;
+        }
+
+        const recentActivity = [
+            { id: 1, activity: "Completed Algebra Lesson 1", icon: "✅" },
+            { id: 2, activity: "Scored 85% on Biology Quiz", icon: "🎯" },
+            { id: 3, activity: "Joined Study Group: Chemistry", icon: "👥" },
+            { id: 4, activity: "Unlocked Achievement: Math Explorer", icon: "🏆" }
+        ];
+
+        function loadSubjects() {
+            const grid = document.getElementById('subjectsGrid');
+            const selectedSubjects = getSelectedSubjects();
+            
+            if (selectedSubjects.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-8">
+                        <p class="text-lg text-[#F5F7FA]/70 mb-4">No subjects selected yet.</p>
+                        <a href="learning-path.html" class="btn-primary inline-block">
+                            Choose Your Learning Path
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Calculate actual progress for each subject
+            const subjectsWithProgress = selectedSubjects.map(subject => ({
+                ...subject,
+                progress: calculateSubjectProgress(subject.id)
+            }));
+            
+            grid.innerHTML = subjectsWithProgress.map(subject => `
+                <a href="${subject.link}" class="subject-card-link">
+                    <div class="glass-card p-6 text-center hover:scale-105 transition-transform" style="border: 2px solid ${subject.color}33;">
+                        <div class="text-5xl mb-4">${subject.icon}</div>
+                        <h3 class="text-xl font-bold mb-3">${subject.name}</h3>
+                        <div class="progress-bar-container mb-2" style="height: 8px;">
+                            <div class="progress-bar" style="width: ${subject.progress}%; background: linear-gradient(90deg, ${subject.color}, ${subject.color}88);"></div>
+                        </div>
+                        <p class="text-sm text-[#F5F7FA]/70">${subject.progress}% Complete</p>
+                    </div>
+                </a>
+            `).join('');
+            
+            // Update missions completed count
+            updateMissionsCompleted();
+        }
+
+        function loadActivity() {
+            const list = document.getElementById('activityList');
+            list.innerHTML = recentActivity.map(activity => `
+                <div class="flex items-center p-4 glass-card rounded-lg">
+                    <span class="text-2xl mr-4">${activity.icon}</span>
+                    <p class="text-lg">${activity.activity}</p>
+                </div>
+            `).join('');
+        }
+
+        const skillData = [
+            { id: 1, name: "Algebra", subject: "Math", level: 85, status: "mastered", x: 120, y: 100, icon: "🔭" },
+            { id: 2, name: "Geometry", subject: "Math", level: 70, status: "in-progress", x: 250, y: 80, icon: "📐" },
+            { id: 3, name: "Calculus", subject: "Math", level: 45, status: "in-progress", x: 380, y: 120, icon: "📊" },
+            { id: 4, name: "Biology", subject: "Science", level: 90, status: "mastered", x: 150, y: 200, icon: "🧬" },
+            { id: 5, name: "Chemistry", subject: "Science", level: 60, status: "in-progress", x: 280, y: 180, icon: "⚗️" },
+            { id: 6, name: "Physics", subject: "Science", level: 30, status: "locked", x: 410, y: 200, icon: "🌌" },
+            { id: 7, name: "Reading Comprehension", subject: "Reading", level: 95, status: "mastered", x: 520, y: 100, icon: "📚" },
+            { id: 8, name: "Literary Analysis", subject: "Reading", level: 75, status: "in-progress", x: 650, y: 130, icon: "📖" },
+            { id: 9, name: "Spanish", subject: "Language", level: 55, status: "in-progress", x: 540, y: 220, icon: "🌍" },
+            { id: 10, name: "French", subject: "Language", level: 20, status: "locked", x: 680, y: 200, icon: "🗣️" }
+        ];
+
+        function drawConstellation() {
+            const map = document.getElementById('constellationMap');
+            map.innerHTML = ''; // Clear previous content
+            
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('width', '100%');
+            svg.setAttribute('height', '400');
+            svg.setAttribute('viewBox', '0 0 800 400');
+            svg.classList.add('constellation-svg');
+
+            // Group skills by subject for connections
+            const mathSkills = skillData.filter(s => s.subject === "Math");
+            const scienceSkills = skillData.filter(s => s.subject === "Science");
+            const readingSkills = skillData.filter(s => s.subject === "Reading");
+            const languageSkills = skillData.filter(s => s.subject === "Language");
+
+            // Draw connections within subject groups
+            function connectSkills(skills) {
+                for (let i = 0; i < skills.length - 1; i++) {
+                    const start = skills[i];
+                    const end = skills[i + 1];
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.setAttribute('x1', start.x);
+                    line.setAttribute('y1', start.y);
+                    line.setAttribute('x2', end.x);
+                    line.setAttribute('y2', end.y);
+                    line.setAttribute('stroke', start.status === 'mastered' ? '#4FC3F7' : start.status === 'in-progress' ? '#FF6EC7' : '#482880');
+                    line.setAttribute('stroke-width', '2');
+                    line.setAttribute('opacity', '0.4');
+                    line.setAttribute('stroke-dasharray', start.status === 'locked' ? '5,5' : '0');
+                    svg.appendChild(line);
+                }
+            }
+
+            connectSkills(mathSkills);
+            connectSkills(scienceSkills);
+            connectSkills(readingSkills);
+            connectSkills(languageSkills);
+
+            // Draw skill stars with labels
+            skillData.forEach((skill, index) => {
+                // Determine color based on status
+                let color = '#482880';
+                let glowColor = '#482880';
+                if (skill.status === 'mastered') {
+                    color = '#4FC3F7';
+                    glowColor = '#4FC3F7';
+                } else if (skill.status === 'in-progress') {
+                    color = '#FF6EC7';
+                    glowColor = '#FF6EC7';
+                }
+
+                // Draw star circle
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                const baseRadius = skill.status === 'mastered' ? '12' : skill.status === 'in-progress' ? '10' : '8';
+                circle.setAttribute('cx', skill.x);
+                circle.setAttribute('cy', skill.y);
+                circle.setAttribute('r', baseRadius);
+                circle.setAttribute('fill', color);
+                circle.setAttribute('opacity', skill.status === 'locked' ? '0.5' : '0.9');
+                circle.classList.add('constellation-star');
+                circle.setAttribute('data-skill-id', skill.id);
+                circle.setAttribute('data-skill-name', skill.name);
+                circle.setAttribute('data-skill-subject', skill.subject);
+                circle.setAttribute('data-skill-level', skill.level);
+                circle.setAttribute('data-skill-status', skill.status);
+                circle.style.filter = `drop-shadow(0 0 8px ${glowColor})`;
+                circle.style.cursor = 'pointer';
+                
+                // Create invisible larger hit area for better hover detection
+                const hitArea = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                hitArea.setAttribute('cx', skill.x);
+                hitArea.setAttribute('cy', skill.y);
+                hitArea.setAttribute('r', '25'); // Larger invisible area
+                hitArea.setAttribute('fill', 'transparent');
+                hitArea.setAttribute('pointer-events', 'all');
+                hitArea.style.cursor = 'pointer';
+                
+                // Add hover events to hit area instead of circle
+                let hoverTimeout;
+                let isHovering = false;
+                
+                hitArea.addEventListener('mouseenter', (e) => {
+                    if (!isHovering) {
+                        isHovering = true;
+                        clearTimeout(hoverTimeout);
+                        hoverTimeout = setTimeout(() => {
+                            showTooltip(e, skill);
+                            circle.style.filter = `drop-shadow(0 0 20px ${glowColor}) drop-shadow(0 0 30px ${glowColor})`;
+                        }, 10);
+                    }
+                });
+                
+                hitArea.addEventListener('mouseleave', (e) => {
+                    isHovering = false;
+                    clearTimeout(hoverTimeout);
+                    hideTooltip();
+                    circle.style.filter = `drop-shadow(0 0 8px ${glowColor})`;
+                });
+                
+                hitArea.addEventListener('mousemove', (e) => {
+                    if (isHovering) {
+                        updateTooltipPosition(e);
+                    }
+                });
+                
+                svg.appendChild(circle);
+                svg.appendChild(hitArea); // Add hit area after circle so it's on top
+
+                // Draw outer glow ring for mastered skills
+                if (skill.status === 'mastered') {
+                    const glow = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    glow.setAttribute('cx', skill.x);
+                    glow.setAttribute('cy', skill.y);
+                    glow.setAttribute('r', '16');
+                    glow.setAttribute('fill', 'none');
+                    glow.setAttribute('stroke', color);
+                    glow.setAttribute('stroke-width', '2');
+                    glow.setAttribute('opacity', '0.5');
+                    glow.classList.add('constellation-glow');
+                    svg.appendChild(glow);
+                }
+
+                // Draw skill label
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', skill.x);
+                text.setAttribute('y', skill.y - 25);
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('fill', '#F5F7FA');
+                text.setAttribute('font-size', '11');
+                text.setAttribute('font-weight', '600');
+                text.setAttribute('class', 'constellation-label');
+                text.textContent = skill.name;
+                svg.appendChild(text);
+
+                // Draw level indicator
+                const levelText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                levelText.setAttribute('x', skill.x);
+                levelText.setAttribute('y', skill.y + 30);
+                levelText.setAttribute('text-anchor', 'middle');
+                levelText.setAttribute('fill', color);
+                levelText.setAttribute('font-size', '10');
+                levelText.setAttribute('font-weight', 'bold');
+                levelText.textContent = skill.status === 'locked' ? 'Locked' : `${skill.level}%`;
+                svg.appendChild(levelText);
+            });
+
+            map.appendChild(svg);
+        }
+
+        function showTooltip(event, skill) {
+            const tooltip = document.getElementById('skillTooltip');
+            const tooltipName = document.getElementById('tooltipName');
+            const tooltipSubject = document.getElementById('tooltipSubject');
+            const tooltipLevel = document.getElementById('tooltipLevel');
+            const tooltipStatus = document.getElementById('tooltipStatus');
+            
+            if (tooltip && tooltipName && tooltipSubject && tooltipLevel && tooltipStatus) {
+                tooltipName.textContent = skill.name;
+                tooltipSubject.textContent = `Subject: ${skill.subject}`;
+                tooltipLevel.textContent = skill.status === 'locked' ? 'Status: Locked' : `Progress: ${skill.level}%`;
+                tooltipStatus.textContent = skill.status === 'mastered' ? '⭐ Mastered Skill' : 
+                                          skill.status === 'in-progress' ? '🚀 In Progress' : 
+                                          '🔒 Locked - Complete prerequisites to unlock';
+                
+                tooltip.classList.remove('hidden');
+                updateTooltipPosition(event);
+            }
+        }
+
+        function hideTooltip() {
+            const tooltip = document.getElementById('skillTooltip');
+            if (tooltip) {
+                tooltip.classList.add('hidden');
+            }
+        }
+
+        function updateTooltipPosition(event) {
+            const tooltip = document.getElementById('skillTooltip');
+            const mapContainer = document.querySelector('.constellation-map-container');
+            if (tooltip && mapContainer && !tooltip.classList.contains('hidden')) {
+                const rect = mapContainer.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                // Use requestAnimationFrame to smooth out position updates
+                requestAnimationFrame(() => {
+                    tooltip.style.left = Math.min(x + 20, rect.width - 220) + 'px';
+                    tooltip.style.top = Math.max(y - 100, 10) + 'px';
+                });
+            }
+        }
+
+        function loadSkillLegend() {
+            const legend = document.getElementById('skillLegend');
+            const groupedSkills = {
+                'Math': skillData.filter(s => s.subject === 'Math'),
+                'Science': skillData.filter(s => s.subject === 'Science'),
+                'Reading': skillData.filter(s => s.subject === 'Reading'),
+                'Language': skillData.filter(s => s.subject === 'Language')
+            };
+
+            legend.innerHTML = Object.entries(groupedSkills).map(([subject, skills]) => {
+                const avgProgress = Math.round(skills.reduce((sum, s) => sum + (s.status === 'locked' ? 0 : s.level), 0) / skills.length);
+                const masteredCount = skills.filter(s => s.status === 'mastered').length;
+                const inProgressCount = skills.filter(s => s.status === 'in-progress').length;
+                const lockedCount = skills.filter(s => s.status === 'locked').length;
+                
+                return `
+                    <div class="glass-card p-4 hover:scale-105 transition-transform">
+                        <h3 class="font-bold mb-3 text-lg flex items-center">
+                            <span class="mr-2">${skills[0].icon || '⭐'}</span>
+                            ${subject}
+                        </h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-[#F5F7FA]/70">Total Skills:</span>
+                                <span class="font-bold">${skills.length}</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-[#F5F7FA]/70">⭐ Mastered:</span>
+                                <span class="font-bold text-[#4FC3F7]">${masteredCount}</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-[#F5F7FA]/70">🚀 In Progress:</span>
+                                <span class="font-bold text-[#FF6EC7]">${inProgressCount}</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-[#F5F7FA]/70">🔒 Locked:</span>
+                                <span class="font-bold text-[#482880]">${lockedCount}</span>
+                            </div>
+                            <div class="mt-3 pt-3 border-t border-white/10">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-[#F5F7FA]/70">Avg Progress:</span>
+                                    <span class="font-bold text-lg" style="color: ${avgProgress >= 70 ? '#4FC3F7' : avgProgress >= 40 ? '#FF6EC7' : '#482880'}">${avgProgress}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (isLoggedIn()) {
+                loadSubjects();
+                loadActivity();
+                drawConstellation();
+                loadSkillLegend();
+                updateMissionsCompleted();
+                initFloatingStars();
+            }
+        });
+        
+        // Listen for storage changes to update missions count when lessons are completed on other pages
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'astrolearn_completed_lessons') {
+                updateMissionsCompleted();
+                loadSubjects(); // Also update subject progress
+            }
+        });
+        
+        // Also update when page becomes visible (in case user completed lessons in another tab)
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                updateMissionsCompleted();
+                loadSubjects();
+            }
+        });
+    </script>
+</body>
+</html>

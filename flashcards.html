@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-3xl animate-pulse">⭐</span>
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flashcards Header -->
+    <section class="container mx-auto px-6 py-12">
+        <div class="text-center mb-8">
+            <div class="text-6xl mb-4">📚</div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Study Guides
+                </span>
+            </h1>
+            <p class="text-xl text-[#F5F7FA]/80">Interactive flashcards for your grade level and subjects</p>
+        </div>
+
+        <!-- Subject Selection -->
+        <div class="glass-card p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-center">Select Subject</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="subjectSelector">
+                <!-- Subjects will be populated by JS -->
+            </div>
+        </div>
+
+        <!-- Flashcard Display -->
+        <div id="flashcardContainer" class="hidden">
+            <div class="glass-card p-8 mb-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold" id="currentSubjectTitle">Math Study Guide</h2>
+                    <div class="text-sm text-[#F5F7FA]/70">
+                        <span id="currentCard">1</span> / <span id="totalCards">0</span>
+                    </div>
+                </div>
+                
+                <!-- Flashcard -->
+                <div class="flashcard-wrapper mb-6">
+                    <div class="flashcard glass-card p-8 min-h-[300px] flex items-center justify-center cursor-pointer" id="flashcard">
+                        <div class="text-center w-full" id="flashcardContent">
+                            <div class="text-4xl mb-4" id="flashcardIcon">🔭</div>
+                            <h3 class="text-3xl font-bold mb-4" id="flashcardTerm">Click a subject to begin</h3>
+                            <p class="text-lg text-[#F5F7FA]/70" id="flashcardDefinition">Select a subject from above to view study guide flashcards</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex justify-between items-center">
+                    <button class="btn-secondary" id="prevBtn" disabled>← Previous</button>
+                    <div class="flex gap-2">
+                        <button class="btn-tertiary" id="flipBtn">🔄 Flip Card</button>
+                        <button class="btn-tertiary" id="shuffleBtn">🔀 Shuffle</button>
+                    </div>
+                    <button class="btn-secondary" id="nextBtn" disabled>Next →</button>
+                </div>
+            </div>
+
+            <!-- Progress -->
+            <div class="glass-card p-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-[#F5F7FA]/70">Progress</span>
+                    <div class="flex-1 mx-4">
+                        <div class="progress-bar-container" style="height: 8px;">
+                            <div class="progress-bar" id="progressBar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                    <span class="text-sm font-bold" id="progressText">0%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!checkAuth()) {
+                return;
+            }
+            updateNavigation();
+            initFloatingStars();
+            setupMobileMenu();
+            loadSubjects();
+        });
+
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        }
+
+        function getGradeLevel() {
+            const prefs = localStorage.getItem('astrolearn_preferences');
+            if (prefs) {
+                try {
+                    const preferences = JSON.parse(prefs);
+                    return preferences.grade || 9;
+                } catch (e) {
+                    console.error('Error parsing preferences:', e);
+                }
+            }
+            return 9;
+        }
+
+        function getSelectedSubjects() {
+            const prefs = localStorage.getItem('astrolearn_preferences');
+            if (prefs) {
+                try {
+                    const preferences = JSON.parse(prefs);
+                    return preferences.subjects || ['math', 'science', 'reading', 'language'];
+                } catch (e) {
+                    console.error('Error parsing preferences:', e);
+                }
+            }
+            return ['math', 'science', 'reading', 'language'];
+        }
+
+        const subjects = [
+            { id: 'math', name: 'Math', icon: '🔭', color: '#4FC3F7' },
+            { id: 'science', name: 'Science', icon: '🧬', color: '#FF6EC7' },
+            { id: 'reading', name: 'Reading', icon: '📚', color: '#482880' },
+            { id: 'language', name: 'Language', icon: '🌍', color: '#4FC3F7' }
+        ];
+
+        // Grade-level specific flashcards
+        const flashcardsByGrade = {
+            6: {
+                math: [
+                    { term: "Fraction", definition: "A number that represents part of a whole, written as a/b where a is the numerator and b is the denominator." },
+                    { term: "Decimal", definition: "A number written with a decimal point, representing parts of a whole (e.g., 0.5 = 1/2)." },
+                    { term: "Ratio", definition: "A comparison of two quantities, written as a:b or a/b." },
+                    { term: "Percentage", definition: "A fraction with a denominator of 100, written with the % symbol." },
+                    { term: "Area", definition: "The amount of space inside a 2D shape, measured in square units." },
+                    { term: "Perimeter", definition: "The distance around the outside of a shape." }
+                ],
+                science: [
+                    { term: "Matter", definition: "Anything that has mass and takes up space. It exists in three states: solid, liquid, and gas." },
+                    { term: "Atom", definition: "The smallest unit of matter that retains the properties of an element." },
+                    { term: "Ecosystem", definition: "A community of living organisms and their physical environment interacting together." },
+                    { term: "Photosynthesis", definition: "The process by which plants use sunlight, water, and carbon dioxide to make food (glucose) and oxygen." },
+                    { term: "Force", definition: "A push or pull that can change the motion of an object." },
+                    { term: "Energy", definition: "The ability to do work or cause change." }
+                ],
+                reading: [
+                    { term: "Main Idea", definition: "The most important point or message the author wants to convey in a text." },
+                    { term: "Supporting Details", definition: "Facts, examples, or information that explain or support the main idea." },
+                    { term: "Character", definition: "A person, animal, or being in a story." },
+                    { term: "Setting", definition: "The time and place where a story takes place." },
+                    { term: "Plot", definition: "The sequence of events that make up a story." },
+                    { term: "Theme", definition: "The underlying message or lesson the author wants to convey." }
+                ],
+                language: [
+                    { term: "Greeting", definition: "A polite word or phrase used when meeting someone (e.g., Hello, Hola, Bonjour)." },
+                    { term: "Noun", definition: "A word that names a person, place, thing, or idea." },
+                    { term: "Verb", definition: "A word that shows action or state of being." },
+                    { term: "Adjective", definition: "A word that describes or modifies a noun." },
+                    { term: "Present Tense", definition: "A verb form that describes actions happening now or regularly." },
+                    { term: "Vocabulary", definition: "The collection of words known and used by a person." }
+                ]
+            },
+            7: {
+                math: [
+                    { term: "Integer", definition: "A whole number that can be positive, negative, or zero (e.g., -3, 0, 5)." },
+                    { term: "Expression", definition: "A mathematical phrase that can contain numbers, variables, and operators." },
+                    { term: "Equation", definition: "A mathematical statement showing two expressions are equal (e.g., 2x + 3 = 11)." },
+                    { term: "Proportion", definition: "An equation stating that two ratios are equal." },
+                    { term: "Angle", definition: "The figure formed by two rays sharing a common endpoint (vertex)." },
+                    { term: "Probability", definition: "The likelihood of an event occurring, expressed as a number between 0 and 1." }
+                ],
+                science: [
+                    { term: "Cell", definition: "The basic unit of life. All living things are made of cells." },
+                    { term: "Organelle", definition: "A specialized structure within a cell that performs a specific function." },
+                    { term: "Ecosystem", definition: "A biological community of interacting organisms and their environment." },
+                    { term: "Chemical Reaction", definition: "A process where substances (reactants) transform into new substances (products)." },
+                    { term: "Motion", definition: "The change in position of an object over time." },
+                    { term: "Energy Transfer", definition: "The movement of energy from one object or system to another." }
+                ],
+                reading: [
+                    { term: "Literary Device", definition: "A technique used by writers to create special effects or convey meaning (e.g., metaphor, simile)." },
+                    { term: "Symbolism", definition: "The use of symbols to represent ideas or qualities." },
+                    { term: "Point of View", definition: "The perspective from which a story is told (first person, third person, etc.)." },
+                    { term: "Inference", definition: "A conclusion reached based on evidence and reasoning rather than explicit statements." },
+                    { term: "Text Structure", definition: "The way information is organized in a text (chronological, cause-effect, etc.)." },
+                    { term: "Author's Purpose", definition: "The reason the author wrote the text (to inform, persuade, entertain, etc.)." }
+                ],
+                language: [
+                    { term: "Present Tense", definition: "A verb tense that describes actions happening now or regularly." },
+                    { term: "Past Tense", definition: "A verb tense that describes actions that have already happened." },
+                    { term: "Subject", definition: "The person or thing performing the action in a sentence." },
+                    { term: "Object", definition: "The person or thing receiving the action in a sentence." },
+                    { term: "Conjugation", definition: "Changing a verb form to match its subject (person, number, tense)." },
+                    { term: "Vocabulary", definition: "The collection of words used in a language." }
+                ]
+            },
+            8: {
+                math: [
+                    { term: "Linear Equation", definition: "An equation where the highest power of the variable is 1 (e.g., y = mx + b)." },
+                    { term: "System of Equations", definition: "Two or more equations with the same variables, solved together." },
+                    { term: "Function", definition: "A relation where each input (x) has exactly one output (y)." },
+                    { term: "Pythagorean Theorem", definition: "In a right triangle, a² + b² = c², where c is the hypotenuse." },
+                    { term: "Transformation", definition: "Changing a shape's position, size, or orientation (translation, rotation, reflection)." },
+                    { term: "Scientific Notation", definition: "A way to write very large or small numbers using powers of 10 (e.g., 3.5 × 10⁸)." }
+                ],
+                science: [
+                    { term: "Genetics", definition: "The study of heredity and how traits are passed from parents to offspring." },
+                    { term: "DNA", definition: "Deoxyribonucleic acid, the molecule that carries genetic information." },
+                    { term: "Evolution", definition: "The process by which species change over time through natural selection." },
+                    { term: "Atom", definition: "The basic unit of matter, consisting of protons, neutrons, and electrons." },
+                    { term: "Periodic Table", definition: "A chart organizing all known elements by their atomic number and properties." },
+                    { term: "Wave", definition: "A disturbance that transfers energy through matter or space." }
+                ],
+                reading: [
+                    { term: "Literary Analysis", definition: "Examining and interpreting the meaning, structure, and style of a literary work." },
+                    { term: "Poetry", definition: "A form of literature that uses rhythm, imagery, and figurative language to express ideas." },
+                    { term: "Textual Evidence", definition: "Quotes or details from a text used to support an argument or analysis." },
+                    { term: "Rhetoric", definition: "The art of effective or persuasive speaking or writing." },
+                    { term: "Tone", definition: "The author's attitude toward the subject, conveyed through word choice and style." },
+                    { term: "Mood", definition: "The emotional atmosphere created by a literary work." }
+                ],
+                language: [
+                    { term: "Past Tense", definition: "A verb tense describing actions that happened in the past." },
+                    { term: "Future Tense", definition: "A verb tense describing actions that will happen in the future." },
+                    { term: "Adjective", definition: "A word that describes or modifies a noun." },
+                    { term: "Adverb", definition: "A word that describes or modifies a verb, adjective, or other adverb." },
+                    { term: "Preposition", definition: "A word that shows the relationship between a noun/pronoun and other words (e.g., in, on, at)." },
+                    { term: "Idiom", definition: "A phrase with a meaning different from its literal words (e.g., 'break a leg')." }
+                ]
+            },
+            9: {
+                math: [
+                    { term: "Algebra", definition: "A branch of mathematics using symbols and letters to represent numbers and quantities." },
+                    { term: "Quadratic Equation", definition: "An equation of the form ax² + bx + c = 0, where a ≠ 0." },
+                    { term: "Polynomial", definition: "An expression with multiple terms involving variables raised to powers." },
+                    { term: "Exponent", definition: "A number showing how many times a base is multiplied by itself (e.g., 2³ = 2 × 2 × 2)." },
+                    { term: "Radical", definition: "A symbol (√) indicating the square root or other root of a number." },
+                    { term: "Inequality", definition: "A mathematical statement comparing two expressions using <, >, ≤, or ≥." }
+                ],
+                science: [
+                    { term: "Cell Biology", definition: "The study of cells, their structure, function, and processes." },
+                    { term: "Photosynthesis", definition: "The process by which plants convert light energy into chemical energy (glucose)." },
+                    { term: "Genetics", definition: "The study of genes, heredity, and variation in living organisms." },
+                    { term: "Chemistry", definition: "The study of matter, its properties, composition, and changes." },
+                    { term: "Physics", definition: "The study of matter, energy, motion, and forces." },
+                    { term: "Astronomy", definition: "The study of celestial objects and the universe." }
+                ],
+                reading: [
+                    { term: "Reading Comprehension", definition: "Understanding and interpreting written text." },
+                    { term: "Literary Analysis", definition: "Examining the meaning, structure, and techniques used in literature." },
+                    { term: "Shakespeare", definition: "William Shakespeare, a famous English playwright and poet from the 16th-17th century." },
+                    { term: "Modern Literature", definition: "Literary works from the 20th and 21st centuries." },
+                    { term: "Critical Reading", definition: "Analyzing and evaluating a text's meaning, purpose, and effectiveness." },
+                    { term: "Poetry Analysis", definition: "Examining the form, structure, and meaning of poems." }
+                ],
+                language: [
+                    { term: "Spanish Basics", definition: "Fundamental Spanish vocabulary, grammar, and phrases." },
+                    { term: "French Greetings", definition: "Common French phrases used when meeting people." },
+                    { term: "German Vocabulary", definition: "Essential German words and phrases." },
+                    { term: "Grammar", definition: "The rules and structure of a language." },
+                    { term: "Conversation", definition: "Spoken exchange between two or more people." },
+                    { term: "Verb Conjugation", definition: "Changing verb forms to match subject, tense, and mood." }
+                ]
+            },
+            10: {
+                math: [
+                    { term: "Advanced Algebra", definition: "Complex algebraic concepts including systems of equations and polynomial functions." },
+                    { term: "Quadratic Function", definition: "A function of the form f(x) = ax² + bx + c, creating a parabola when graphed." },
+                    { term: "Polynomial Function", definition: "A function involving terms with variables raised to powers." },
+                    { term: "Rational Expression", definition: "A fraction where the numerator and/or denominator are polynomials." },
+                    { term: "Logarithm", definition: "The inverse operation of exponentiation (e.g., log₂(8) = 3 because 2³ = 8)." },
+                    { term: "Sequence", definition: "An ordered list of numbers following a pattern (e.g., 2, 4, 6, 8...)." }
+                ],
+                science: [
+                    { term: "Advanced Biology", definition: "Complex biological processes including cellular respiration and genetics." },
+                    { term: "Organic Chemistry", definition: "The study of carbon-containing compounds and their reactions." },
+                    { term: "Thermodynamics", definition: "The study of heat, energy, and their transformations." },
+                    { term: "Electromagnetism", definition: "The relationship between electricity and magnetism." },
+                    { term: "Environmental Science", definition: "The study of the environment and human impact on ecosystems." },
+                    { term: "Molecular Biology", definition: "The study of biology at the molecular level, focusing on DNA and proteins." }
+                ],
+                reading: [
+                    { term: "Rhetorical Analysis", definition: "Examining how authors use language and techniques to persuade or inform." },
+                    { term: "Classical Literature", definition: "Enduring literary works from ancient times through the 19th century." },
+                    { term: "American Literature", definition: "Literary works from American authors." },
+                    { term: "World Literature", definition: "Significant literary works from around the world." },
+                    { term: "Literary Criticism", definition: "The analysis and interpretation of literature using various theoretical approaches." },
+                    { term: "Advanced Literary Analysis", definition: "Deep examination of literary techniques, themes, and meanings." }
+                ],
+                language: [
+                    { term: "Advanced Verb Tenses", definition: "Complex verb forms including perfect, progressive, and conditional tenses." },
+                    { term: "Subjunctive Mood", definition: "A verb mood expressing wishes, doubts, or hypothetical situations." },
+                    { term: "Complex Sentences", definition: "Sentences with multiple clauses and sophisticated structure." },
+                    { term: "Idiomatic Expressions", definition: "Phrases with meanings different from their literal words." },
+                    { term: "Literary Analysis", definition: "Analyzing literature in the target language." },
+                    { term: "Advanced Conversation", definition: "Complex spoken exchanges on abstract or technical topics." }
+                ]
+            },
+            11: {
+                math: [
+                    { term: "Trigonometry", definition: "The study of triangles and the relationships between angles and sides." },
+                    { term: "Trigonometric Functions", definition: "Functions like sine, cosine, and tangent that relate angles to ratios." },
+                    { term: "Trigonometric Identities", definition: "Equations that are true for all values of the variables (e.g., sin²θ + cos²θ = 1)." },
+                    { term: "Analytic Geometry", definition: "Using algebra to study geometry, including coordinate systems." },
+                    { term: "Complex Numbers", definition: "Numbers of the form a + bi, where i is the imaginary unit (√-1)." },
+                    { term: "Conic Sections", definition: "Curves formed by intersecting a plane with a cone (circle, ellipse, parabola, hyperbola)." }
+                ],
+                science: [
+                    { term: "Advanced Chemistry", definition: "Complex chemical reactions, equilibrium, and thermodynamics." },
+                    { term: "Physics: Mechanics", definition: "The study of motion, forces, and energy." },
+                    { term: "Physics: Electricity", definition: "The study of electric charge, current, and circuits." },
+                    { term: "Human Anatomy", definition: "The study of the structure of the human body." },
+                    { term: "Biochemistry", definition: "The chemistry of living organisms and biological processes." },
+                    { term: "Quantum Physics", definition: "The study of matter and energy at the atomic and subatomic level." }
+                ],
+                reading: [
+                    { term: "AP Literature Analysis", definition: "Advanced Placement level analysis of literary works." },
+                    { term: "British Literature", definition: "Literary works from British authors throughout history." },
+                    { term: "Advanced Poetry", definition: "Complex poetic forms, techniques, and analysis." },
+                    { term: "Drama Analysis", definition: "Examining plays, their structure, characters, and themes." },
+                    { term: "Literary Theory", definition: "Theoretical frameworks for analyzing and interpreting literature." },
+                    { term: "Research and Writing", definition: "Conducting research and writing academic papers on literature." }
+                ],
+                language: [
+                    { term: "AP Language Preparation", definition: "Advanced Placement level language study and exam preparation." },
+                    { term: "Advanced Literature", definition: "Studying literature in the target language." },
+                    { term: "Formal Writing", definition: "Writing in formal, academic style in the target language." },
+                    { term: "Cultural Studies", definition: "Understanding the culture associated with the language." },
+                    { term: "Translation Skills", definition: "Converting text from one language to another accurately." },
+                    { term: "Linguistic Analysis", definition: "Analyzing the structure and patterns of language." }
+                ]
+            },
+            12: {
+                math: [
+                    { term: "Calculus", definition: "The mathematical study of change, including derivatives and integrals." },
+                    { term: "Limit", definition: "The value a function approaches as the input approaches a certain value." },
+                    { term: "Derivative", definition: "The rate of change of a function, representing the slope of the tangent line." },
+                    { term: "Integral", definition: "The area under a curve, the reverse operation of differentiation." },
+                    { term: "Applications of Derivatives", definition: "Using derivatives to solve optimization and related rates problems." },
+                    { term: "Applications of Integrals", definition: "Using integrals to find areas, volumes, and other quantities." }
+                ],
+                science: [
+                    { term: "AP Biology", definition: "Advanced Placement Biology covering advanced cellular, molecular, and ecological concepts." },
+                    { term: "AP Chemistry", definition: "Advanced Placement Chemistry with advanced reactions, thermodynamics, and kinetics." },
+                    { term: "AP Physics", definition: "Advanced Placement Physics covering mechanics, electricity, and magnetism." },
+                    { term: "Advanced Genetics", definition: "Complex genetic concepts including gene expression and biotechnology." },
+                    { term: "Organic Synthesis", definition: "Creating complex organic molecules through chemical reactions." },
+                    { term: "Astrophysics", definition: "The application of physics to understand celestial objects and the universe." }
+                ],
+                reading: [
+                    { term: "Advanced Literary Theory", definition: "Complex theoretical approaches to analyzing literature." },
+                    { term: "Contemporary Literature", definition: "Modern literary works from recent decades." },
+                    { term: "Postmodern Analysis", definition: "Analyzing postmodern literary techniques and themes." },
+                    { term: "Comparative Literature", definition: "Comparing literary works across different cultures and languages." },
+                    { term: "Literary Research Methods", definition: "Conducting scholarly research on literature." },
+                    { term: "Thesis Development", definition: "Creating and supporting a central argument in literary analysis." }
+                ],
+                language: [
+                    { term: "Advanced Literature", definition: "Studying complex literary works in the target language." },
+                    { term: "Thesis Writing", definition: "Writing academic theses in the target language." },
+                    { term: "Literary Criticism", definition: "Critically analyzing literature in the target language." },
+                    { term: "Advanced Grammar", definition: "Mastering complex grammatical structures and rules." },
+                    { term: "Professional Communication", definition: "Using the language in professional and academic contexts." },
+                    { term: "Research in Language", definition: "Conducting research using the target language." }
+                ]
+            }
+        };
+
+        let currentSubject = null;
+        let currentCards = [];
+        let currentCardIndex = 0;
+        let isFlipped = false;
+
+        function loadSubjects() {
+            const selector = document.getElementById('subjectSelector');
+            const selectedSubjects = getSelectedSubjects();
+            const availableSubjects = subjects.filter(s => selectedSubjects.includes(s.id));
+            
+            selector.innerHTML = availableSubjects.map(subject => `
+                <button class="glass-card p-4 text-center hover:scale-105 transition-transform subject-btn" 
+                        data-subject="${subject.id}"
+                        style="border: 2px solid ${subject.color}33;">
+                    <div class="text-4xl mb-2">${subject.icon}</div>
+                    <div class="font-bold">${subject.name}</div>
+                </button>
+            `).join('');
+
+            document.querySelectorAll('.subject-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    loadFlashcards(btn.dataset.subject);
+                });
+            });
+        }
+
+        function loadFlashcards(subjectId) {
+            const grade = getGradeLevel();
+            const subjectData = flashcardsByGrade[grade]?.[subjectId];
+            
+            if (!subjectData || subjectData.length === 0) {
+                alert('No flashcards available for this subject at your grade level.');
+                return;
+            }
+
+            currentSubject = subjectId;
+            currentCards = [...subjectData];
+            currentCardIndex = 0;
+            isFlipped = false;
+
+            // Shuffle cards
+            shuffleArray(currentCards);
+
+            document.getElementById('flashcardContainer').classList.remove('hidden');
+            const subject = subjects.find(s => s.id === subjectId);
+            document.getElementById('currentSubjectTitle').textContent = `${subject.name} Study Guide`;
+            
+            updateCard();
+        }
+
+        function updateCard() {
+            if (currentCards.length === 0) return;
+
+            const card = currentCards[currentCardIndex];
+            const subject = subjects.find(s => s.id === currentSubject);
+            
+            document.getElementById('flashcardIcon').textContent = subject.icon;
+            document.getElementById('flashcardTerm').textContent = isFlipped ? card.definition : card.term;
+            document.getElementById('flashcardDefinition').textContent = isFlipped ? card.term : card.definition;
+            
+            document.getElementById('currentCard').textContent = currentCardIndex + 1;
+            document.getElementById('totalCards').textContent = currentCards.length;
+            
+            document.getElementById('prevBtn').disabled = currentCardIndex === 0;
+            document.getElementById('nextBtn').disabled = currentCardIndex === currentCards.length - 1;
+            
+            const progress = ((currentCardIndex + 1) / currentCards.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressText').textContent = Math.round(progress) + '%';
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        document.getElementById('flipBtn').addEventListener('click', () => {
+            isFlipped = !isFlipped;
+            updateCard();
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                isFlipped = false;
+                updateCard();
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentCardIndex < currentCards.length - 1) {
+                currentCardIndex++;
+                isFlipped = false;
+                updateCard();
+            }
+        });
+
+        document.getElementById('shuffleBtn').addEventListener('click', () => {
+            shuffleArray(currentCards);
+            currentCardIndex = 0;
+            isFlipped = false;
+            updateCard();
+        });
+
+        document.getElementById('flashcard').addEventListener('click', () => {
+            isFlipped = !isFlipped;
+            updateCard();
+        });
+    </script>
+</body>
+</html>
+
+

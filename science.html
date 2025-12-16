@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-3xl animate-pulse">⭐</span>
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Subject Header -->
+    <section class="container mx-auto px-6 py-12">
+        <div class="text-center mb-12">
+            <div class="text-6xl mb-4">🧬</div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-[#FF6EC7] to-[#4FC3F7] bg-clip-text text-transparent">
+                    Science Mission
+                </span>
+            </h1>
+            <p class="text-xl text-[#F5F7FA]/80">Explore the mysteries of the universe</p>
+            <div class="mt-4 inline-flex items-center gap-3 glass-card px-4 py-2">
+                <p class="text-sm text-[#F5F7FA]/70">
+                    <span class="font-semibold text-[#FF6EC7]">Grade Level:</span> 
+                    <select id="gradeSelector" class="bg-transparent border-none text-[#F5F7FA] font-bold cursor-pointer focus:outline-none ml-2">
+                        <option value="6">6th</option>
+                        <option value="7">7th</option>
+                        <option value="8">8th</option>
+                        <option value="9">9th</option>
+                        <option value="10">10th</option>
+                        <option value="11">11th</option>
+                        <option value="12">12th</option>
+                    </select>
+                </p>
+            </div>
+            </div>
+
+        <!-- Earth to Moon Progress Bar -->
+        <div class="glass-card p-8 mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-center">
+                <span class="bg-gradient-to-r from-[#FF6EC7] to-[#4FC3F7] bg-clip-text text-transparent">
+                    Mission Progress
+                </span>
+            </h2>
+            <div class="space-journey-container">
+                <div class="space-journey-track">
+                    <div class="journey-start">
+                        <div class="planet-icon">🌍</div>
+                        <span class="journey-label">Earth</span>
+            </div>
+                    <div class="journey-progress-bar">
+                        <div class="journey-progress-fill" id="scienceProgress" style="width: 0%">
+                            <div class="space-shuttle" id="scienceShuttle">🚀</div>
+                        </div>
+                    </div>
+                    <div class="journey-end">
+                        <div class="planet-icon">🌙</div>
+                        <span class="journey-label">Moon</span>
+                    </div>
+                </div>
+                <div class="progress-stats text-center mt-4">
+                    <p class="text-2xl font-bold text-[#FF6EC7]" id="scienceProgressText">0%</p>
+                    <p class="text-sm text-[#F5F7FA]/70">Complete your journey to the Moon!</p>
+                    <p class="text-xs text-[#F5F7FA]/50 mt-2" id="lessonsCompletedText">0 of 0 lessons completed</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lessons Section -->
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-[#FF6EC7] to-[#4FC3F7] bg-clip-text text-transparent">
+                    Available Lessons
+                </span>
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch" id="lessonsGrid">
+                <!-- Lessons will be populated by JS -->
+        </div>
+    </div>
+
+        <!-- Back to Dashboard -->
+        <div class="text-center mb-8">
+            <a href="dashboard.html" class="btn-secondary inline-block">
+                ← Back to Dashboard
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!checkAuth()) {
+                return;
+            }
+            updateNavigation();
+            initFloatingStars();
+            
+            // Animate progress on load
+            setTimeout(() => {
+                animateShuttle();
+            }, 300);
+        });
+
+        // Grade-level specific science lessons
+        const scienceLessonsByGrade = {
+            6: [
+                { id: 1, title: "Introduction to Matter", difficulty: "Easy", completed: false },
+                { id: 2, title: "Earth's Layers", difficulty: "Easy", completed: false },
+                { id: 3, title: "Weather and Climate", difficulty: "Easy", completed: false },
+                { id: 4, title: "Plant Life Cycles", difficulty: "Medium", completed: false },
+                { id: 5, title: "Simple Machines", difficulty: "Medium", completed: false },
+                { id: 6, title: "Solar System Basics", difficulty: "Medium", completed: false }
+            ],
+            7: [
+                { id: 1, title: "Cell Structure", difficulty: "Easy", completed: false },
+                { id: 2, title: "Ecosystems", difficulty: "Medium", completed: false },
+                { id: 3, title: "Chemical Reactions", difficulty: "Medium", completed: false },
+                { id: 4, title: "Forces and Motion", difficulty: "Medium", completed: false },
+                { id: 5, title: "Energy Transfer", difficulty: "Medium", completed: false },
+                { id: 6, title: "Earth's Resources", difficulty: "Hard", completed: false }
+            ],
+            8: [
+                { id: 1, title: "Genetics and Heredity", difficulty: "Medium", completed: false },
+                { id: 2, title: "Evolution", difficulty: "Medium", completed: false },
+                { id: 3, title: "Atomic Structure", difficulty: "Medium", completed: false },
+                { id: 4, title: "Periodic Table", difficulty: "Medium", completed: false },
+                { id: 5, title: "Waves and Sound", difficulty: "Hard", completed: false },
+                { id: 6, title: "Light and Optics", difficulty: "Hard", completed: false }
+            ],
+            9: [
+                { id: 1, title: "Cell Biology", difficulty: "Easy", completed: false },
+                { id: 2, title: "Photosynthesis", difficulty: "Medium", completed: false },
+                { id: 3, title: "Genetics", difficulty: "Medium", completed: false },
+                { id: 4, title: "Chemistry Basics", difficulty: "Easy", completed: false },
+                { id: 5, title: "Physics Fundamentals", difficulty: "Hard", completed: false },
+                { id: 6, title: "Astronomy", difficulty: "Medium", completed: false }
+            ],
+            10: [
+                { id: 1, title: "Advanced Biology", difficulty: "Medium", completed: false },
+                { id: 2, title: "Organic Chemistry", difficulty: "Hard", completed: false },
+                { id: 3, title: "Thermodynamics", difficulty: "Hard", completed: false },
+                { id: 4, title: "Electromagnetism", difficulty: "Hard", completed: false },
+                { id: 5, title: "Environmental Science", difficulty: "Medium", completed: false },
+                { id: 6, title: "Molecular Biology", difficulty: "Hard", completed: false }
+            ],
+            11: [
+                { id: 1, title: "Advanced Chemistry", difficulty: "Hard", completed: false },
+                { id: 2, title: "Physics: Mechanics", difficulty: "Hard", completed: false },
+                { id: 3, title: "Physics: Electricity", difficulty: "Hard", completed: false },
+                { id: 4, title: "Human Anatomy", difficulty: "Hard", completed: false },
+                { id: 5, title: "Biochemistry", difficulty: "Hard", completed: false },
+                { id: 6, title: "Quantum Physics", difficulty: "Hard", completed: false }
+            ],
+            12: [
+                { id: 1, title: "AP Biology", difficulty: "Hard", completed: false },
+                { id: 2, title: "AP Chemistry", difficulty: "Hard", completed: false },
+                { id: 3, title: "AP Physics", difficulty: "Hard", completed: false },
+                { id: 4, title: "Advanced Genetics", difficulty: "Hard", completed: false },
+                { id: 5, title: "Organic Synthesis", difficulty: "Hard", completed: false },
+                { id: 6, title: "Astrophysics", difficulty: "Hard", completed: false }
+            ]
+        };
+
+        function getGradeLevel() {
+            const prefs = localStorage.getItem('astrolearn_preferences');
+            if (prefs) {
+                try {
+                    const preferences = JSON.parse(prefs);
+                    return preferences.grade || 9;
+                } catch (e) {
+                    console.error('Error parsing preferences:', e);
+                }
+            }
+            return 9;
+        }
+
+        function getCompletedLessons() {
+            const completed = localStorage.getItem('astrolearn_completed_lessons');
+            if (completed) {
+                try {
+                    return JSON.parse(completed);
+                } catch (e) {
+                    console.error('Error parsing completed lessons:', e);
+                }
+            }
+            return [];
+        }
+
+        let currentLessonKey = null;
+        let currentLessonTitle = null;
+        let currentSubject = null;
+
+        // Grade-level specific lesson content
+        const lessonContentByGrade = {
+            6: {
+                science: {
+                    "Introduction to Matter": {
+                        title: "Introduction to Matter",
+                        introduction: "Everything around us is made of matter! Matter is all the 'stuff' that makes up the universe - from the air we breathe to the ground we walk on. Let's explore what matter is and how it behaves!",
+                        concepts: [
+                            {
+                                heading: "What is Matter?",
+                                explanation: "Matter is anything that has mass (weight) and takes up space (volume). Everything you can see, touch, or feel is made of matter. Even things you can't see, like air, are matter because they have mass and take up space.",
+                                example: "A book is matter because it has weight and takes up space. The air around you is also matter, even though you can't see it!"
+                            },
+                            {
+                                heading: "Three States of Matter",
+                                explanation: "Matter exists in three main states: solid, liquid, and gas. Solids have a fixed shape and volume (like ice or wood). Liquids have a fixed volume but take the shape of their container (like water or oil). Gases have no fixed shape or volume and spread out to fill their container (like air or steam).",
+                                example: "Ice is a solid (fixed shape), water is a liquid (takes container shape), and steam is a gas (fills the container)."
+                            },
+                            {
+                                heading: "Changing States of Matter",
+                                explanation: "Matter can change from one state to another through heating or cooling. When you heat a solid, it melts into a liquid. When you heat a liquid, it evaporates into a gas. When you cool a gas, it condenses into a liquid. When you cool a liquid, it freezes into a solid.",
+                                example: "Ice (solid) melts into water (liquid) when heated. Water (liquid) freezes into ice (solid) when cooled. Water (liquid) evaporates into steam (gas) when heated."
+                            },
+                            {
+                                heading: "Particles in Matter",
+                                explanation: "All matter is made of tiny particles called atoms and molecules. In solids, particles are packed tightly together and vibrate in place. In liquids, particles are close together but can move around. In gases, particles are far apart and move freely.",
+                                example: "Think of a solid like people standing close together in a line, a liquid like people walking around in a room, and a gas like people spread out across a large field."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What are the three states of matter?",
+                                solution: "Solid, liquid, and gas"
+                            },
+                            {
+                                problem: "What happens to ice when you heat it?",
+                                solution: "It melts and becomes water (a liquid)"
+                            },
+                            {
+                                problem: "Why is air considered matter even though you can't see it?",
+                                solution: "Because it has mass and takes up space - the two requirements for matter"
+                            }
+                        ],
+                        summary: "Matter is anything with mass and volume. It exists in three states: solid, liquid, and gas. States can change through heating or cooling. All matter is made of tiny particles called atoms. Understanding matter helps us understand the world around us!"
+                    }
+                }
+            },
+            9: {
+                science: {
+                    "Cell Biology": {
+                        title: "Cell Biology",
+                        introduction: "Cells are the building blocks of all living things! From the smallest bacteria to the largest whale, every living organism is made of cells. Let's explore the amazing world inside these tiny units of life!",
+                        concepts: [
+                            {
+                                heading: "What are Cells?",
+                                explanation: "Cells are the basic units of life. All living things - plants, animals, fungi, and bacteria - are made of one or more cells. Cells are like tiny factories that carry out all the functions needed to keep an organism alive. The cell theory states that: 1) all living things are made of cells, 2) cells are the basic unit of structure and function, and 3) all cells come from existing cells.",
+                                example: "Your body contains trillions of cells! A single drop of blood contains millions of red blood cells."
+                            },
+                            {
+                                heading: "Cell Membrane",
+                                explanation: "The cell membrane (also called the plasma membrane) is like the cell's protective barrier. It surrounds the cell and controls what enters and exits. It's selectively permeable, meaning it allows some substances to pass through while blocking others. This helps maintain the cell's internal environment.",
+                                example: "Think of the cell membrane like a security guard at a building - it decides who and what can come in or go out."
+                            },
+                            {
+                                heading: "Nucleus - The Control Center",
+                                explanation: "The nucleus is often called the 'control center' of the cell. It contains DNA (deoxyribonucleic acid), which holds all the genetic information that determines the cell's characteristics and functions. The nucleus controls cell activities by directing protein production and cell division.",
+                                example: "If the cell is a factory, the nucleus is like the manager's office with all the blueprints (DNA) for how everything should work."
+                            },
+                            {
+                                heading: "Mitochondria - The Powerhouses",
+                                explanation: "Mitochondria are often called the 'powerhouses' of the cell because they produce energy in the form of ATP (adenosine triphosphate). Cells need energy to perform all their functions, and mitochondria convert nutrients into usable energy through cellular respiration.",
+                                example: "Mitochondria are like power plants - they take in fuel (sugar) and convert it into energy (ATP) that the cell can use."
+                            },
+                            {
+                                heading: "Ribosomes - Protein Factories",
+                                explanation: "Ribosomes are tiny structures that make proteins. Proteins are essential molecules that perform many functions in the cell, such as building structures, carrying out chemical reactions, and transporting materials. Ribosomes read the instructions from DNA (via RNA) and assemble amino acids into proteins.",
+                                example: "Ribosomes are like assembly lines in a factory - they follow instructions to build proteins, which are the tools and machines the cell needs."
+                            },
+                            {
+                                heading: "Plant Cells vs Animal Cells",
+                                explanation: "Plant cells have all the structures that animal cells have (cell membrane, nucleus, mitochondria, ribosomes), plus two additional structures: chloroplasts (which perform photosynthesis to make food) and a cell wall (a rigid structure outside the cell membrane that provides support and protection).",
+                                example: "Animal cells are like flexible apartments, while plant cells are like apartments with extra rooms (chloroplasts) and reinforced walls (cell wall) for extra support."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is the function of the nucleus?",
+                                solution: "The nucleus contains DNA and controls cell activities, acting as the cell's control center."
+                            },
+                            {
+                                problem: "Why are mitochondria called the 'powerhouses' of the cell?",
+                                solution: "Because they produce ATP (energy) that the cell needs to function, converting nutrients into usable energy."
+                            },
+                            {
+                                problem: "What two structures do plant cells have that animal cells don't?",
+                                solution: "Chloroplasts (for photosynthesis) and a cell wall (for support and protection)"
+                            }
+                        ],
+                        summary: "Cells are the basic units of life. The cell membrane controls what enters and exits. The nucleus contains DNA and controls cell activities. Mitochondria produce energy (ATP). Ribosomes make proteins. Plant cells have chloroplasts and cell walls in addition to all animal cell structures. Understanding cells helps us understand how all living things function!"
+                    },
+                    "Genetics": {
+                        title: "Genetics",
+                        introduction: "Genetics is the fascinating study of how traits are passed from parents to offspring! Have you ever wondered why you have your mother's eyes or your father's hair color? Genetics explains how characteristics are inherited through genes and DNA!",
+                        concepts: [
+                            {
+                                heading: "What is Genetics?",
+                                explanation: "Genetics is the branch of biology that studies how traits (characteristics) are passed from parents to offspring. It explains why children often look like their parents and why siblings can be similar or different. Genetics helps us understand inheritance patterns and how genes work.",
+                                example: "If both of your parents have brown eyes, you're likely to have brown eyes too - that's genetics at work!"
+                            },
+                            {
+                                heading: "Genes and DNA",
+                                explanation: "Genes are segments of DNA (deoxyribonucleic acid) that code for specific traits. DNA is a molecule located in the nucleus of cells that contains all the genetic information. Each gene provides instructions for making proteins, which determine our traits. Think of DNA as a recipe book, and genes as individual recipes.",
+                                example: "A gene might contain instructions for eye color, hair texture, or height. Different versions of a gene (called alleles) can produce different traits."
+                            },
+                            {
+                                heading: "Chromosomes",
+                                explanation: "Chromosomes are structures made of DNA and proteins that contain genes. Humans have 46 chromosomes (23 pairs) in each cell - 23 from the mother and 23 from the father. Chromosomes come in pairs, and each pair contains genes for the same traits. The 23rd pair determines biological sex (XX for female, XY for male).",
+                                example: "If you imagine DNA as a long string, chromosomes are like organized bundles of that string. Each chromosome contains thousands of genes."
+                            },
+                            {
+                                heading: "Dominant and Recessive Traits",
+                                explanation: "Traits can be dominant or recessive. Dominant traits are expressed (shown) when at least one dominant allele is present. Recessive traits are only expressed when two recessive alleles are present. Dominant traits 'mask' recessive traits. We use capital letters for dominant alleles (B) and lowercase for recessive (b).",
+                                example: "Brown eyes (B) are dominant over blue eyes (b). If you have BB or Bb, you'll have brown eyes. Only bb gives blue eyes."
+                            },
+                            {
+                                heading: "Genotype vs Phenotype",
+                                explanation: "Genotype is the genetic makeup (the alleles you have, like BB, Bb, or bb). Phenotype is the physical appearance or expression of the trait (what you actually see, like brown eyes or blue eyes). The genotype determines the phenotype, but the same phenotype can come from different genotypes.",
+                                example: "Genotype BB and Bb both produce the brown eye phenotype, but BB is homozygous dominant while Bb is heterozygous."
+                            },
+                            {
+                                heading: "Punnett Squares",
+                                explanation: "A Punnett square is a tool used to predict the probability of offspring having certain traits. You place one parent's alleles on top and the other parent's alleles on the side, then fill in the boxes to see all possible combinations. This helps predict the likelihood of different genotypes and phenotypes in offspring.",
+                                example: "If one parent is BB (brown eyes) and the other is bb (blue eyes), a Punnett square shows all children will be Bb (brown eyes), because B is dominant."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "How many chromosomes do humans have in each cell?",
+                                solution: "46 chromosomes (23 pairs) - half from each parent"
+                            },
+                            {
+                                problem: "If brown eyes (B) are dominant and blue eyes (b) are recessive, what phenotype will someone with genotype Bb have?",
+                                solution: "Brown eyes, because B (dominant) masks b (recessive)"
+                            },
+                            {
+                                problem: "What is the difference between genotype and phenotype?",
+                                solution: "Genotype is the genetic makeup (alleles like BB, Bb, bb), while phenotype is the physical appearance (what you see, like brown or blue eyes)"
+                            }
+                        ],
+                        summary: "Genetics studies how traits are inherited. Genes are segments of DNA that code for traits. Humans have 46 chromosomes (23 pairs). Dominant traits mask recessive traits. Genotype is the genetic makeup, phenotype is the physical appearance. Punnett squares help predict inheritance patterns. Genetics explains why we inherit traits from our parents!"
+                    }
+                }
+            }
+        };
+
+        function openLessonModal(lessonKey, lessonTitle, subject, isAlreadyCompleted = false) {
+            currentLessonKey = lessonKey;
+            currentLessonTitle = lessonTitle;
+            currentSubject = subject;
+            
+            const grade = getGradeLevel();
+            const content = lessonContentByGrade[grade]?.[subject]?.[lessonTitle];
+            
+            if (!content) {
+                const defaultContent = {
+                    title: lessonTitle,
+                    notes: [
+                        `Welcome to ${lessonTitle}!`,
+                        "This lesson will help you understand key concepts.",
+                        "Take your time to read through the notes carefully.",
+                        "Practice the examples to reinforce your learning.",
+                        "Complete this lesson to unlock practice quizzes!"
+                    ],
+                    examples: [
+                        "Example 1: Practice problem",
+                        "Example 2: Another practice problem"
+                    ]
+                };
+                displayLessonContent(defaultContent, isAlreadyCompleted);
+            } else {
+                displayLessonContent(content, isAlreadyCompleted);
+            }
+            
+            document.getElementById('lessonModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function displayLessonContent(content, isAlreadyCompleted = false) {
+            const lessonContentDiv = document.getElementById('lessonContent');
+            
+            // Build concepts section
+            const conceptsHTML = content.concepts ? `
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold mb-4 text-[#FF6EC7]">📚 Key Concepts</h3>
+                    <div class="space-y-4">
+                        ${content.concepts.map((concept, index) => `
+                            <div class="glass-card p-5">
+                                <h4 class="text-lg font-bold mb-2 text-[#4FC3F7]">${index + 1}. ${concept.heading}</h4>
+                                <p class="text-[#F5F7FA]/90 mb-3 leading-relaxed">${concept.explanation}</p>
+                                <div class="glass-card p-3 bg-[#482880]/20 mt-3">
+                                    <p class="text-sm font-semibold text-[#FF6EC7] mb-1">Example:</p>
+                                    <p class="text-[#F5F7FA]/90 font-mono text-sm">${concept.example}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : '';
+            
+            // Build practice problems section
+            const practiceHTML = content.practiceProblems ? `
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold mb-4 text-[#4FC3F7]">✏️ Practice Problems</h3>
+                    <div class="space-y-4">
+                        ${content.practiceProblems.map((problem, index) => `
+                            <div class="glass-card p-5">
+                                <div class="mb-3">
+                                    <p class="text-sm font-semibold text-[#FF6EC7] mb-1">Problem ${index + 1}:</p>
+                                    <p class="text-[#F5F7FA]/90 font-semibold">${problem.problem}</p>
+                                </div>
+                                <details class="mt-2">
+                                    <summary class="cursor-pointer text-sm text-[#4FC3F7] hover:text-[#FF6EC7] transition-colors">Show Solution</summary>
+                                    <div class="glass-card p-3 bg-[#482880]/20 mt-2">
+                                        <p class="text-[#F5F7FA]/90 font-mono text-sm">${problem.solution}</p>
+                                    </div>
+                                </details>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : '';
+            
+            lessonContentDiv.innerHTML = `
+                <div class="mb-6">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-3xl font-bold mb-4">
+                            <span class="bg-gradient-to-r from-[#FF6EC7] to-[#4FC3F7] bg-clip-text text-transparent">
+                                ${content.title}
+                            </span>
+                        </h2>
+                        ${isAlreadyCompleted ? '<span class="text-2xl" title="Lesson Completed">✅</span>' : ''}
+                    </div>
+                    ${content.introduction ? `
+                        <div class="glass-card p-4 bg-[#FF6EC7]/10 border border-[#FF6EC7]/30 mb-4">
+                            <p class="text-[#F5F7FA]/90 leading-relaxed">${content.introduction}</p>
+                        </div>
+                    ` : ''}
+                    ${isAlreadyCompleted ? '<p class="text-sm text-[#FF6EC7] mb-4">You\'ve completed this lesson! Review the content below.</p>' : ''}
+                </div>
+                
+                ${conceptsHTML}
+                
+                ${practiceHTML}
+                
+                ${content.summary ? `
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold mb-3 text-[#482880]">📋 Lesson Summary</h3>
+                        <div class="glass-card p-5 bg-[#482880]/20 border-2 border-[#482880]/50">
+                            <p class="text-[#F5F7FA]/90 leading-relaxed">${content.summary}</p>
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+            
+            // Update button text based on completion status
+            const completeBtn = document.getElementById('completeLessonBtn');
+            if (completeBtn) {
+                if (isAlreadyCompleted) {
+                    completeBtn.textContent = 'Mark as Complete Again';
+                    completeBtn.classList.remove('btn-primary');
+                    completeBtn.classList.add('btn-secondary');
+                } else {
+                    completeBtn.textContent = 'Mark as Complete';
+                    completeBtn.classList.remove('btn-secondary');
+                    completeBtn.classList.add('btn-primary');
+                }
+            }
+        }
+
+        function closeLessonModal() {
+            document.getElementById('lessonModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function completeCurrentLesson() {
+            if (currentLessonKey && currentLessonTitle) {
+                const completed = getCompletedLessons();
+                const isAlreadyCompleted = completed.includes(currentLessonKey);
+                
+                if (!isAlreadyCompleted) {
+                    markLessonCompleted(currentLessonKey, currentLessonTitle);
+                } else {
+                    // Already completed, just close
+                    alert('Lesson already completed! You can review it anytime.');
+                }
+                closeLessonModal();
+                loadLessons();
+            }
+        }
+
+        function markLessonCompleted(lessonKey, lessonTitle) {
+            const completed = getCompletedLessons();
+            if (!completed.includes(lessonKey)) {
+                completed.push(lessonKey);
+                localStorage.setItem('astrolearn_completed_lessons', JSON.stringify(completed));
+                updateProgress();
+            }
+        }
+
+        function updateProgress() {
+            const grade = getGradeLevel();
+            const lessons = scienceLessonsByGrade[grade] || scienceLessonsByGrade[9];
+            const completedLessons = getCompletedLessons();
+            
+            let completedCount = 0;
+            lessons.forEach(lesson => {
+                const lessonKey = `science_${grade}_${lesson.title}`;
+                if (completedLessons.includes(lessonKey)) {
+                    completedCount++;
+                }
+            });
+            
+            const totalLessons = lessons.length;
+            const progress = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
+            
+            document.getElementById('scienceProgressText').textContent = progress + '%';
+            document.getElementById('lessonsCompletedText').textContent = `${completedCount} of ${totalLessons} lessons completed`;
+            
+            const progressFill = document.getElementById('scienceProgress');
+            if (progressFill) {
+                progressFill.style.width = progress + '%';
+            }
+            
+            animateShuttle();
+        }
+
+        function loadLessons() {
+            const grid = document.getElementById('lessonsGrid');
+            const grade = getGradeLevel();
+            const lessons = scienceLessonsByGrade[grade] || scienceLessonsByGrade[9];
+            
+            if (!lessons || lessons.length === 0) {
+                grid.innerHTML = '<p class="text-center text-[#F5F7FA]/70">No lessons available for this grade level.</p>';
+                return;
+            }
+            
+            // Load completed lessons
+            const completedLessons = getCompletedLessons();
+            
+            grid.innerHTML = lessons.map(lesson => {
+                const lessonKey = `science_${grade}_${lesson.title}`;
+                const isCompleted = completedLessons.includes(lessonKey);
+                
+                return `
+                <div class="glass-card p-6 flex flex-col h-full ${isCompleted ? 'border-2 border-[#FF6EC7]' : ''}">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-bold flex-1">${lesson.title}</h3>
+                        ${isCompleted ? '<span class="text-2xl ml-2 flex-shrink-0">✅</span>' : ''}
+                    </div>
+                    <p class="text-sm text-[#F5F7FA]/70 mb-2">Difficulty: <span class="font-bold" style="color: ${lesson.difficulty === 'Easy' ? '#4FC3F7' : lesson.difficulty === 'Medium' ? '#FF6EC7' : '#482880'}">${lesson.difficulty}</span></p>
+                    <p class="text-xs text-[#F5F7FA]/50 mb-4">Grade ${grade} Level</p>
+                    <div class="mt-auto flex gap-2">
+                        <button class="btn-primary flex-1 complete-lesson-btn" 
+                                data-lesson-key="${lessonKey}"
+                                data-lesson-title="${lesson.title}"
+                                data-is-completed="${isCompleted}">
+                            ${isCompleted ? 'Review Lesson' : 'Start Lesson'}
+                        </button>
+                        ${isCompleted ? `
+                            <button class="btn-secondary complete-lesson-btn-again flex-shrink-0" 
+                                    data-lesson-key="${lessonKey}"
+                                    data-lesson-title="${lesson.title}"
+                                    title="Mark as incomplete to redo">
+                                🔄
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            }).join('');
+            
+            // Add event listeners for lesson buttons
+            document.querySelectorAll('.complete-lesson-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    openLessonModal(btn.dataset.lessonKey, btn.dataset.lessonTitle, 'science', btn.dataset.isCompleted === 'true');
+                });
+            });
+            
+            // Add event listeners for redo buttons
+            document.querySelectorAll('.complete-lesson-btn-again').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (confirm('Mark this lesson as incomplete so you can redo it?')) {
+                        const lessonKey = btn.dataset.lessonKey;
+                        const completed = getCompletedLessons();
+                        const index = completed.indexOf(lessonKey);
+                        if (index > -1) {
+                            completed.splice(index, 1);
+                            localStorage.setItem('astrolearn_completed_lessons', JSON.stringify(completed));
+                            updateProgress();
+                            loadLessons(); // Reload to update UI
+                        }
+                    }
+                });
+            });
+            
+            updateProgress();
+        }
+
+        function animateShuttle() {
+            const progressText = document.getElementById('scienceProgressText');
+            const progress = progressText ? parseInt(progressText.textContent) : 0;
+            const shuttle = document.getElementById('scienceShuttle');
+            
+            if (shuttle) {
+                setTimeout(() => {
+                    shuttle.style.transform = 'translateX(0)';
+                }, 100);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (isLoggedIn()) {
+                // Set up grade selector
+                const gradeSelector = document.getElementById('gradeSelector');
+                if (gradeSelector) {
+                    const grade = getGradeLevel();
+                    gradeSelector.value = grade;
+                    
+                    gradeSelector.addEventListener('change', (e) => {
+                        const newGrade = parseInt(e.target.value);
+                        const prefs = localStorage.getItem('astrolearn_preferences');
+                        if (prefs) {
+                            try {
+                                const preferences = JSON.parse(prefs);
+                                preferences.grade = newGrade;
+                                localStorage.setItem('astrolearn_preferences', JSON.stringify(preferences));
+                                
+                                // Reload lessons and progress for new grade
+                                loadLessons();
+                                updateProgress();
+                                
+                                // Show feedback
+                                gradeSelector.style.backgroundColor = 'rgba(255, 110, 199, 0.2)';
+                                setTimeout(() => {
+                                    gradeSelector.style.backgroundColor = 'transparent';
+                                }, 500);
+                            } catch (e) {
+                                console.error('Error updating grade:', e);
+                            }
+                        }
+                    });
+                }
+                
+                loadLessons();
+                updateProgress();
+            }
+        });
+    </script>
+</body>
+</html>

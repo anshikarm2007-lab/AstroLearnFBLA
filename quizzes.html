@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Quizzes - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-3xl animate-pulse">⭐</span>
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Quizzes Header -->
+    <section class="container mx-auto px-6 py-12">
+        <div class="text-center mb-8">
+            <div class="text-6xl mb-4">📝</div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Practice Quizzes
+                </span>
+            </h1>
+            <p class="text-xl text-[#F5F7FA]/80">Test your knowledge based on completed lessons</p>
+        </div>
+
+        <!-- Subject Selection -->
+        <div class="glass-card p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-center">Select Subject</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="subjectSelector">
+                <!-- Subjects will be populated by JS -->
+            </div>
+        </div>
+
+        <!-- Available Quizzes -->
+        <div id="quizzesContainer" class="hidden">
+            <div class="glass-card p-6 mb-6">
+                <h2 class="text-2xl font-bold mb-4" id="currentSubjectTitle">Select a subject to view available quizzes</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4" id="quizzesGrid">
+                    <!-- Quizzes will be populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Taking Interface -->
+        <div id="quizInterface" class="hidden">
+            <div class="glass-card p-8 mb-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold" id="quizTitle">Quiz</h2>
+                    <div class="text-sm text-[#F5F7FA]/70">
+                        Question <span id="currentQuestion">1</span> / <span id="totalQuestions">0</span>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <div class="progress-bar-container mb-2" style="height: 8px;">
+                        <div class="progress-bar" id="quizProgressBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="quiz-question glass-card p-6 mb-6">
+                    <h3 class="text-xl font-bold mb-4" id="questionText">Question</h3>
+                    <div class="space-y-3" id="answerOptions">
+                        <!-- Answer options will be populated by JS -->
+                    </div>
+                </div>
+
+                <div class="flex justify-between">
+                    <button class="btn-secondary" id="prevQuestionBtn" disabled>← Previous</button>
+                    <button class="btn-primary" id="nextQuestionBtn">Next →</button>
+                    <button class="btn-primary hidden" id="submitQuizBtn">Submit Quiz</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Results -->
+        <div id="quizResults" class="hidden">
+            <div class="glass-card p-8 text-center">
+                <div class="text-6xl mb-4" id="resultIcon">🎉</div>
+                <h2 class="text-3xl font-bold mb-4" id="resultTitle">Quiz Complete!</h2>
+                <div class="text-5xl font-bold mb-4" id="resultScore">0%</div>
+                <p class="text-lg text-[#F5F7FA]/70 mb-6" id="resultMessage">Great job!</p>
+                <div class="flex gap-4 justify-center">
+                    <button class="btn-primary" onclick="location.reload()">Take Another Quiz</button>
+                    <a href="dashboard.html" class="btn-secondary">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!checkAuth()) {
+                return;
+            }
+            updateNavigation();
+            initFloatingStars();
+            setupMobileMenu();
+            loadSubjects();
+        });
+
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        }
+
+        function getGradeLevel() {
+            const prefs = localStorage.getItem('astrolearn_preferences');
+            if (prefs) {
+                try {
+                    const preferences = JSON.parse(prefs);
+                    return preferences.grade || 9;
+                } catch (e) {
+                    console.error('Error parsing preferences:', e);
+                }
+            }
+            return 9;
+        }
+
+        function getSelectedSubjects() {
+            const prefs = localStorage.getItem('astrolearn_preferences');
+            if (prefs) {
+                try {
+                    const preferences = JSON.parse(prefs);
+                    return preferences.subjects || ['math', 'science', 'reading', 'language'];
+                } catch (e) {
+                    console.error('Error parsing preferences:', e);
+                }
+            }
+            return ['math', 'science', 'reading', 'language'];
+        }
+
+        function getCompletedLessons() {
+            const completed = localStorage.getItem('astrolearn_completed_lessons');
+            if (completed) {
+                try {
+                    return JSON.parse(completed);
+                } catch (e) {
+                    console.error('Error parsing completed lessons:', e);
+                }
+            }
+            return [];
+        }
+
+        const subjects = [
+            { id: 'math', name: 'Math', icon: '🔭', color: '#4FC3F7' },
+            { id: 'science', name: 'Science', icon: '🧬', color: '#FF6EC7' },
+            { id: 'reading', name: 'Reading', icon: '📚', color: '#482880' },
+            { id: 'language', name: 'Language', icon: '🌍', color: '#4FC3F7' }
+        ];
+
+        // Quiz questions by grade and subject
+        const quizQuestionsByGrade = {
+            6: {
+                math: {
+                    "Introduction to Fractions": [
+                        { question: "What is 1/2 + 1/4?", options: ["2/4", "3/4", "1/6", "2/6"], correct: 1 },
+                        { question: "Which fraction is larger: 1/3 or 1/4?", options: ["1/3", "1/4", "They're equal", "Cannot determine"], correct: 0 },
+                        { question: "What is the decimal form of 3/4?", options: ["0.25", "0.5", "0.75", "1.0"], correct: 2 }
+                    ],
+                    "Decimal Operations": [
+                        { question: "What is 2.5 + 3.7?", options: ["5.2", "6.2", "5.12", "6.12"], correct: 1 },
+                        { question: "What is 5.8 - 2.3?", options: ["3.5", "3.3", "2.5", "2.3"], correct: 0 },
+                        { question: "What is 0.5 × 4?", options: ["2.0", "2.5", "1.5", "0.2"], correct: 0 }
+                    ]
+                },
+                science: {
+                    "Introduction to Matter": [
+                        { question: "What are the three states of matter?", options: ["Solid, Liquid, Gas", "Hot, Cold, Warm", "Big, Medium, Small", "Hard, Soft, Medium"], correct: 0 },
+                        { question: "What happens when water freezes?", options: ["It becomes a gas", "It becomes a solid", "It disappears", "It becomes a liquid"], correct: 1 },
+                        { question: "What is matter made of?", options: ["Energy", "Atoms", "Light", "Sound"], correct: 1 }
+                    ]
+                },
+                reading: {
+                    "Basic Reading Comprehension": [
+                        { question: "What is the main idea of a text?", options: ["The first sentence", "The most important point", "The title", "The last sentence"], correct: 1 },
+                        { question: "What do supporting details do?", options: ["Contradict the main idea", "Explain or support the main idea", "Replace the main idea", "Hide the main idea"], correct: 1 }
+                    ]
+                },
+                language: {
+                    "Basic Greetings": [
+                        { question: "How do you say 'Hello' in Spanish?", options: ["Hola", "Adiós", "Gracias", "Por favor"], correct: 0 },
+                        { question: "What does 'Bonjour' mean?", options: ["Goodbye", "Hello", "Thank you", "Please"], correct: 1 }
+                    ]
+                }
+            },
+            9: {
+                math: {
+                    "Algebra Basics": [
+                        { question: "Solve for x: 2x + 5 = 13", options: ["x = 4", "x = 5", "x = 6", "x = 7"], correct: 0 },
+                        { question: "What is the value of x in 3x - 7 = 14?", options: ["x = 5", "x = 6", "x = 7", "x = 8"], correct: 2 },
+                        { question: "Simplify: 2x + 3x", options: ["5x", "6x", "5x²", "6x²"], correct: 0 }
+                    ],
+                    "Quadratic Equations": [
+                        { question: "What is the solution to x² - 9 = 0?", options: ["x = 3", "x = -3", "x = 3 or x = -3", "x = 9"], correct: 2 },
+                        { question: "What is the vertex form of a quadratic equation?", options: ["y = ax + b", "y = a(x-h)² + k", "y = mx + b", "y = ax²"], correct: 1 }
+                    ]
+                },
+                science: {
+                    "Cell Biology": [
+                        { question: "What is the powerhouse of the cell?", options: ["Nucleus", "Mitochondria", "Ribosome", "Cell membrane"], correct: 1 },
+                        { question: "Where is DNA located in a cell?", options: ["Mitochondria", "Nucleus", "Cytoplasm", "Cell membrane"], correct: 1 },
+                        { question: "What process do plants use to make food?", options: ["Respiration", "Photosynthesis", "Digestion", "Circulation"], correct: 1 }
+                    ],
+                    "Genetics": [
+                        { question: "What is a gene?", options: ["A type of cell", "A unit of heredity", "A type of protein", "A type of molecule"], correct: 1 },
+                        { question: "How many chromosomes do humans have?", options: ["23", "46", "44", "48"], correct: 1 }
+                    ]
+                },
+                reading: {
+                    "Reading Comprehension": [
+                        { question: "What is the purpose of literary analysis?", options: ["To summarize the plot", "To examine meaning and techniques", "To memorize quotes", "To count pages"], correct: 1 },
+                        { question: "What is a theme in literature?", options: ["The main character", "The setting", "The underlying message", "The plot"], correct: 2 }
+                    ],
+                    "Literary Analysis": [
+                        { question: "What is symbolism?", options: ["Using symbols to represent ideas", "Writing in symbols", "Drawing symbols", "Speaking in symbols"], correct: 0 }
+                    ]
+                },
+                language: {
+                    "Spanish Basics": [
+                        { question: "How do you say 'Thank you' in Spanish?", options: ["Hola", "Adiós", "Gracias", "Por favor"], correct: 2 },
+                        { question: "What is 'Good morning' in Spanish?", options: ["Buenas noches", "Buenos días", "Buenas tardes", "Hola"], correct: 1 }
+                    ]
+                }
+            }
+        };
+
+        let currentSubject = null;
+        let currentQuiz = null;
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+
+        function loadSubjects() {
+            const selector = document.getElementById('subjectSelector');
+            const selectedSubjects = getSelectedSubjects();
+            const availableSubjects = subjects.filter(s => selectedSubjects.includes(s.id));
+            
+            selector.innerHTML = availableSubjects.map(subject => `
+                <button class="glass-card p-4 text-center hover:scale-105 transition-transform subject-btn" 
+                        data-subject="${subject.id}"
+                        style="border: 2px solid ${subject.color}33;">
+                    <div class="text-4xl mb-2">${subject.icon}</div>
+                    <div class="font-bold">${subject.name}</div>
+                </button>
+            `).join('');
+
+            document.querySelectorAll('.subject-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    loadQuizzes(btn.dataset.subject);
+                });
+            });
+        }
+
+        function loadQuizzes(subjectId) {
+            const grade = getGradeLevel();
+            const completedLessons = getCompletedLessons();
+            const subjectData = quizQuestionsByGrade[grade]?.[subjectId];
+            
+            if (!subjectData) {
+                alert('No quizzes available for this subject at your grade level. Complete some lessons first!');
+                return;
+            }
+
+            // Filter quizzes based on completed lessons
+            const availableQuizzes = Object.keys(subjectData).filter(lessonTitle => {
+                const lessonKey = `${subjectId}_${grade}_${lessonTitle}`;
+                return completedLessons.includes(lessonKey);
+            });
+
+            if (availableQuizzes.length === 0) {
+                alert('Complete some lessons first to unlock practice quizzes!');
+                return;
+            }
+
+            currentSubject = subjectId;
+            document.getElementById('quizzesContainer').classList.remove('hidden');
+            const subject = subjects.find(s => s.id === subjectId);
+            document.getElementById('currentSubjectTitle').textContent = `${subject.name} Practice Quizzes`;
+            
+            const grid = document.getElementById('quizzesGrid');
+            grid.innerHTML = availableQuizzes.map(lessonTitle => {
+                const questions = subjectData[lessonTitle];
+                return `
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-bold mb-2">${lessonTitle} Quiz</h3>
+                        <p class="text-sm text-[#F5F7FA]/70 mb-4">${questions.length} questions</p>
+                        <button class="btn-primary w-full start-quiz-btn" data-lesson="${lessonTitle}">
+                            Start Quiz
+                        </button>
+                    </div>
+                `;
+            }).join('');
+
+            document.querySelectorAll('.start-quiz-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    startQuiz(btn.dataset.lesson);
+                });
+            });
+        }
+
+        function startQuiz(lessonTitle) {
+            const grade = getGradeLevel();
+            const questions = quizQuestionsByGrade[grade][currentSubject][lessonTitle];
+            
+            currentQuiz = { lesson: lessonTitle, questions };
+            currentQuestionIndex = 0;
+            userAnswers = new Array(questions.length).fill(null);
+
+            document.getElementById('quizzesContainer').classList.add('hidden');
+            document.getElementById('quizInterface').classList.remove('hidden');
+            
+            document.getElementById('quizTitle').textContent = `${lessonTitle} Quiz`;
+            document.getElementById('totalQuestions').textContent = questions.length;
+            
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = currentQuiz.questions[currentQuestionIndex];
+            
+            document.getElementById('questionText').textContent = question.question;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            
+            const optionsDiv = document.getElementById('answerOptions');
+            optionsDiv.innerHTML = question.options.map((option, index) => `
+                <label class="flex items-center p-4 glass-card cursor-pointer hover:bg-white/10 transition-all ${userAnswers[currentQuestionIndex] === index ? 'border-2 border-[#4FC3F7]' : ''}">
+                    <input type="radio" name="answer" value="${index}" class="mr-3" ${userAnswers[currentQuestionIndex] === index ? 'checked' : ''}>
+                    <span>${option}</span>
+                </label>
+            `).join('');
+
+            document.querySelectorAll('input[name="answer"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    userAnswers[currentQuestionIndex] = parseInt(e.target.value);
+                    updateAnswerStyles();
+                });
+            });
+
+            document.getElementById('prevQuestionBtn').disabled = currentQuestionIndex === 0;
+            document.getElementById('nextQuestionBtn').classList.remove('hidden');
+            document.getElementById('submitQuizBtn').classList.add('hidden');
+            
+            if (currentQuestionIndex === currentQuiz.questions.length - 1) {
+                document.getElementById('nextQuestionBtn').classList.add('hidden');
+                document.getElementById('submitQuizBtn').classList.remove('hidden');
+            }
+
+            const progress = ((currentQuestionIndex + 1) / currentQuiz.questions.length) * 100;
+            document.getElementById('quizProgressBar').style.width = progress + '%';
+        }
+
+        function updateAnswerStyles() {
+            document.querySelectorAll('#answerOptions label').forEach((label, index) => {
+                if (userAnswers[currentQuestionIndex] === index) {
+                    label.classList.add('border-2', 'border-[#4FC3F7]');
+                } else {
+                    label.classList.remove('border-2', 'border-[#4FC3F7]');
+                }
+            });
+        }
+
+        document.getElementById('prevQuestionBtn').addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        });
+
+        document.getElementById('nextQuestionBtn').addEventListener('click', () => {
+            if (currentQuestionIndex < currentQuiz.questions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion();
+            }
+        });
+
+        document.getElementById('submitQuizBtn').addEventListener('click', () => {
+            submitQuiz();
+        });
+
+        function submitQuiz() {
+            let correct = 0;
+            currentQuiz.questions.forEach((question, index) => {
+                if (userAnswers[index] === question.correct) {
+                    correct++;
+                }
+            });
+
+            const score = Math.round((correct / currentQuiz.questions.length) * 100);
+            
+            document.getElementById('quizInterface').classList.add('hidden');
+            document.getElementById('quizResults').classList.remove('hidden');
+            
+            document.getElementById('resultScore').textContent = score + '%';
+            document.getElementById('resultMessage').textContent = `You got ${correct} out of ${currentQuiz.questions.length} questions correct!`;
+            
+            if (score >= 90) {
+                document.getElementById('resultIcon').textContent = '🌟';
+                document.getElementById('resultTitle').textContent = 'Excellent Work!';
+            } else if (score >= 70) {
+                document.getElementById('resultIcon').textContent = '👍';
+                document.getElementById('resultTitle').textContent = 'Good Job!';
+            } else {
+                document.getElementById('resultIcon').textContent = '📚';
+                document.getElementById('resultTitle').textContent = 'Keep Practicing!';
+            }
+        }
+    </script>
+</body>
+</html>
+
+

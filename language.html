@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foreign Language - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-3xl animate-pulse">⭐</span>
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Subject Header -->
+    <section class="container mx-auto px-6 py-12">
+        <div class="text-center mb-12">
+            <div class="text-6xl mb-4">🌍</div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#482880] bg-clip-text text-transparent">
+                    Foreign Language Mission
+                </span>
+            </h1>
+            <p class="text-xl text-[#F5F7FA]/80">Connect with the world through languages</p>
+            <div class="mt-4 inline-flex items-center gap-3 glass-card px-4 py-2">
+                <p class="text-sm text-[#F5F7FA]/70">
+                    <span class="font-semibold text-[#4FC3F7]">Grade Level:</span> 
+                    <select id="gradeSelector" class="bg-transparent border-none text-[#F5F7FA] font-bold cursor-pointer focus:outline-none ml-2">
+                        <option value="6">6th</option>
+                        <option value="7">7th</option>
+                        <option value="8">8th</option>
+                        <option value="9">9th</option>
+                        <option value="10">10th</option>
+                        <option value="11">11th</option>
+                        <option value="12">12th</option>
+                    </select>
+                </p>
+            </div>
+        </div>
+
+        <!-- Earth to Moon Progress Bar -->
+        <div class="glass-card p-8 mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-center">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#482880] bg-clip-text text-transparent">
+                    Mission Progress
+                </span>
+            </h2>
+            <div class="space-journey-container">
+                <div class="space-journey-track">
+                    <div class="journey-start">
+                        <div class="planet-icon">🌍</div>
+                        <span class="journey-label">Earth</span>
+                    </div>
+                    <div class="journey-progress-bar">
+                        <div class="journey-progress-fill" id="languageProgress" style="width: 0%">
+                            <div class="space-shuttle" id="languageShuttle">🚀</div>
+                        </div>
+                    </div>
+                    <div class="journey-end">
+                        <div class="planet-icon">🌙</div>
+                        <span class="journey-label">Moon</span>
+                    </div>
+                </div>
+                <div class="progress-stats text-center mt-4">
+                    <p class="text-2xl font-bold text-[#4FC3F7]" id="languageProgressText">0%</p>
+                    <p class="text-sm text-[#F5F7FA]/70">Complete your journey to the Moon!</p>
+                    <p class="text-xs text-[#F5F7FA]/50 mt-2" id="lessonsCompletedText">0 of 0 lessons completed</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lessons Section -->
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#482880] bg-clip-text text-transparent">
+                    Available Lessons
+                </span>
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch" id="lessonsGrid">
+                <!-- Lessons will be populated by JS -->
+        </div>
+    </div>
+
+        <!-- Back to Dashboard -->
+        <div class="text-center mb-8">
+            <a href="dashboard.html" class="btn-secondary inline-block">
+                ← Back to Dashboard
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!checkAuth()) {
+                return;
+            }
+            updateNavigation();
+            initFloatingStars();
+            
+            // Animate progress on load
+            setTimeout(() => {
+                animateShuttle();
+            }, 300);
+        });
+
+        // Grade-level specific language lessons
+        const languageLessonsByGrade = {
+            6: [
+                { id: 1, title: "Basic Greetings", difficulty: "Easy", completed: false },
+                { id: 2, title: "Numbers and Colors", difficulty: "Easy", completed: false },
+                { id: 3, title: "Family and Friends", difficulty: "Easy", completed: false },
+                { id: 4, title: "Daily Activities", difficulty: "Medium", completed: false },
+                { id: 5, title: "Food and Drinks", difficulty: "Medium", completed: false },
+                { id: 6, title: "Simple Conversations", difficulty: "Medium", completed: false }
+            ],
+            7: [
+                { id: 1, title: "Present Tense Verbs", difficulty: "Easy", completed: false },
+                { id: 2, title: "Common Phrases", difficulty: "Easy", completed: false },
+                { id: 3, title: "Describing People", difficulty: "Medium", completed: false },
+                { id: 4, title: "School and Hobbies", difficulty: "Medium", completed: false },
+                { id: 5, title: "Weather and Seasons", difficulty: "Medium", completed: false },
+                { id: 6, title: "Basic Grammar Rules", difficulty: "Hard", completed: false }
+            ],
+            8: [
+                { id: 1, title: "Past Tense Introduction", difficulty: "Medium", completed: false },
+                { id: 2, title: "Future Tense", difficulty: "Medium", completed: false },
+                { id: 3, title: "Adjectives and Adverbs", difficulty: "Medium", completed: false },
+                { id: 4, title: "Question Formation", difficulty: "Medium", completed: false },
+                { id: 5, title: "Travel Vocabulary", difficulty: "Hard", completed: false },
+                { id: 6, title: "Cultural Context", difficulty: "Hard", completed: false }
+            ],
+            9: [
+                { id: 1, title: "Spanish Basics", difficulty: "Easy", completed: false },
+                { id: 2, title: "French Greetings", difficulty: "Easy", completed: false },
+                { id: 3, title: "German Vocabulary", difficulty: "Medium", completed: false },
+                { id: 4, title: "Spanish Grammar", difficulty: "Medium", completed: false },
+                { id: 5, title: "French Conversation", difficulty: "Hard", completed: false },
+                { id: 6, title: "German Grammar", difficulty: "Hard", completed: false }
+            ],
+            10: [
+                { id: 1, title: "Advanced Verb Tenses", difficulty: "Medium", completed: false },
+                { id: 2, title: "Subjunctive Mood", difficulty: "Hard", completed: false },
+                { id: 3, title: "Complex Sentences", difficulty: "Hard", completed: false },
+                { id: 4, title: "Idiomatic Expressions", difficulty: "Hard", completed: false },
+                { id: 5, title: "Literary Analysis", difficulty: "Hard", completed: false },
+                { id: 6, title: "Advanced Conversation", difficulty: "Hard", completed: false }
+            ],
+            11: [
+                { id: 1, title: "AP Language Preparation", difficulty: "Hard", completed: false },
+                { id: 2, title: "Advanced Literature", difficulty: "Hard", completed: false },
+                { id: 3, title: "Formal Writing", difficulty: "Hard", completed: false },
+                { id: 4, title: "Cultural Studies", difficulty: "Hard", completed: false },
+                { id: 5, title: "Translation Skills", difficulty: "Hard", completed: false },
+                { id: 6, title: "Linguistic Analysis", difficulty: "Hard", completed: false }
+            ],
+            12: [
+                { id: 1, title: "Advanced Literature", difficulty: "Hard", completed: false },
+                { id: 2, title: "Thesis Writing", difficulty: "Hard", completed: false },
+                { id: 3, title: "Literary Criticism", difficulty: "Hard", completed: false },
+                { id: 4, title: "Advanced Grammar", difficulty: "Hard", completed: false },
+                { id: 5, title: "Professional Communication", difficulty: "Hard", completed: false },
+                { id: 6, title: "Research in Language", difficulty: "Hard", completed: false }
+            ]
+        };
+
+        function getGradeLevel() {
+            const prefs = localStorage.getItem('astrolearn_preferences');
+            if (prefs) {
+                try {
+                    const preferences = JSON.parse(prefs);
+                    return preferences.grade || 9;
+                } catch (e) {
+                    console.error('Error parsing preferences:', e);
+                }
+            }
+            return 9;
+        }
+
+        function getCompletedLessons() {
+            const completed = localStorage.getItem('astrolearn_completed_lessons');
+            if (completed) {
+                try {
+                    return JSON.parse(completed);
+                } catch (e) {
+                    console.error('Error parsing completed lessons:', e);
+                }
+            }
+            return [];
+        }
+
+        let currentLessonKey = null;
+        let currentLessonTitle = null;
+        let currentSubject = null;
+
+        const lessonContentByGrade = {
+            9: {
+                language: {
+                    "Spanish Basics": {
+                        title: "Spanish Basics",
+                        introduction: "¡Hola! Welcome to Spanish! Spanish is one of the most widely spoken languages in the world, with over 500 million speakers. Learning Spanish opens doors to amazing cultures, countries, and conversations. Let's start with the basics!",
+                        concepts: [
+                            {
+                                heading: "Why Learn Spanish?",
+                                explanation: "Spanish is spoken in 21 countries and is the second most spoken language in the world. Learning Spanish helps you communicate with millions of people, understand rich cultures, travel more easily, and can even help in your career. Plus, many English words come from Spanish, so you'll recognize some words right away!",
+                                example: "Words like 'patio,' 'plaza,' 'tornado,' and 'cafeteria' come from Spanish - you already know some Spanish words!"
+                            },
+                            {
+                                heading: "Basic Greetings",
+                                explanation: "Greetings are the first step in any conversation. In Spanish: 'Hola' means Hello (used anytime), 'Buenos días' means Good morning (used until noon), 'Buenas tardes' means Good afternoon (noon to evening), and 'Buenas noches' means Good evening/Good night (evening and night). Always be friendly and use appropriate greetings!",
+                                example: "When you meet someone at 10 AM, say 'Buenos días.' When you meet them at 8 PM, say 'Buenas noches.'"
+                            },
+                            {
+                                heading: "Common Polite Phrases",
+                                explanation: "Politeness is important in Spanish-speaking cultures. Essential phrases include: 'Por favor' (Please), 'Gracias' (Thank you), 'De nada' (You're welcome), 'Perdón' or 'Disculpe' (Excuse me/Sorry), and 'Con permiso' (Excuse me, when passing by). Using these shows respect and good manners.",
+                                example: "When asking for something, say 'Por favor' (Please). When someone helps you, say 'Gracias' (Thank you), and they'll respond 'De nada' (You're welcome)."
+                            },
+                            {
+                                heading: "Masculine and Feminine Articles",
+                                explanation: "Spanish nouns have gender - they're either masculine or feminine. Articles (the, a) must match the noun's gender. 'El' is the masculine article (the), 'La' is the feminine article (the), 'Un' is a/an (masculine), and 'Una' is a/an (feminine). Generally, nouns ending in -o are masculine, and those ending in -a are feminine, but there are exceptions.",
+                                example: "'El libro' (the book - masculine), 'La mesa' (the table - feminine), 'Un perro' (a dog - masculine), 'Una casa' (a house - feminine)"
+                            },
+                            {
+                                heading: "Subject Pronouns and Verb Conjugation",
+                                explanation: "Spanish verbs change (conjugate) based on who is doing the action. Subject pronouns include: 'yo' (I), 'tú' (you, informal), 'él/ella' (he/she), 'nosotros/nosotras' (we), 'vosotros/vosotras' (you all, Spain), 'ellos/ellas' (they). Each pronoun has its own verb ending. For example, 'hablar' (to speak): yo hablo, tú hablas, él/ella habla.",
+                                example: "'Yo hablo español' (I speak Spanish), 'Tú hablas inglés' (You speak English), 'Él habla francés' (He speaks French)"
+                            },
+                            {
+                                heading: "Pronunciation Basics",
+                                explanation: "Spanish pronunciation is more consistent than English. Spanish vowels always sound the same: 'a' (ah), 'e' (eh), 'i' (ee), 'o' (oh), 'u' (oo). The letter 'h' is always silent. The letter 'ñ' makes a 'ny' sound. 'LL' and 'Y' often sound like 'y' in 'yes.' Practice listening and repeating to improve!",
+                                example: "'Hola' is pronounced 'OH-lah' (h is silent), 'España' is pronounced 'es-PAH-nyah' (ñ sounds like ny)"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "How do you say 'Hello' and 'Thank you' in Spanish?",
+                                solution: "'Hola' (Hello) and 'Gracias' (Thank you)"
+                            },
+                            {
+                                problem: "What is the difference between 'el' and 'la'?",
+                                solution: "'El' is the masculine article (the) used with masculine nouns, while 'la' is the feminine article (the) used with feminine nouns."
+                            },
+                            {
+                                problem: "How do you say 'My name is Maria' in Spanish?",
+                                solution: "'Me llamo María' or 'Mi nombre es María'"
+                            }
+                        ],
+                        summary: "Spanish is widely spoken and opens many opportunities. Learn basic greetings (Hola, Buenos días, etc.) and polite phrases (Por favor, Gracias). Understand masculine (el) and feminine (la) articles. Practice verb conjugation with subject pronouns (yo, tú, él/ella). Spanish pronunciation is consistent - vowels always sound the same. ¡Buena suerte (Good luck) with your Spanish learning journey!"
+                    },
+                    "French Greetings": {
+                        title: "French Greetings",
+                        introduction: "Bonjour! Welcome to French! French is a beautiful language spoken in over 29 countries across five continents. Known as the language of love, diplomacy, and culture, French opens doors to art, cuisine, literature, and international communication. Commençons (Let's begin)!",
+                        concepts: [
+                            {
+                                heading: "Why Learn French?",
+                                explanation: "French is an official language in 29 countries and is spoken by over 300 million people worldwide. It's the language of diplomacy, used in international organizations like the UN and EU. French culture has given us incredible art, literature, cuisine, and fashion. Learning French also helps with other Romance languages like Spanish and Italian.",
+                                example: "Many English words come from French: 'restaurant,' 'ballet,' 'chocolate,' 'café' - you already know some French!"
+                            },
+                            {
+                                heading: "Basic Greetings",
+                                explanation: "French greetings vary by time of day and formality. 'Bonjour' means Hello/Good day (used from morning until evening, formal and informal). 'Bonsoir' means Good evening (used in the evening and night). 'Salut' means Hi/Bye (informal, used with friends). 'Au revoir' means Goodbye (formal and informal). 'À bientôt' means See you soon.",
+                                example: "At 10 AM, say 'Bonjour.' At 8 PM, say 'Bonsoir.' With friends, you can use 'Salut' for both hello and goodbye."
+                            },
+                            {
+                                heading: "Politeness in French Culture",
+                                explanation: "Politeness is extremely important in French culture. Essential phrases include: 'S'il vous plaît' (Please - formal) or 'S'il te plaît' (Please - informal), 'Merci' (Thank you), 'De rien' or 'Je vous en prie' (You're welcome), 'Excusez-moi' (Excuse me - formal), 'Pardon' (Sorry/Excuse me). Always use polite phrases - it's expected and appreciated!",
+                                example: "When ordering in a restaurant, say 'Un café, s'il vous plaît' (A coffee, please). When someone helps you, say 'Merci beaucoup' (Thank you very much)."
+                            },
+                            {
+                                heading: "Formal vs Informal 'You'",
+                                explanation: "French has two ways to say 'you': 'vous' (formal) and 'tu' (informal). Use 'vous' with strangers, older people, authority figures, or in professional settings. Use 'tu' with friends, family, and people your age. When in doubt, use 'vous' - it's more respectful. The verb conjugation changes based on which one you use.",
+                                example: "'Comment allez-vous?' (How are you? - formal) vs 'Comment vas-tu?' (How are you? - informal). 'Vous parlez' (You speak - formal) vs 'Tu parles' (You speak - informal)."
+                            },
+                            {
+                                heading: "Introducing Yourself",
+                                explanation: "To introduce yourself, say 'Je m'appelle [Your Name]' (My name is...) or 'Je suis [Your Name]' (I am...). When meeting someone, you might say 'Enchanté(e)' (Nice to meet you - masculine/feminine) or 'Ravi(e) de vous rencontrer' (Pleased to meet you - formal). To ask someone's name, say 'Comment vous appelez-vous?' (formal) or 'Comment tu t'appelles?' (informal).",
+                                example: "'Bonjour, je m'appelle Pierre. Enchanté!' (Hello, my name is Pierre. Nice to meet you!)"
+                            },
+                            {
+                                heading: "French Pronunciation Tips",
+                                explanation: "French pronunciation can be challenging but follows patterns. Many letters are silent, especially at the end of words. French has nasal sounds (like in 'bon,' 'vin,' 'un'). The 'r' is pronounced in the back of the throat. 'E' at the end of words is usually silent. 'H' is always silent. Practice listening to native speakers and repeating - pronunciation improves with practice!",
+                                example: "'Bonjour' is pronounced 'bohn-ZHOOR' (the 'n' is nasal, 'r' is guttural). 'Merci' is pronounced 'mehr-SEE' (the 'r' is guttural)."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is the difference between 'Bonjour' and 'Bonsoir'?",
+                                solution: "'Bonjour' means Hello/Good day (used from morning until evening), while 'Bonsoir' means Good evening (used in the evening and night)."
+                            },
+                            {
+                                problem: "When should you use 'vous' vs 'tu'?",
+                                solution: "Use 'vous' (formal) with strangers, older people, authority figures, or in professional settings. Use 'tu' (informal) with friends, family, and people your age. When in doubt, use 'vous.'"
+                            },
+                            {
+                                problem: "How do you say 'My name is Pierre' and 'Nice to meet you' in French?",
+                                solution: "'Je m'appelle Pierre' (My name is Pierre) and 'Enchanté' (Nice to meet you - masculine) or 'Enchantée' (feminine)"
+                            }
+                        ],
+                        summary: "French is a global language of culture and diplomacy. Learn greetings: Bonjour (Hello), Bonsoir (Good evening), Au revoir (Goodbye). Use polite phrases: S'il vous plaît (Please), Merci (Thank you). Understand formal 'vous' vs informal 'tu.' Practice pronunciation - French has nasal sounds and silent letters. Bonne chance (Good luck) with your French learning!"
+                    }
+                }
+            }
+        };
+
+        function openLessonModal(lessonKey, lessonTitle, subject, isAlreadyCompleted = false) {
+            currentLessonKey = lessonKey;
+            currentLessonTitle = lessonTitle;
+            currentSubject = subject;
+            
+            const grade = getGradeLevel();
+            const content = lessonContentByGrade[grade]?.[subject]?.[lessonTitle];
+            
+            if (!content) {
+                const defaultContent = {
+                    title: lessonTitle,
+                    notes: [
+                        `Welcome to ${lessonTitle}!`,
+                        "This lesson will help you understand key concepts.",
+                        "Take your time to read through the notes carefully.",
+                        "Practice the examples to reinforce your learning.",
+                        "Complete this lesson to unlock practice quizzes!"
+                    ],
+                    examples: [
+                        "Example 1: Practice problem",
+                        "Example 2: Another practice problem"
+                    ]
+                };
+                displayLessonContent(defaultContent, isAlreadyCompleted);
+            } else {
+                displayLessonContent(content, isAlreadyCompleted);
+            }
+            
+            document.getElementById('lessonModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function displayLessonContent(content, isAlreadyCompleted = false) {
+            const lessonContentDiv = document.getElementById('lessonContent');
+            
+            // Build concepts section
+            const conceptsHTML = content.concepts ? `
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold mb-4 text-[#4FC3F7]">📚 Key Concepts</h3>
+                    <div class="space-y-4">
+                        ${content.concepts.map((concept, index) => `
+                            <div class="glass-card p-5">
+                                <h4 class="text-lg font-bold mb-2 text-[#482880]">${index + 1}. ${concept.heading}</h4>
+                                <p class="text-[#F5F7FA]/90 mb-3 leading-relaxed">${concept.explanation}</p>
+                                <div class="glass-card p-3 bg-[#482880]/20 mt-3">
+                                    <p class="text-sm font-semibold text-[#4FC3F7] mb-1">Example:</p>
+                                    <p class="text-[#F5F7FA]/90 font-mono text-sm">${concept.example}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : '';
+            
+            // Build practice problems section
+            const practiceHTML = content.practiceProblems ? `
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold mb-4 text-[#482880]">✏️ Practice Exercises</h3>
+                    <div class="space-y-4">
+                        ${content.practiceProblems.map((problem, index) => `
+                            <div class="glass-card p-5">
+                                <div class="mb-3">
+                                    <p class="text-sm font-semibold text-[#4FC3F7] mb-1">Exercise ${index + 1}:</p>
+                                    <p class="text-[#F5F7FA]/90 font-semibold">${problem.problem}</p>
+                                </div>
+                                <details class="mt-2">
+                                    <summary class="cursor-pointer text-sm text-[#482880] hover:text-[#4FC3F7] transition-colors">Show Answer</summary>
+                                    <div class="glass-card p-3 bg-[#482880]/20 mt-2">
+                                        <p class="text-[#F5F7FA]/90 font-mono text-sm">${problem.solution}</p>
+                                    </div>
+                                </details>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : '';
+            
+            lessonContentDiv.innerHTML = `
+                <div class="mb-6">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-3xl font-bold mb-4">
+                            <span class="bg-gradient-to-r from-[#4FC3F7] to-[#482880] bg-clip-text text-transparent">
+                                ${content.title}
+                            </span>
+                        </h2>
+                        ${isAlreadyCompleted ? '<span class="text-2xl" title="Lesson Completed">✅</span>' : ''}
+                    </div>
+                    ${content.introduction ? `
+                        <div class="glass-card p-4 bg-[#4FC3F7]/10 border border-[#4FC3F7]/30 mb-4">
+                            <p class="text-[#F5F7FA]/90 leading-relaxed">${content.introduction}</p>
+                        </div>
+                    ` : ''}
+                    ${isAlreadyCompleted ? '<p class="text-sm text-[#4FC3F7] mb-4">You\'ve completed this lesson! Review the content below.</p>' : ''}
+                </div>
+                
+                ${conceptsHTML}
+                
+                ${practiceHTML}
+                
+                ${content.summary ? `
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold mb-3 text-[#482880]">📋 Lesson Summary</h3>
+                        <div class="glass-card p-5 bg-[#482880]/20 border-2 border-[#482880]/50">
+                            <p class="text-[#F5F7FA]/90 leading-relaxed">${content.summary}</p>
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+            
+            // Update button text based on completion status
+            const completeBtn = document.getElementById('completeLessonBtn');
+            if (completeBtn) {
+                if (isAlreadyCompleted) {
+                    completeBtn.textContent = 'Mark as Complete Again';
+                    completeBtn.classList.remove('btn-primary');
+                    completeBtn.classList.add('btn-secondary');
+                } else {
+                    completeBtn.textContent = 'Mark as Complete';
+                    completeBtn.classList.remove('btn-secondary');
+                    completeBtn.classList.add('btn-primary');
+                }
+            }
+        }
+
+        function closeLessonModal() {
+            document.getElementById('lessonModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function completeCurrentLesson() {
+            if (currentLessonKey && currentLessonTitle) {
+                const completed = getCompletedLessons();
+                const isAlreadyCompleted = completed.includes(currentLessonKey);
+                
+                if (!isAlreadyCompleted) {
+                    markLessonCompleted(currentLessonKey, currentLessonTitle);
+                } else {
+                    // Already completed, just close
+                    alert('Lesson already completed! You can review it anytime.');
+                }
+                closeLessonModal();
+                loadLessons();
+            }
+        }
+
+        function markLessonCompleted(lessonKey, lessonTitle) {
+            const completed = getCompletedLessons();
+            if (!completed.includes(lessonKey)) {
+                completed.push(lessonKey);
+                localStorage.setItem('astrolearn_completed_lessons', JSON.stringify(completed));
+                updateProgress();
+            }
+        }
+
+        function updateProgress() {
+            const grade = getGradeLevel();
+            const lessons = languageLessonsByGrade[grade] || languageLessonsByGrade[9];
+            const completedLessons = getCompletedLessons();
+            
+            let completedCount = 0;
+            lessons.forEach(lesson => {
+                const lessonKey = `language_${grade}_${lesson.title}`;
+                if (completedLessons.includes(lessonKey)) {
+                    completedCount++;
+                }
+            });
+            
+            const totalLessons = lessons.length;
+            const progress = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
+            
+            document.getElementById('languageProgressText').textContent = progress + '%';
+            document.getElementById('lessonsCompletedText').textContent = `${completedCount} of ${totalLessons} lessons completed`;
+            
+            const progressFill = document.getElementById('languageProgress');
+            if (progressFill) {
+                progressFill.style.width = progress + '%';
+            }
+            
+            animateShuttle();
+        }
+
+        function loadLessons() {
+            const grid = document.getElementById('lessonsGrid');
+            const grade = getGradeLevel();
+            const lessons = languageLessonsByGrade[grade] || languageLessonsByGrade[9];
+            
+            if (!lessons || lessons.length === 0) {
+                grid.innerHTML = '<p class="text-center text-[#F5F7FA]/70">No lessons available for this grade level.</p>';
+                return;
+            }
+            
+            // Load completed lessons
+            const completedLessons = getCompletedLessons();
+            
+            grid.innerHTML = lessons.map(lesson => {
+                const lessonKey = `language_${grade}_${lesson.title}`;
+                const isCompleted = completedLessons.includes(lessonKey);
+                
+                return `
+                <div class="glass-card p-6 flex flex-col h-full ${isCompleted ? 'border-2 border-[#4FC3F7]' : ''}">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-bold flex-1">${lesson.title}</h3>
+                        ${isCompleted ? '<span class="text-2xl ml-2 flex-shrink-0">✅</span>' : ''}
+                    </div>
+                    <p class="text-sm text-[#F5F7FA]/70 mb-2">Difficulty: <span class="font-bold" style="color: ${lesson.difficulty === 'Easy' ? '#4FC3F7' : lesson.difficulty === 'Medium' ? '#FF6EC7' : '#482880'}">${lesson.difficulty}</span></p>
+                    <p class="text-xs text-[#F5F7FA]/50 mb-4">Grade ${grade} Level</p>
+                    <div class="mt-auto flex gap-2">
+                        <button class="btn-primary flex-1 complete-lesson-btn" 
+                                data-lesson-key="${lessonKey}"
+                                data-lesson-title="${lesson.title}"
+                                data-is-completed="${isCompleted}">
+                            ${isCompleted ? 'Review Lesson' : 'Start Lesson'}
+                        </button>
+                        ${isCompleted ? `
+                            <button class="btn-secondary complete-lesson-btn-again flex-shrink-0" 
+                                    data-lesson-key="${lessonKey}"
+                                    data-lesson-title="${lesson.title}"
+                                    title="Mark as incomplete to redo">
+                                🔄
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            }).join('');
+            
+            // Add event listeners for lesson buttons
+            document.querySelectorAll('.complete-lesson-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    openLessonModal(btn.dataset.lessonKey, btn.dataset.lessonTitle, 'language', btn.dataset.isCompleted === 'true');
+                });
+            });
+            
+            // Add event listeners for redo buttons
+            document.querySelectorAll('.complete-lesson-btn-again').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (confirm('Mark this lesson as incomplete so you can redo it?')) {
+                        const lessonKey = btn.dataset.lessonKey;
+                        const completed = getCompletedLessons();
+                        const index = completed.indexOf(lessonKey);
+                        if (index > -1) {
+                            completed.splice(index, 1);
+                            localStorage.setItem('astrolearn_completed_lessons', JSON.stringify(completed));
+                            updateProgress();
+                            loadLessons(); // Reload to update UI
+                        }
+                    }
+                });
+            });
+            
+            updateProgress();
+        }
+
+        function animateShuttle() {
+            const progressText = document.getElementById('languageProgressText');
+            const progress = progressText ? parseInt(progressText.textContent) : 0;
+            const shuttle = document.getElementById('languageShuttle');
+            
+            if (shuttle) {
+                setTimeout(() => {
+                    shuttle.style.transform = 'translateX(0)';
+                }, 100);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (isLoggedIn()) {
+                // Set up grade selector
+                const gradeSelector = document.getElementById('gradeSelector');
+                if (gradeSelector) {
+                    const grade = getGradeLevel();
+                    gradeSelector.value = grade;
+                    
+                    gradeSelector.addEventListener('change', (e) => {
+                        const newGrade = parseInt(e.target.value);
+                        const prefs = localStorage.getItem('astrolearn_preferences');
+                        if (prefs) {
+                            try {
+                                const preferences = JSON.parse(prefs);
+                                preferences.grade = newGrade;
+                                localStorage.setItem('astrolearn_preferences', JSON.stringify(preferences));
+                                
+                                // Reload lessons and progress for new grade
+                                loadLessons();
+                                updateProgress();
+                                
+                                // Show feedback
+                                gradeSelector.style.backgroundColor = 'rgba(79, 195, 247, 0.2)';
+                                setTimeout(() => {
+                                    gradeSelector.style.backgroundColor = 'transparent';
+                                }, 500);
+                            } catch (e) {
+                                console.error('Error updating grade:', e);
+                            }
+                        }
+                    });
+                }
+                
+                loadLessons();
+                updateProgress();
+            }
+        });
+    </script>
+</body>
+</html>

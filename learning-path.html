@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Learning Path - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-3xl animate-pulse">⭐</span>
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Onboarding Container -->
+    <div class="container mx-auto px-6 py-12 max-w-4xl">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <div class="text-6xl mb-4 animate-float">🚀</div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Customize Your Mission, Cadet
+                </span>
+            </h1>
+            <p class="text-xl text-[#F5F7FA]/80">Set up your learning journey through the stars</p>
+        </div>
+
+        <!-- Grade Level Selection -->
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-center">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Select Your Grade Level
+                </span>
+            </h2>
+            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3 md:gap-4" id="gradeSelector">
+                <!-- Grades will be populated by JS -->
+            </div>
+        </div>
+
+        <!-- Subject Selection -->
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-center">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Choose the Subjects You Want to Explore
+                </span>
+            </h2>
+            <p class="text-center text-[#F5F7FA]/70 mb-6">Select all subjects you're interested in learning</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6" id="subjectSelector">
+                <!-- Subjects will be populated by JS -->
+            </div>
+        </div>
+
+        <!-- Difficulty Setting -->
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-center">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Choose Your Difficulty Level
+                </span>
+            </h2>
+            <p class="text-center text-[#F5F7FA]/70 mb-6">Select your preferred challenge level (optional)</p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center" id="difficultySelector">
+                <!-- Difficulty options will be populated by JS -->
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="text-center">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-4">
+                <button id="resetBtn" class="btn-secondary text-lg py-3 px-8 flex items-center gap-2">
+                    <span>↺</span>
+                    <span>Reset Selections</span>
+                </button>
+                <button id="continueBtn" class="btn-primary text-xl py-4 px-12 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    Continue to My Dashboard
+                </button>
+            </div>
+            <p class="text-sm text-[#F5F7FA]/50 mt-4">You can change these settings later in your profile</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-16">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('astrolearn_logged_in') === 'true';
+            if (!isLoggedIn) {
+                window.location.href = 'login.html';
+                return;
+            }
+            initFloatingStars();
+            loadOnboardingContent();
+            loadSavedPreferences();
+        });
+
+        const grades = [
+            { id: 6, label: '6th', icon: '🌟' },
+            { id: 7, label: '7th', icon: '⭐' },
+            { id: 8, label: '8th', icon: '✨' },
+            { id: 9, label: '9th', icon: '🌠' },
+            { id: 10, label: '10th', icon: '💫' },
+            { id: 11, label: '11th', icon: '🔭' },
+            { id: 12, label: '12th', icon: '🚀' }
+        ];
+
+        const subjects = [
+            { id: 'math', name: 'Math', icon: '🔭', color: '#4FC3F7' },
+            { id: 'science', name: 'Science', icon: '🧬', color: '#FF6EC7' },
+            { id: 'reading', name: 'Reading', icon: '📚', color: '#482880' },
+            { id: 'language', name: 'Foreign Language', icon: '🌍', color: '#4FC3F7' }
+        ];
+
+        const difficultyLevels = [
+            { id: 'easy', name: 'Nebula Mode', description: 'Gentle introduction to concepts', icon: '🌌', color: '#4FC3F7' },
+            { id: 'medium', name: 'Supernova Mode', description: 'Balanced challenge level', icon: '💥', color: '#FF6EC7' },
+            { id: 'hard', name: 'Black Hole Mode', description: 'Maximum challenge', icon: '🕳️', color: '#482880' }
+        ];
+
+        let selectedGrade = null;
+        let selectedSubjects = [];
+        let selectedDifficulty = null;
+
+        function loadOnboardingContent() {
+            loadGradeSelector();
+            loadSubjectSelector();
+            loadDifficultySelector();
+            setupContinueButton();
+        }
+
+        function loadSavedPreferences() {
+            // Load previously saved preferences if they exist
+            const savedPrefs = localStorage.getItem('astrolearn_preferences');
+            if (savedPrefs) {
+                try {
+                    const prefs = JSON.parse(savedPrefs);
+                    
+                    // Restore grade selection
+                    if (prefs.grade) {
+                        selectedGrade = prefs.grade;
+                        const gradeBtn = document.querySelector(`.grade-btn[data-grade="${prefs.grade}"]`);
+                        if (gradeBtn) {
+                            gradeBtn.classList.add('grade-selected');
+                        }
+                    }
+                    
+                    // Restore subject selections
+                    if (prefs.subjects && Array.isArray(prefs.subjects)) {
+                        selectedSubjects = prefs.subjects;
+                        prefs.subjects.forEach(subjectId => {
+                            const subjectBtn = document.querySelector(`.subject-btn[data-subject="${subjectId}"]`);
+                            if (subjectBtn) {
+                                subjectBtn.classList.add('subject-selected');
+                                subjectBtn.querySelector('.subject-checkmark').classList.remove('hidden');
+                            }
+                        });
+                    }
+                    
+                    // Restore difficulty selection
+                    if (prefs.difficulty) {
+                        selectedDifficulty = prefs.difficulty;
+                        const difficultyBtn = document.querySelector(`.difficulty-btn[data-difficulty="${prefs.difficulty}"]`);
+                        if (difficultyBtn) {
+                            difficultyBtn.classList.add('difficulty-selected');
+                            difficultyBtn.querySelector('.difficulty-checkmark').classList.remove('hidden');
+                        }
+                    }
+                    
+                    // Update continue button state
+                    updateContinueButton();
+                } catch (e) {
+                    console.error('Error loading saved preferences:', e);
+                }
+            }
+        }
+
+        function loadGradeSelector() {
+            const selector = document.getElementById('gradeSelector');
+            selector.innerHTML = grades.map(grade => `
+                <button 
+                    class="grade-btn glass-card p-4 text-center transition-all hover:scale-105"
+                    data-grade="${grade.id}"
+                >
+                    <div class="text-3xl mb-2">${grade.icon}</div>
+                    <div class="font-bold">${grade.label}</div>
+                </button>
+            `).join('');
+
+            // Add click handlers
+            document.querySelectorAll('.grade-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.grade-btn').forEach(b => {
+                        b.classList.remove('grade-selected');
+                    });
+                    btn.classList.add('grade-selected');
+                    selectedGrade = parseInt(btn.dataset.grade);
+                    updateContinueButton();
+                });
+            });
+        }
+
+        function loadSubjectSelector() {
+            const selector = document.getElementById('subjectSelector');
+            selector.innerHTML = subjects.map(subject => `
+                <button 
+                    class="subject-btn glass-card p-6 text-center transition-all hover:scale-105"
+                    data-subject="${subject.id}"
+                    style="border: 2px solid ${subject.color}33;"
+                >
+                    <div class="text-5xl mb-3">${subject.icon}</div>
+                    <div class="font-bold text-lg">${subject.name}</div>
+                    <div class="subject-checkmark hidden mt-2 text-2xl">✅</div>
+                </button>
+            `).join('');
+
+            // Add click handlers
+            document.querySelectorAll('.subject-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const subjectId = btn.dataset.subject;
+                    if (selectedSubjects.includes(subjectId)) {
+                        selectedSubjects = selectedSubjects.filter(s => s !== subjectId);
+                        btn.classList.remove('subject-selected');
+                        btn.querySelector('.subject-checkmark').classList.add('hidden');
+                    } else {
+                        selectedSubjects.push(subjectId);
+                        btn.classList.add('subject-selected');
+                        btn.querySelector('.subject-checkmark').classList.remove('hidden');
+                    }
+                    updateContinueButton();
+                });
+            });
+        }
+
+        function loadDifficultySelector() {
+            const selector = document.getElementById('difficultySelector');
+            selector.innerHTML = difficultyLevels.map(difficulty => `
+                <button 
+                    class="difficulty-btn glass-card p-6 text-center transition-all hover:scale-105 flex-1"
+                    data-difficulty="${difficulty.id}"
+                    style="border: 2px solid ${difficulty.color}33;"
+                >
+                    <div class="text-4xl mb-3">${difficulty.icon}</div>
+                    <div class="font-bold text-lg mb-2">${difficulty.name}</div>
+                    <div class="text-sm text-[#F5F7FA]/70">${difficulty.description}</div>
+                    <div class="difficulty-checkmark hidden mt-2 text-2xl">✅</div>
+                </button>
+            `).join('');
+
+            // Add click handlers
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.difficulty-btn').forEach(b => {
+                        b.classList.remove('difficulty-selected');
+                        b.querySelector('.difficulty-checkmark').classList.add('hidden');
+                    });
+                    btn.classList.add('difficulty-selected');
+                    btn.querySelector('.difficulty-checkmark').classList.remove('hidden');
+                    selectedDifficulty = btn.dataset.difficulty;
+                    updateContinueButton();
+                });
+            });
+        }
+
+        function updateContinueButton() {
+            const continueBtn = document.getElementById('continueBtn');
+            // Grade is required, subjects are required (at least one), difficulty is optional
+            if (selectedGrade && selectedSubjects.length > 0) {
+                continueBtn.disabled = false;
+            } else {
+                continueBtn.disabled = true;
+            }
+        }
+
+        function resetSelections() {
+            // Reset state variables
+            selectedGrade = null;
+            selectedSubjects = [];
+            selectedDifficulty = null;
+
+            // Reset UI - remove all selected classes
+            document.querySelectorAll('.grade-btn').forEach(btn => {
+                btn.classList.remove('grade-selected');
+            });
+
+            document.querySelectorAll('.subject-btn').forEach(btn => {
+                btn.classList.remove('subject-selected');
+                btn.querySelector('.subject-checkmark').classList.add('hidden');
+            });
+
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.classList.remove('difficulty-selected');
+                btn.querySelector('.difficulty-checkmark').classList.add('hidden');
+            });
+
+            // Update continue button state
+            updateContinueButton();
+
+            // Show feedback
+            const resetBtn = document.getElementById('resetBtn');
+            const originalText = resetBtn.innerHTML;
+            resetBtn.innerHTML = '<span>✓</span><span>Reset!</span>';
+            resetBtn.classList.add('bg-green-500');
+            
+            setTimeout(() => {
+                resetBtn.innerHTML = originalText;
+                resetBtn.classList.remove('bg-green-500');
+            }, 1500);
+        }
+
+        function setupContinueButton() {
+            const continueBtn = document.getElementById('continueBtn');
+            const resetBtn = document.getElementById('resetBtn');
+
+            // Reset button handler
+            resetBtn.addEventListener('click', resetSelections);
+
+            // Continue button handler
+            continueBtn.addEventListener('click', () => {
+                if (continueBtn.disabled) return;
+
+                // Save user preferences to localStorage
+                const userPreferences = {
+                    grade: selectedGrade,
+                    subjects: selectedSubjects,
+                    difficulty: selectedDifficulty || 'medium', // Default to medium if not selected
+                    onboardingComplete: true
+                };
+
+                localStorage.setItem('astrolearn_preferences', JSON.stringify(userPreferences));
+                localStorage.setItem('astrolearn_onboarding_complete', 'true');
+
+                // Show loading state
+                continueBtn.textContent = 'Launching Mission...';
+                continueBtn.disabled = true;
+
+                // Redirect to dashboard
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+            });
+        }
+    </script>
+</body>
+</html>
+

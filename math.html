@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-3xl animate-pulse">⭐</span>
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Subject Header -->
+    <section class="container mx-auto px-6 py-12">
+        <div class="text-center mb-12">
+            <div class="text-6xl mb-4">🔭</div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Math Mission
+                </span>
+            </h1>
+            <p class="text-xl text-[#F5F7FA]/80">Master the universe of numbers and equations</p>
+            <div class="mt-4 inline-flex items-center gap-3 glass-card px-4 py-2">
+                <p class="text-sm text-[#F5F7FA]/70">
+                    <span class="font-semibold text-[#4FC3F7]">Grade Level:</span> 
+                    <select id="gradeSelector" class="bg-transparent border-none text-[#F5F7FA] font-bold cursor-pointer focus:outline-none ml-2">
+                        <option value="6">6th</option>
+                        <option value="7">7th</option>
+                        <option value="8">8th</option>
+                        <option value="9">9th</option>
+                        <option value="10">10th</option>
+                        <option value="11">11th</option>
+                        <option value="12">12th</option>
+                    </select>
+                </p>
+            </div>
+        </div>
+
+        <!-- Earth to Moon Progress Bar -->
+        <div class="glass-card p-8 mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-center">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Mission Progress
+                </span>
+            </h2>
+            <div class="space-journey-container">
+                <div class="space-journey-track">
+                    <div class="journey-start">
+                        <div class="planet-icon">🌍</div>
+                        <span class="journey-label">Earth</span>
+                    </div>
+                    <div class="journey-progress-bar">
+                        <div class="journey-progress-fill" id="mathProgress" style="width: 0%">
+                            <div class="space-shuttle" id="mathShuttle">🚀</div>
+                        </div>
+                    </div>
+                    <div class="journey-end">
+                        <div class="planet-icon">🌙</div>
+                        <span class="journey-label">Moon</span>
+                    </div>
+                </div>
+                <div class="progress-stats text-center mt-4">
+                    <p class="text-2xl font-bold text-[#4FC3F7]" id="mathProgressText">0%</p>
+                    <p class="text-sm text-[#F5F7FA]/70">Complete your journey to the Moon!</p>
+                    <p class="text-xs text-[#F5F7FA]/50 mt-2" id="lessonsCompletedText">0 of 0 lessons completed</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lessons Section -->
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Available Lessons
+                </span>
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch" id="lessonsGrid">
+                <!-- Lessons will be populated by JS -->
+                </div>
+            </div>
+
+        <!-- Lesson Modal -->
+        <div id="lessonModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div class="fixed inset-0 bg-black/70 backdrop-blur-sm" onclick="closeLessonModal()"></div>
+            <div class="relative glass-card p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto z-10">
+                <button onclick="closeLessonModal()" class="absolute top-4 right-4 text-2xl text-[#F5F7FA]/70 hover:text-[#F5F7FA]">✕</button>
+                <div id="lessonContent">
+                    <!-- Lesson content will be populated by JS -->
+                </div>
+                <div class="mt-6 flex gap-4 justify-end">
+                    <button onclick="closeLessonModal()" class="btn-secondary">Close</button>
+                    <button onclick="completeCurrentLesson()" class="btn-primary" id="completeLessonBtn">Mark as Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Dashboard -->
+        <div class="text-center mb-8">
+            <a href="dashboard.html" class="btn-secondary inline-block">
+                ← Back to Dashboard
+            </a>
+    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!checkAuth()) {
+                return;
+            }
+            updateNavigation();
+            initFloatingStars();
+            
+            // Animate progress on load
+            setTimeout(() => {
+                animateShuttle();
+            }, 300);
+        });
+
+        // Grade-level specific math lessons
+        const mathLessonsByGrade = {
+            6: [
+                { id: 1, title: "Introduction to Fractions", difficulty: "Easy", completed: false },
+                { id: 2, title: "Decimal Operations", difficulty: "Easy", completed: false },
+                { id: 3, title: "Basic Geometry Shapes", difficulty: "Easy", completed: false },
+                { id: 4, title: "Ratios and Proportions", difficulty: "Medium", completed: false },
+                { id: 5, title: "Percentages", difficulty: "Medium", completed: false },
+                { id: 6, title: "Area and Perimeter", difficulty: "Medium", completed: false }
+            ],
+            7: [
+                { id: 1, title: "Integers and Operations", difficulty: "Easy", completed: false },
+                { id: 2, title: "Expressions and Equations", difficulty: "Medium", completed: false },
+                { id: 3, title: "Proportional Relationships", difficulty: "Medium", completed: false },
+                { id: 4, title: "Angle Relationships", difficulty: "Medium", completed: false },
+                { id: 5, title: "Statistics and Probability", difficulty: "Medium", completed: false },
+                { id: 6, title: "Surface Area and Volume", difficulty: "Hard", completed: false }
+            ],
+            8: [
+                { id: 1, title: "Linear Equations", difficulty: "Medium", completed: false },
+                { id: 2, title: "Systems of Equations", difficulty: "Medium", completed: false },
+                { id: 3, title: "Functions", difficulty: "Medium", completed: false },
+                { id: 4, title: "Pythagorean Theorem", difficulty: "Medium", completed: false },
+                { id: 5, title: "Transformations", difficulty: "Hard", completed: false },
+                { id: 6, title: "Scientific Notation", difficulty: "Hard", completed: false }
+            ],
+            9: [
+                { id: 1, title: "Algebra Basics", difficulty: "Easy", completed: false },
+                { id: 2, title: "Linear Equations and Inequalities", difficulty: "Medium", completed: false },
+                { id: 3, title: "Quadratic Equations", difficulty: "Medium", completed: false },
+                { id: 4, title: "Polynomials", difficulty: "Medium", completed: false },
+                { id: 5, title: "Exponential Functions", difficulty: "Hard", completed: false },
+                { id: 6, title: "Radical Expressions", difficulty: "Hard", completed: false }
+            ],
+            10: [
+                { id: 1, title: "Advanced Algebra", difficulty: "Medium", completed: false },
+                { id: 2, title: "Quadratic Functions", difficulty: "Medium", completed: false },
+                { id: 3, title: "Polynomial Functions", difficulty: "Hard", completed: false },
+                { id: 4, title: "Rational Expressions", difficulty: "Hard", completed: false },
+                { id: 5, title: "Logarithmic Functions", difficulty: "Hard", completed: false },
+                { id: 6, title: "Sequences and Series", difficulty: "Hard", completed: false }
+            ],
+            11: [
+                { id: 1, title: "Trigonometry Basics", difficulty: "Medium", completed: false },
+                { id: 2, title: "Trigonometric Functions", difficulty: "Hard", completed: false },
+                { id: 3, title: "Trigonometric Identities", difficulty: "Hard", completed: false },
+                { id: 4, title: "Analytic Geometry", difficulty: "Hard", completed: false },
+                { id: 5, title: "Complex Numbers", difficulty: "Hard", completed: false },
+                { id: 6, title: "Conic Sections", difficulty: "Hard", completed: false }
+            ],
+            12: [
+                { id: 1, title: "Calculus Introduction", difficulty: "Hard", completed: false },
+                { id: 2, title: "Limits and Continuity", difficulty: "Hard", completed: false },
+                { id: 3, title: "Derivatives", difficulty: "Hard", completed: false },
+                { id: 4, title: "Applications of Derivatives", difficulty: "Hard", completed: false },
+                { id: 5, title: "Integrals", difficulty: "Hard", completed: false },
+                { id: 6, title: "Applications of Integrals", difficulty: "Hard", completed: false }
+            ]
+        };
+
+        function getGradeLevel() {
+            const prefs = localStorage.getItem('astrolearn_preferences');
+            if (prefs) {
+                try {
+                    const preferences = JSON.parse(prefs);
+                    return preferences.grade || 9; // Default to 9th grade
+                } catch (e) {
+                    console.error('Error parsing preferences:', e);
+                }
+            }
+            return 9; // Default grade
+        }
+
+        function getCompletedLessons() {
+            const completed = localStorage.getItem('astrolearn_completed_lessons');
+            if (completed) {
+                try {
+                    return JSON.parse(completed);
+                } catch (e) {
+                    console.error('Error parsing completed lessons:', e);
+                }
+            }
+            return [];
+        }
+
+        let currentLessonKey = null;
+        let currentLessonTitle = null;
+        let currentSubject = null;
+
+        // Grade-level specific lesson content
+        const lessonContentByGrade = {
+            6: {
+                math: {
+                    "Introduction to Fractions": {
+                        title: "Introduction to Fractions",
+                        introduction: "Welcome to fractions! Fractions help us represent parts of a whole. Think of a pizza cut into slices - each slice is a fraction of the whole pizza.",
+                        concepts: [
+                            {
+                                heading: "What is a Fraction?",
+                                explanation: "A fraction is written as a/b where 'a' is the numerator (top number) and 'b' is the denominator (bottom number). The denominator tells us how many equal parts the whole is divided into, and the numerator tells us how many of those parts we have.",
+                                example: "If you have 3 slices of a pizza that was cut into 8 equal slices, you have 3/8 of the pizza."
+                            },
+                            {
+                                heading: "Understanding Numerator and Denominator",
+                                explanation: "The numerator (top number) counts how many parts you have. The denominator (bottom number) tells you how many equal parts make up the whole.",
+                                example: "In 1/2, the numerator is 1 (you have 1 part) and the denominator is 2 (the whole is divided into 2 parts)."
+                            },
+                            {
+                                heading: "Adding Fractions with Same Denominator",
+                                explanation: "When fractions have the same denominator, simply add the numerators and keep the denominator the same.",
+                                example: "1/5 + 2/5 = (1+2)/5 = 3/5"
+                            },
+                            {
+                                heading: "Adding Fractions with Different Denominators",
+                                explanation: "To add fractions with different denominators, first find a common denominator. Then convert both fractions to have that denominator, and add the numerators.",
+                                example: "1/2 + 1/4: Find common denominator (4). Convert 1/2 to 2/4. Then 2/4 + 1/4 = 3/4"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What fraction represents 2 out of 5 equal parts?",
+                                solution: "2/5"
+                            },
+                            {
+                                problem: "Add: 1/3 + 1/3",
+                                solution: "2/3"
+                            },
+                            {
+                                problem: "Add: 1/2 + 1/4",
+                                solution: "3/4 (convert 1/2 to 2/4, then add: 2/4 + 1/4 = 3/4)"
+                            }
+                        ],
+                        summary: "Fractions represent parts of a whole. The numerator tells you how many parts you have, and the denominator tells you how many parts make up the whole. When adding fractions, make sure they have the same denominator first!"
+                    },
+                    "Decimal Operations": {
+                        title: "Decimal Operations",
+                        introduction: "Decimals are another way to write fractions. They use a decimal point to separate whole numbers from parts. For example, 0.5 means 'five tenths' or 1/2.",
+                        concepts: [
+                            {
+                                heading: "Understanding Decimal Place Value",
+                                explanation: "Each digit in a decimal has a place value. Moving right from the decimal point: tenths, hundredths, thousandths, etc. For example, in 2.35, the 3 is in the tenths place and the 5 is in the hundredths place.",
+                                example: "2.35 = 2 ones + 3 tenths + 5 hundredths"
+                            },
+                            {
+                                heading: "Adding and Subtracting Decimals",
+                                explanation: "When adding or subtracting decimals, line up the decimal points vertically. Add zeros if needed to make the numbers the same length. Then add or subtract as you would with whole numbers, keeping the decimal point in the same position.",
+                                example: "2.5 + 3.7: Line up decimals → 2.5 + 3.7 = 6.2"
+                            },
+                            {
+                                heading: "Multiplying Decimals",
+                                explanation: "Multiply decimals as if they were whole numbers. Then count the total number of decimal places in both numbers, and place the decimal point that many places from the right in your answer.",
+                                example: "0.5 × 4: Multiply 5 × 4 = 20. Since 0.5 has 1 decimal place, the answer is 2.0"
+                            },
+                            {
+                                heading: "Dividing Decimals",
+                                explanation: "To divide decimals, move the decimal point in the divisor (the number you're dividing by) to make it a whole number. Move the decimal point in the dividend (the number being divided) the same number of places. Then divide normally.",
+                                example: "6.4 ÷ 0.8: Move decimals → 64 ÷ 8 = 8"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "Add: 2.5 + 3.7",
+                                solution: "6.2"
+                            },
+                            {
+                                problem: "Subtract: 5.8 - 2.3",
+                                solution: "3.5"
+                            },
+                            {
+                                problem: "Multiply: 0.5 × 4",
+                                solution: "2.0"
+                            }
+                        ],
+                        summary: "Decimals represent parts of a whole using a decimal point. When operating with decimals, always align decimal points for addition/subtraction, and count decimal places for multiplication. For division, move decimal points to make the divisor a whole number."
+                    },
+                    "Basic Geometry Shapes": {
+                        title: "Basic Geometry Shapes",
+                        introduction: "Geometry is the branch of mathematics that studies shapes, sizes, and properties of space. Let's explore the basic shapes you'll encounter!",
+                        concepts: [
+                            {
+                                heading: "Polygons",
+                                explanation: "A polygon is a closed figure with straight sides. Polygons are named by the number of sides: triangle (3), quadrilateral (4), pentagon (5), hexagon (6), etc. All sides must be straight lines, and the shape must be closed.",
+                                example: "A square is a quadrilateral with 4 equal sides and 4 right angles."
+                            },
+                            {
+                                heading: "Triangles",
+                                explanation: "Triangles have exactly 3 sides and 3 angles. The sum of all three angles in any triangle is always 180°. Triangles can be classified by sides (equilateral, isosceles, scalene) or by angles (acute, right, obtuse).",
+                                example: "In a triangle with angles 60°, 60°, and 60°, the sum is 180°."
+                            },
+                            {
+                                heading: "Quadrilaterals",
+                                explanation: "Quadrilaterals have 4 sides. Common types include: squares (4 equal sides, 4 right angles), rectangles (opposite sides equal, 4 right angles), parallelograms (opposite sides parallel), and trapezoids (one pair of parallel sides).",
+                                example: "A rectangle has opposite sides that are equal in length and all angles are 90°."
+                            },
+                            {
+                                heading: "Circles",
+                                explanation: "A circle is a round shape where all points are the same distance from the center. The radius (r) is the distance from center to edge. The diameter (d) is twice the radius (d = 2r). The circumference is the distance around the circle (C = 2πr or C = πd).",
+                                example: "If a circle has radius 5 cm, its diameter is 10 cm and circumference is approximately 31.4 cm (2 × 3.14 × 5)."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "How many sides does a triangle have?",
+                                solution: "3 sides"
+                            },
+                            {
+                                problem: "What is the sum of angles in any triangle?",
+                                solution: "180°"
+                            },
+                            {
+                                problem: "If a circle has radius 3, what is its diameter?",
+                                solution: "6 (diameter = 2 × radius)"
+                            }
+                        ],
+                        summary: "Geometry studies shapes and their properties. Triangles have 3 sides with angles summing to 180°. Quadrilaterals have 4 sides. Circles are round shapes with a center, radius, and diameter. Understanding these basic shapes is the foundation of geometry!"
+                    },
+                    "Ratios and Proportions": {
+                        title: "Ratios and Proportions",
+                        introduction: "Ratios and proportions help us compare quantities and solve problems involving relationships between numbers. They're used everywhere - from cooking recipes to maps!",
+                        concepts: [
+                            {
+                                heading: "Understanding Ratios",
+                                explanation: "A ratio compares two quantities. It can be written as a:b, a/b, or 'a to b'. Ratios show the relationship between two amounts. For example, if you have 3 apples and 4 oranges, the ratio of apples to oranges is 3:4.",
+                                example: "In a class with 12 girls and 8 boys, the ratio of girls to boys is 12:8, which simplifies to 3:2."
+                            },
+                            {
+                                heading: "Simplifying Ratios",
+                                explanation: "Ratios can be simplified by dividing both parts by their greatest common factor (GCF). This makes ratios easier to understand and compare.",
+                                example: "The ratio 6:9 can be simplified by dividing both by 3: 6÷3:9÷3 = 2:3"
+                            },
+                            {
+                                heading: "Proportions",
+                                explanation: "A proportion is an equation stating that two ratios are equal. If a/b = c/d, then a and d are called the extremes, and b and c are called the means. In a proportion, the product of the extremes equals the product of the means (ad = bc).",
+                                example: "If 2/5 = x/10, then 2×10 = 5×x, so 20 = 5x, therefore x = 4"
+                            },
+                            {
+                                heading: "Using Proportions to Solve Problems",
+                                explanation: "Proportions are useful for scaling, converting units, and solving real-world problems. Set up a proportion with known values and solve for the unknown.",
+                                example: "If 1 inch on a map equals 5 miles, and you measure 3 inches, the actual distance is: 1/5 = 3/x, so x = 15 miles"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "Simplify the ratio 8:12",
+                                solution: "2:3 (divide both by 4)"
+                            },
+                            {
+                                problem: "Solve: 2/5 = x/10",
+                                solution: "x = 4 (cross multiply: 2×10 = 5×x, so 20 = 5x, x = 4)"
+                            },
+                            {
+                                problem: "If 3 apples cost $2, how much do 9 apples cost?",
+                                solution: "$6 (set up proportion: 3/2 = 9/x, so 3x = 18, x = 6)"
+                            }
+                        ],
+                        summary: "Ratios compare two quantities and can be simplified. Proportions are equations showing two equal ratios. Use cross multiplication to solve proportions. Ratios and proportions are essential for scaling, conversions, and solving real-world problems!"
+                    }
+                }
+            },
+            7: {
+                math: {
+                    "Integers and Operations": {
+                        title: "Integers and Operations",
+                        introduction: "Integers are whole numbers that can be positive, negative, or zero. They're like regular numbers, but they can go below zero! Understanding integers helps us work with temperatures, elevations, money, and many real-world situations.",
+                        concepts: [
+                            {
+                                heading: "What are Integers?",
+                                explanation: "Integers are whole numbers (no fractions or decimals) that can be positive (like 1, 2, 3), negative (like -1, -2, -3), or zero. They extend the number line in both directions. Positive integers are greater than zero, negative integers are less than zero, and zero is neither positive nor negative.",
+                                example: "Examples of integers: -5, -3, 0, 2, 7. Not integers: 1.5 (has a decimal), 2/3 (is a fraction)"
+                            },
+                            {
+                                heading: "Adding Integers with Same Signs",
+                                explanation: "When adding integers with the same sign (both positive or both negative), add the absolute values (the numbers without signs) and keep the same sign. Think of it as combining like things: positive + positive = more positive, negative + negative = more negative.",
+                                example: "5 + 3 = 8 (both positive, so answer is positive). -5 + (-3) = -8 (both negative, so answer is negative)"
+                            },
+                            {
+                                heading: "Adding Integers with Different Signs",
+                                explanation: "When adding integers with different signs (one positive, one negative), subtract the smaller absolute value from the larger one, and keep the sign of the number with the larger absolute value. Think of it as canceling out: positive and negative numbers work against each other.",
+                                example: "5 + (-3) = 2 (5 is larger, so answer is positive: 5 - 3 = 2). -5 + 3 = -2 (-5 is larger, so answer is negative: 5 - 3 = 2, but negative)"
+                            },
+                            {
+                                heading: "Subtracting Integers",
+                                explanation: "Subtracting an integer is the same as adding its opposite. To subtract, change the subtraction sign to addition and change the sign of the number being subtracted. Then follow the rules for adding integers.",
+                                example: "5 - 3 = 5 + (-3) = 2. 5 - (-3) = 5 + 3 = 8 (subtracting a negative is like adding a positive)"
+                            },
+                            {
+                                heading: "Multiplying and Dividing Integers",
+                                explanation: "The rules for multiplying and dividing integers are the same: same signs = positive answer, different signs = negative answer. Two positives or two negatives make a positive. One positive and one negative make a negative.",
+                                example: "(-2) × (-3) = 6 (both negative, so positive). (-2) × 3 = -6 (different signs, so negative). Same rules apply to division: (-6) ÷ (-2) = 3, (-6) ÷ 2 = -3"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "Add: -5 + (-3)",
+                                solution: "-8 (both negative, add and keep negative sign)"
+                            },
+                            {
+                                problem: "Add: 5 + (-3)",
+                                solution: "2 (different signs, subtract: 5 - 3 = 2, keep sign of larger number which is positive)"
+                            },
+                            {
+                                problem: "Multiply: (-2) × (-3)",
+                                solution: "6 (same signs = positive)"
+                            }
+                        ],
+                        summary: "Integers are whole numbers that can be positive, negative, or zero. When adding same signs, add and keep the sign. When adding different signs, subtract and keep the sign of the larger number. Subtracting is adding the opposite. Multiplying/dividing: same signs = positive, different signs = negative. Integers are everywhere in real life!"
+                    },
+                    "Expressions and Equations": {
+                        title: "Expressions and Equations",
+                        introduction: "Expressions and equations are fundamental building blocks of algebra! An expression is like a mathematical phrase, while an equation is a mathematical sentence with an equals sign. Understanding the difference and how to work with them is key to solving problems!",
+                        concepts: [
+                            {
+                                heading: "What is an Expression?",
+                                explanation: "An expression is a mathematical phrase that can contain numbers, variables (letters), and operations (+, -, ×, ÷), but NO equals sign. Expressions cannot be solved - they can only be simplified or evaluated. Think of an expression as a recipe that hasn't been completed yet.",
+                                example: "3x + 2 is an expression. You can simplify it or substitute a value for x, but you can't 'solve' it because there's no equals sign."
+                            },
+                            {
+                                heading: "What is an Equation?",
+                                explanation: "An equation is a mathematical statement that shows two expressions are equal. It has an equals sign (=). Equations can be solved to find the value of the variable that makes the equation true. Think of an equation as a balanced scale - both sides must be equal.",
+                                example: "3x + 2 = 11 is an equation. We can solve it to find that x = 3 makes both sides equal (3(3) + 2 = 11)."
+                            },
+                            {
+                                heading: "Inverse Operations",
+                                explanation: "Inverse operations are opposite operations that undo each other. Addition and subtraction are inverses (they cancel each other out). Multiplication and division are inverses. To solve equations, use inverse operations to isolate the variable. Do the opposite of what's being done to the variable.",
+                                example: "If x + 5 = 10, subtract 5 (inverse of addition). If 3x = 12, divide by 3 (inverse of multiplication)."
+                            },
+                            {
+                                heading: "The Golden Rule of Equations",
+                                explanation: "The most important rule: whatever you do to one side of an equation, you MUST do to the other side. This keeps the equation balanced. If you add 5 to the left, add 5 to the right. If you multiply the left by 2, multiply the right by 2. This is how you solve equations!",
+                                example: "To solve x + 3 = 7, subtract 3 from BOTH sides: x + 3 - 3 = 7 - 3, so x = 4"
+                            },
+                            {
+                                heading: "Checking Your Answer",
+                                explanation: "Always check your answer by substituting it back into the original equation. Replace the variable with your answer and see if both sides are equal. If they are, you're correct! If not, recheck your work.",
+                                example: "If you solved 3x + 2 = 11 and got x = 3, check: 3(3) + 2 = 9 + 2 = 11 ✓ Correct!"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is the difference between an expression and an equation?",
+                                solution: "An expression is a mathematical phrase (no equals sign) that can be simplified but not solved. An equation has an equals sign and can be solved to find the variable's value."
+                            },
+                            {
+                                problem: "Solve: 3x + 2 = 11",
+                                solution: "x = 3 (subtract 2: 3x = 9, then divide by 3: x = 3)"
+                            },
+                            {
+                                problem: "Check if x = 4 is a solution to 2x - 5 = 3",
+                                solution: "Yes! 2(4) - 5 = 8 - 5 = 3 ✓"
+                            }
+                        ],
+                        summary: "Expressions are mathematical phrases (no equals sign) that can be simplified. Equations have an equals sign and can be solved. Use inverse operations to solve equations. Always do the same operation to both sides. Check your answer by substituting back. Mastering expressions and equations opens the door to algebra!"
+                    }
+                }
+            },
+            8: {
+                math: {
+                    "Linear Equations": {
+                        title: "Linear Equations",
+                        introduction: "Linear equations create straight lines when graphed! They're one of the most important types of equations in algebra. Understanding linear equations helps you model real-world relationships and solve problems involving constant rates of change.",
+                        concepts: [
+                            {
+                                heading: "What is a Linear Equation?",
+                                explanation: "A linear equation is an equation whose graph is a straight line. In slope-intercept form, it's written as y = mx + b, where m is the slope and b is the y-intercept. The variable x has a power of 1 (no x² or higher powers). Linear equations represent relationships with a constant rate of change.",
+                                example: "y = 2x + 3 is a linear equation. y = x² + 3 is NOT linear (has x²)."
+                            },
+                            {
+                                heading: "Slope (m)",
+                                explanation: "The slope (m) tells you how steep the line is and in which direction it goes. Slope = rise over run = (change in y) / (change in x). Positive slope means the line goes up from left to right. Negative slope means it goes down. Zero slope is horizontal. Undefined slope is vertical.",
+                                example: "If slope = 2, for every 1 unit you move right, you move up 2 units. If slope = -1/2, for every 2 units right, you move down 1 unit."
+                            },
+                            {
+                                heading: "Y-Intercept (b)",
+                                explanation: "The y-intercept (b) is the point where the line crosses the y-axis. It's the y-value when x = 0. In the equation y = mx + b, b is the y-intercept. It tells you the starting point of the line on the y-axis.",
+                                example: "In y = 2x + 3, the y-intercept is 3, so the line crosses the y-axis at (0, 3)."
+                            },
+                            {
+                                heading: "Graphing Linear Equations",
+                                explanation: "To graph a linear equation in slope-intercept form (y = mx + b): 1) Plot the y-intercept (0, b) on the y-axis. 2) Use the slope (m) to find another point: from the y-intercept, move up/down by the rise and right by the run. 3) Draw a line through the points.",
+                                example: "For y = 2x + 3: Start at (0, 3). Slope is 2 (or 2/1), so from (0, 3), go up 2 and right 1 to (1, 5). Draw line through (0, 3) and (1, 5)."
+                            },
+                            {
+                                heading: "Two Points Determine a Line",
+                                explanation: "You only need two points to draw a line! If you have two points, you can find the equation of the line. You can also check if a point is on a line by substituting its coordinates into the equation.",
+                                example: "If a line passes through (0, 3) and (2, 7), you can find its equation. Check: Is (1, 5) on y = 2x + 3? 5 = 2(1) + 3 = 5 ✓ Yes!"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "In y = 2x + 3, what is the slope and y-intercept?",
+                                solution: "Slope (m) = 2, y-intercept (b) = 3"
+                            },
+                            {
+                                problem: "How do you graph y = -x + 5?",
+                                solution: "Start at (0, 5) on y-axis. Slope is -1 (or -1/1), so go down 1 and right 1 to (1, 4). Draw line through these points."
+                            },
+                            {
+                                problem: "What does a negative slope mean?",
+                                solution: "A negative slope means the line goes down from left to right - as x increases, y decreases."
+                            }
+                        ],
+                        summary: "Linear equations form straight lines when graphed. They're written as y = mx + b, where m is the slope (steepness) and b is the y-intercept (where it crosses y-axis). To graph, plot the y-intercept, then use slope to find another point. Two points determine a line. Linear equations model constant rates of change in the real world!"
+                    },
+                    "Systems of Equations": {
+                        title: "Systems of Equations",
+                        introduction: "A system of equations is when you have two or more equations with the same variables. The solution is the point(s) where the equations are all true at the same time - where their graphs intersect! Systems help us solve problems with multiple conditions.",
+                        concepts: [
+                            {
+                                heading: "What is a System of Equations?",
+                                explanation: "A system of equations is a set of two or more equations with the same variables. The solution to the system is the ordered pair (x, y) that makes ALL equations true simultaneously. Graphically, it's the point where the lines intersect. Systems help solve problems where you need to satisfy multiple conditions at once.",
+                                example: "The system x + y = 5 and x - y = 1 has solution (3, 2) because 3 + 2 = 5 ✓ and 3 - 2 = 1 ✓"
+                            },
+                            {
+                                heading: "Graphing Method",
+                                explanation: "To solve by graphing, graph both equations on the same coordinate plane. The point where the lines intersect is the solution. If lines intersect at one point, there's one solution. If lines are parallel (never intersect), there's no solution. If lines are the same (overlap), there are infinitely many solutions.",
+                                example: "Graph y = 2x + 1 and y = -x + 4. Where they cross is the solution."
+                            },
+                            {
+                                heading: "Substitution Method",
+                                explanation: "In substitution, solve one equation for one variable, then substitute that expression into the other equation. This gives you an equation with just one variable, which you can solve. Then substitute back to find the other variable. This method works well when one variable is already isolated.",
+                                example: "If x + y = 5, then y = 5 - x. Substitute into x - y = 1: x - (5 - x) = 1, so 2x - 5 = 1, x = 3, then y = 2"
+                            },
+                            {
+                                heading: "Elimination Method",
+                                explanation: "In elimination, add or subtract the equations to eliminate one variable. First, make sure one variable has opposite coefficients. Then add the equations (if coefficients are opposite) or subtract (if same sign). Solve for the remaining variable, then substitute to find the other. This method is great when coefficients are easy to work with.",
+                                example: "x + y = 5 and x - y = 1. Add them: (x + y) + (x - y) = 5 + 1, so 2x = 6, x = 3. Then 3 + y = 5, so y = 2"
+                            },
+                            {
+                                heading: "Types of Solutions",
+                                explanation: "A system can have: 1) One solution - lines intersect at one point (independent system). 2) No solution - lines are parallel and never intersect (inconsistent system). 3) Infinitely many solutions - lines are the same (dependent system).",
+                                example: "x + y = 5 and 2x + 2y = 10 are the same line (multiply first by 2), so infinite solutions. x + y = 5 and x + y = 7 are parallel, so no solution."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "Solve by elimination: x + y = 5, x - y = 1",
+                                solution: "(3, 2) - Add equations: 2x = 6, so x = 3, then 3 + y = 5, so y = 2"
+                            },
+                            {
+                                problem: "What does it mean if two lines in a system are parallel?",
+                                solution: "If lines are parallel, they never intersect, so the system has no solution (inconsistent system)."
+                            },
+                            {
+                                problem: "How many solutions does a system have if the equations are the same line?",
+                                solution: "Infinitely many solutions - every point on the line satisfies both equations (dependent system)."
+                            }
+                        ],
+                        summary: "Systems of equations have two or more equations with the same variables. The solution is where they intersect. Solve by graphing, substitution, or elimination. Systems can have one solution, no solution, or infinitely many solutions. Systems help solve real-world problems with multiple conditions!"
+                    }
+                }
+            },
+            9: {
+                math: {
+                    "Algebra Basics": {
+                        title: "Algebra Basics",
+                        introduction: "Algebra is like a puzzle where we use letters to represent unknown numbers. It's a powerful tool for solving problems and understanding relationships between numbers!",
+                        concepts: [
+                            {
+                                heading: "What are Variables?",
+                                explanation: "In algebra, we use letters (like x, y, or n) to represent unknown numbers. These are called variables. Variables allow us to write general rules and solve problems where we don't know all the numbers yet.",
+                                example: "If we don't know a number, we can call it x. Then 'x + 5' means 'some number plus 5'."
+                            },
+                            {
+                                heading: "Understanding Equations",
+                                explanation: "An equation is a mathematical statement showing that two expressions are equal. It has an equals sign (=). For example, 2x + 5 = 13 means '2 times some number plus 5 equals 13'.",
+                                example: "The equation 3x = 12 means '3 times some number equals 12'. We can solve this to find x = 4."
+                            },
+                            {
+                                heading: "Solving Equations - The Golden Rule",
+                                explanation: "The most important rule in algebra: whatever you do to one side of an equation, you must do to the other side. This keeps the equation balanced. Use inverse operations (opposite operations) to isolate the variable.",
+                                example: "To solve x + 5 = 10, subtract 5 from both sides: x + 5 - 5 = 10 - 5, so x = 5"
+                            },
+                            {
+                                heading: "Step-by-Step Solving",
+                                explanation: "1) Identify what's being done to the variable. 2) Use the inverse operation. 3) Apply it to both sides. 4) Simplify. 5) Check your answer by substituting back into the original equation.",
+                                example: "Solve 2x + 5 = 13: Step 1 - subtract 5 from both sides: 2x = 8. Step 2 - divide both sides by 2: x = 4. Check: 2(4) + 5 = 8 + 5 = 13 ✓"
+                            },
+                            {
+                                heading: "Combining Like Terms",
+                                explanation: "Like terms have the same variable raised to the same power. You can combine them by adding or subtracting their coefficients (the numbers in front).",
+                                example: "2x + 3x = 5x (combine the coefficients: 2 + 3 = 5)"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "Solve: x + 7 = 15",
+                                solution: "x = 8 (subtract 7 from both sides: x = 15 - 7 = 8)"
+                            },
+                            {
+                                problem: "Solve: 2x + 5 = 13",
+                                solution: "x = 4 (subtract 5: 2x = 8, then divide by 2: x = 4)"
+                            },
+                            {
+                                problem: "Simplify: 3x + 2x - x",
+                                solution: "4x (combine like terms: 3 + 2 - 1 = 4)"
+                            }
+                        ],
+                        summary: "Algebra uses variables (letters) to represent unknown numbers. Equations show two expressions are equal. Solve by using inverse operations on both sides. Always check your answer! Algebra helps us solve problems and understand mathematical relationships."
+                    },
+                    "Quadratic Equations": {
+                        title: "Quadratic Equations",
+                        introduction: "Quadratic equations are equations where the highest power of the variable is 2 (squared). They create beautiful curves called parabolas and appear in many real-world situations!",
+                        concepts: [
+                            {
+                                heading: "What is a Quadratic Equation?",
+                                explanation: "A quadratic equation has the standard form ax² + bx + c = 0, where a, b, and c are numbers and a ≠ 0. The 'a' cannot be zero because then it wouldn't be quadratic (it would be linear). The highest power is 2 (the x² term).",
+                                example: "x² - 5x + 6 = 0 is a quadratic where a = 1, b = -5, and c = 6"
+                            },
+                            {
+                                heading: "Solving by Factoring",
+                                explanation: "Many quadratics can be solved by factoring. If you can write the quadratic as (x - p)(x - q) = 0, then either x - p = 0 or x - q = 0, giving solutions x = p and x = q.",
+                                example: "x² - 9 = 0 factors as (x - 3)(x + 3) = 0, so x = 3 or x = -3"
+                            },
+                            {
+                                heading: "The Quadratic Formula",
+                                explanation: "The quadratic formula x = (-b ± √(b² - 4ac)) / 2a can solve ANY quadratic equation. The ± symbol means you'll get two solutions: one with + and one with -.",
+                                example: "For x² - 5x + 6 = 0: a=1, b=-5, c=6. x = (5 ± √(25-24)) / 2 = (5 ± 1) / 2, so x = 3 or x = 2"
+                            },
+                            {
+                                heading: "The Discriminant",
+                                explanation: "The discriminant is b² - 4ac (the part under the square root). It tells us about the solutions: if > 0, there are 2 real solutions; if = 0, there's 1 solution; if < 0, there are no real solutions (only imaginary).",
+                                example: "For x² - 5x + 6 = 0: discriminant = 25 - 24 = 1 (positive, so 2 real solutions)"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "Solve: x² - 9 = 0",
+                                solution: "x = 3 or x = -3 (factor as (x-3)(x+3) = 0)"
+                            },
+                            {
+                                problem: "Solve: x² - 5x + 6 = 0",
+                                solution: "x = 2 or x = 3 (factor as (x-2)(x-3) = 0)"
+                            },
+                            {
+                                problem: "What is the discriminant of x² + 4x + 4 = 0?",
+                                solution: "0 (b² - 4ac = 16 - 16 = 0, so there's exactly 1 solution)"
+                            }
+                        ],
+                        summary: "Quadratic equations have the form ax² + bx + c = 0. They can be solved by factoring or using the quadratic formula. The discriminant tells us how many solutions exist. Quadratics create parabolas and model many real-world situations like projectile motion!"
+                    }
+                }
+            }
+        };
+
+        function openLessonModal(lessonKey, lessonTitle, subject, isAlreadyCompleted = false) {
+            currentLessonKey = lessonKey;
+            currentLessonTitle = lessonTitle;
+            currentSubject = subject;
+            
+            const grade = getGradeLevel();
+            const content = lessonContentByGrade[grade]?.[subject]?.[lessonTitle];
+            
+            if (!content) {
+                // Default content if specific content not found
+                const defaultContent = {
+                    title: lessonTitle,
+                    notes: [
+                        `Welcome to ${lessonTitle}!`,
+                        "This lesson will help you understand key concepts.",
+                        "Take your time to read through the notes carefully.",
+                        "Practice the examples to reinforce your learning.",
+                        "Complete this lesson to unlock practice quizzes!"
+                    ],
+                    examples: [
+                        "Example 1: Practice problem",
+                        "Example 2: Another practice problem"
+                    ]
+                };
+                displayLessonContent(defaultContent, isAlreadyCompleted);
+            } else {
+                displayLessonContent(content, isAlreadyCompleted);
+            }
+            
+            document.getElementById('lessonModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function displayLessonContent(content, isAlreadyCompleted = false) {
+            const lessonContentDiv = document.getElementById('lessonContent');
+            
+            // Build concepts section
+            const conceptsHTML = content.concepts ? `
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold mb-4 text-[#4FC3F7]">📚 Key Concepts</h3>
+                    <div class="space-y-4">
+                        ${content.concepts.map((concept, index) => `
+                            <div class="glass-card p-5">
+                                <h4 class="text-lg font-bold mb-2 text-[#FF6EC7]">${index + 1}. ${concept.heading}</h4>
+                                <p class="text-[#F5F7FA]/90 mb-3 leading-relaxed">${concept.explanation}</p>
+                                <div class="glass-card p-3 bg-[#482880]/20 mt-3">
+                                    <p class="text-sm font-semibold text-[#4FC3F7] mb-1">Example:</p>
+                                    <p class="text-[#F5F7FA]/90 font-mono text-sm">${concept.example}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : '';
+            
+            // Build practice problems section
+            const practiceHTML = content.practiceProblems ? `
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold mb-4 text-[#FF6EC7]">✏️ Practice Problems</h3>
+                    <div class="space-y-4">
+                        ${content.practiceProblems.map((problem, index) => `
+                            <div class="glass-card p-5">
+                                <div class="mb-3">
+                                    <p class="text-sm font-semibold text-[#4FC3F7] mb-1">Problem ${index + 1}:</p>
+                                    <p class="text-[#F5F7FA]/90 font-semibold">${problem.problem}</p>
+                                </div>
+                                <details class="mt-2">
+                                    <summary class="cursor-pointer text-sm text-[#FF6EC7] hover:text-[#4FC3F7] transition-colors">Show Solution</summary>
+                                    <div class="glass-card p-3 bg-[#482880]/20 mt-2">
+                                        <p class="text-[#F5F7FA]/90 font-mono text-sm">${problem.solution}</p>
+                                    </div>
+                                </details>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : '';
+            
+            lessonContentDiv.innerHTML = `
+                <div class="mb-6">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-3xl font-bold mb-4">
+                            <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                                ${content.title}
+                            </span>
+                        </h2>
+                        ${isAlreadyCompleted ? '<span class="text-2xl" title="Lesson Completed">✅</span>' : ''}
+                    </div>
+                    ${content.introduction ? `
+                        <div class="glass-card p-4 bg-[#4FC3F7]/10 border border-[#4FC3F7]/30 mb-4">
+                            <p class="text-[#F5F7FA]/90 leading-relaxed">${content.introduction}</p>
+                        </div>
+                    ` : ''}
+                    ${isAlreadyCompleted ? '<p class="text-sm text-[#4FC3F7] mb-4">You\'ve completed this lesson! Review the content below.</p>' : ''}
+                </div>
+                
+                ${conceptsHTML}
+                
+                ${practiceHTML}
+                
+                ${content.summary ? `
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold mb-3 text-[#482880]">📋 Lesson Summary</h3>
+                        <div class="glass-card p-5 bg-[#482880]/20 border-2 border-[#482880]/50">
+                            <p class="text-[#F5F7FA]/90 leading-relaxed">${content.summary}</p>
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+            
+            // Update button text based on completion status
+            const completeBtn = document.getElementById('completeLessonBtn');
+            if (completeBtn) {
+                if (isAlreadyCompleted) {
+                    completeBtn.textContent = 'Mark as Complete Again';
+                    completeBtn.classList.remove('btn-primary');
+                    completeBtn.classList.add('btn-secondary');
+                } else {
+                    completeBtn.textContent = 'Mark as Complete';
+                    completeBtn.classList.remove('btn-secondary');
+                    completeBtn.classList.add('btn-primary');
+                }
+            }
+        }
+
+        function closeLessonModal() {
+            document.getElementById('lessonModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function completeCurrentLesson() {
+            if (currentLessonKey && currentLessonTitle) {
+                const completed = getCompletedLessons();
+                const isAlreadyCompleted = completed.includes(currentLessonKey);
+                
+                if (!isAlreadyCompleted) {
+                    markLessonCompleted(currentLessonKey, currentLessonTitle);
+                } else {
+                    // Already completed, just close
+                    alert('Lesson already completed! You can review it anytime.');
+                }
+                closeLessonModal();
+                // Reload lessons to update UI
+                loadLessons();
+            }
+        }
+
+        function markLessonCompleted(lessonKey, lessonTitle) {
+            const completed = getCompletedLessons();
+            if (!completed.includes(lessonKey)) {
+                completed.push(lessonKey);
+                localStorage.setItem('astrolearn_completed_lessons', JSON.stringify(completed));
+                updateProgress();
+            }
+        }
+
+        function redoLesson(lessonKey) {
+            if (confirm('Are you sure you want to mark this lesson as incomplete?')) {
+                let completed = getCompletedLessons();
+                completed = completed.filter(key => key !== lessonKey);
+                localStorage.setItem('astrolearn_completed_lessons', JSON.stringify(completed));
+                updateProgress();
+                loadLessons(); // Reload lessons to update UI
+            }
+        }
+
+        function updateProgress() {
+            const grade = getGradeLevel();
+            const lessons = mathLessonsByGrade[grade] || mathLessonsByGrade[9];
+            const completedLessons = getCompletedLessons();
+            
+            let completedCount = 0;
+            lessons.forEach(lesson => {
+                const lessonKey = `math_${grade}_${lesson.title}`;
+                if (completedLessons.includes(lessonKey)) {
+                    completedCount++;
+                }
+            });
+            
+            const totalLessons = lessons.length;
+            const progress = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
+            
+            document.getElementById('mathProgressText').textContent = progress + '%';
+            document.getElementById('lessonsCompletedText').textContent = `${completedCount} of ${totalLessons} lessons completed`;
+            
+            const progressFill = document.getElementById('mathProgress');
+            if (progressFill) {
+                progressFill.style.width = progress + '%';
+            }
+            
+            // Update shuttle animation
+            animateShuttle();
+        }
+
+        function loadLessons() {
+            const grid = document.getElementById('lessonsGrid');
+            const grade = getGradeLevel();
+            const lessons = mathLessonsByGrade[grade] || mathLessonsByGrade[9];
+            
+            if (!lessons || lessons.length === 0) {
+                grid.innerHTML = '<p class="text-center text-[#F5F7FA]/70">No lessons available for this grade level.</p>';
+                return;
+            }
+            
+            // Load completed lessons
+            const completedLessons = getCompletedLessons();
+            
+            grid.innerHTML = lessons.map(lesson => {
+                const lessonKey = `math_${grade}_${lesson.title}`;
+                const isCompleted = completedLessons.includes(lessonKey);
+                
+                return `
+                <div class="glass-card p-6 flex flex-col h-full ${isCompleted ? 'border-2 border-[#4FC3F7]' : ''}">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-bold flex-1">${lesson.title}</h3>
+                        ${isCompleted ? '<span class="text-2xl ml-2 flex-shrink-0">✅</span>' : ''}
+                    </div>
+                    <p class="text-sm text-[#F5F7FA]/70 mb-2">Difficulty: <span class="font-bold" style="color: ${lesson.difficulty === 'Easy' ? '#4FC3F7' : lesson.difficulty === 'Medium' ? '#FF6EC7' : '#482880'}">${lesson.difficulty}</span></p>
+                    <p class="text-xs text-[#F5F7FA]/50 mb-4">Grade ${grade} Level</p>
+                    <div class="mt-auto flex gap-2">
+                        <button class="btn-primary flex-1 complete-lesson-btn" 
+                                data-lesson-key="${lessonKey}"
+                                data-lesson-title="${lesson.title}"
+                                data-is-completed="${isCompleted}">
+                            ${isCompleted ? 'Review Lesson' : 'Start Lesson'}
+                        </button>
+                        ${isCompleted ? `
+                            <button class="btn-secondary complete-lesson-btn-again flex-shrink-0" 
+                                    data-lesson-key="${lessonKey}"
+                                    data-lesson-title="${lesson.title}"
+                                    title="Mark as incomplete to redo">
+                                🔄
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            }).join('');
+            
+            // Add event listeners for lesson buttons
+            document.querySelectorAll('.complete-lesson-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lessonKey = btn.dataset.lessonKey;
+                    const lessonTitle = btn.dataset.lessonTitle;
+                    const isCompleted = btn.dataset.isCompleted === 'true';
+                    openLessonModal(lessonKey, lessonTitle, currentSubject, isCompleted);
+                });
+            });
+            
+            // Add event listeners for redo buttons
+            document.querySelectorAll('.complete-lesson-btn-again').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const lessonKey = btn.dataset.lessonKey;
+                    redoLesson(lessonKey);
+                });
+            });
+        }
+
+        function animateShuttle() {
+            const progressText = document.getElementById('mathProgressText');
+            const progress = progressText ? parseInt(progressText.textContent.replace('%', '')) : 0;
+            const shuttle = document.getElementById('mathShuttle');
+            const progressFill = document.getElementById('mathProgress');
+            
+            if (shuttle && progressFill) {
+                // Shuttle is positioned at right: 0, which means it's at the end of the progress fill
+                // The progress fill width controls where the shuttle appears
+                // No additional positioning needed - CSS handles it
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (isLoggedIn()) {
+                // Set up grade selector
+                const gradeSelector = document.getElementById('gradeSelector');
+                if (gradeSelector) {
+                    const grade = getGradeLevel();
+                    gradeSelector.value = grade;
+                    
+                    gradeSelector.addEventListener('change', (e) => {
+                        const newGrade = parseInt(e.target.value);
+                        const prefs = localStorage.getItem('astrolearn_preferences');
+                        if (prefs) {
+                            try {
+                                const preferences = JSON.parse(prefs);
+                                preferences.grade = newGrade;
+                                localStorage.setItem('astrolearn_preferences', JSON.stringify(preferences));
+                                
+                                // Reload lessons and progress for new grade
+                                loadLessons();
+                                updateProgress();
+                                
+                                // Show feedback
+                                gradeSelector.style.backgroundColor = 'rgba(79, 195, 247, 0.2)';
+                                setTimeout(() => {
+                                    gradeSelector.style.backgroundColor = 'transparent';
+                                }, 500);
+                            } catch (e) {
+                                console.error('Error updating grade:', e);
+                            }
+                        }
+                    });
+                }
+                
+                loadLessons();
+                updateProgress();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+/* Dark Mode Text Visibility Enhancements */
+
+[data-theme="dark"] {
+    /* Ensure all text is highly visible */
+    --text-primary: #ffffff;
+    --text-secondary: #e0f7fa;
+}
+
+/* Dark mode text enhancements */
+[data-theme="dark"] body {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+    color: #ffffff !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] p {
+    color: #ffffff !important;
+    opacity: 0.95;
+}
+
+[data-theme="dark"] span {
+    color: #ffffff;
+}
+
+[data-theme="dark"] label {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .subject-card {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .subject-card h3 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .subject-card p {
+    color: #ffffff !important;
+    opacity: 0.95;
+}
+
+[data-theme="dark"] .subject-stats {
+    color: #ffffff !important;
+    opacity: 0.9;
+}
+
+[data-theme="dark"] .testimonial-text {
+    color: #ffffff !important;
+    opacity: 0.95;
+}
+
+[data-theme="dark"] .author-name {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .author-role {
+    color: #ffffff !important;
+    opacity: 0.9;
+}
+
+[data-theme="dark"] .testimonial-card {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .stat-label {
+    color: #ffffff !important;
+    opacity: 0.95;
+}
+
+[data-theme="dark"] .stat-value {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .progress-details {
+    color: #ffffff !important;
+    opacity: 0.95;
+}
+
+[data-theme="dark"] .progress-percent {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .progress-header h3 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .badge-name {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .badge-description {
+    color: #ffffff !important;
+    opacity: 0.9;
+}
+
+[data-theme="dark"] .badge-item {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .session-info h4 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .session-info p {
+    color: #ffffff !important;
+    opacity: 0.95;
+}
+
+[data-theme="dark"] .session-item {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .session-time-badge {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] .recommendation-card h4 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .recommendation-card p {
+    color: #ffffff !important;
+    opacity: 0.95;
+}
+
+[data-theme="dark"] .recommendation-card {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .goal-item label {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .goal-item.completed label {
+    color: #ffffff !important;
+    opacity: 0.75;
+}
+
+[data-theme="dark"] .goal-item-dashboard label {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .goal-item-dashboard.completed label {
+    color: #ffffff !important;
+    opacity: 0.75;
+}
+
+[data-theme="dark"] .goals-widget {
+    color: #000000 !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(224, 247, 250, 0.95) 100%) !important;
+}
+
+[data-theme="dark"] .goals-widget h3 {
+    color: #000000 !important;
+}
+
+[data-theme="dark"] .goal-item {
+    color: #000000 !important;
+}
+
+[data-theme="dark"] .goal-item label {
+    color: #000000 !important;
+}
+
+[data-theme="dark"] .goal-item.completed label {
+    color: #000000 !important;
+    opacity: 0.6;
+}
+
+[data-theme="dark"] .goal-input {
+    color: #000000 !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-theme="dark"] .goal-input::placeholder {
+    color: rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .goal-item-dashboard {
+    color: #000000 !important;
+}
+
+[data-theme="dark"] .goal-item-dashboard label {
+    color: #000000 !important;
+}
+
+[data-theme="dark"] .goal-item-dashboard.completed label {
+    color: #000000 !important;
+    opacity: 0.6;
+}
+
+[data-theme="dark"] .footer-section p {
+    color: #ffffff !important;
+    opacity: 0.95;
+}
+
+[data-theme="dark"] .footer-section a {
+    color: #ffc107 !important;
+}
+
+[data-theme="dark"] .footer-section a:hover {
+    color: #ffeb3b !important;
+}
+
+[data-theme="dark"] .footer-section h3,
+[data-theme="dark"] .footer-section h4 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .footer-bottom {
+    color: #ffffff !important;
+    opacity: 0.9;
+}
+
+[data-theme="dark"] .footer-bottom p {
+    color: #ffffff !important;
+}
+
+/* Schedule Page Dark Mode */
+[data-theme="dark"] .page-title,
+[data-theme="dark"] .calendar-day-header,
+[data-theme="dark"] .calendar-day-number,
+[data-theme="dark"] .session-time,
+[data-theme="dark"] .session-title,
+[data-theme="dark"] .availability-day,
+[data-theme="dark"] .availability-time {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .tutor-info h3 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .tutor-rating {
+    color: #ffeb3b !important;
+}
+
+/* Dashboard Page Dark Mode */
+[data-theme="dark"] .dashboard-section h2 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .progress-header h3 {
+    color: #ffffff !important;
+}
+
+/* Subject Pages Dark Mode */
+[data-theme="dark"] .subject-header h1,
+[data-theme="dark"] .subject-description,
+[data-theme="dark"] .section h2,
+[data-theme="dark"] .lesson-title,
+[data-theme="dark"] .lesson-meta,
+[data-theme="dark"] .quiz-title,
+[data-theme="dark"] .topic-name,
+[data-theme="dark"] .topic-description,
+[data-theme="dark"] .guide-title,
+[data-theme="dark"] .guide-author,
+[data-theme="dark"] .guide-description {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .lesson-meta {
+    opacity: 0.9;
+}
+
+[data-theme="dark"] .topic-description {
+    opacity: 0.9;
+}
+
+[data-theme="dark"] .guide-author {
+    opacity: 0.9;
+}
+
+[data-theme="dark"] .guide-description {
+    opacity: 0.95;
+}
+
+/* Community Page Dark Mode */
+[data-theme="dark"] .community-section h2,
+[data-theme="dark"] .buddy-name,
+[data-theme="dark"] .buddy-grade,
+[data-theme="dark"] .discussion-title,
+[data-theme="dark"] .discussion-preview,
+[data-theme="dark"] .study-room-title,
+[data-theme="dark"] .study-room-info,
+[data-theme="dark"] .profile-name {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .discussion-preview {
+    opacity: 0.95;
+}
+
+[data-theme="dark"] .study-room-info {
+    opacity: 0.9;
+}
+
+/* Resources Page Dark Mode */
+[data-theme="dark"] .page-subtitle,
+[data-theme="dark"] .resource-panel h2,
+[data-theme="dark"] .resource-section h3,
+[data-theme="dark"] .resource-card h4,
+[data-theme="dark"] .resource-card p,
+[data-theme="dark"] .quiz-card h4,
+[data-theme="dark"] .quiz-card p,
+[data-theme="dark"] .download-card h4,
+[data-theme="dark"] .download-card p {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .resource-card p,
+[data-theme="dark"] .quiz-card p,
+[data-theme="dark"] .download-card p {
+    opacity: 0.9;
+}
+
+/* Input Fields Dark Mode */
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="checkbox"],
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Chat Messages Dark Mode */
+[data-theme="dark"] .message-text {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .message-time {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Quiz and Stats Dark Mode */
+[data-theme="dark"] .quiz-info,
+[data-theme="dark"] .quiz-stats,
+[data-theme="dark"] .guide-stats,
+[data-theme="dark"] .discussion-stats,
+[data-theme="dark"] .discussion-meta {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-theme="dark"] .profile-stat-value {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .profile-stat-label {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+

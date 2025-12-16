@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Constellations - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-3xl animate-pulse">⭐</span>
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </h1>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link active protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link">Schedule</a>
+                <a href="resources.html" class="nav-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center block" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Resources Header -->
+    <section class="container mx-auto px-6 py-16 text-center">
+        <h1 class="text-5xl md:text-7xl font-bold mb-4">
+            <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                Knowledge Constellations
+            </span>
+        </h1>
+        <p class="text-xl text-[#F5F7FA]/80">Choose your mission pathway</p>
+    </section>
+
+    <!-- Quick Access -->
+    <section class="container mx-auto px-6 mb-12">
+        <div class="grid md:grid-cols-3 gap-6">
+            <button id="starMapBtn" class="glass-card p-6 text-center hover:scale-105 transition-transform cursor-pointer">
+                <div class="text-4xl mb-3">📥</div>
+                <h3 class="text-lg font-bold">Download Star Maps</h3>
+            </button>
+            <a href="flashcards.html" class="glass-card p-6 text-center hover:scale-105 transition-transform cursor-pointer block">
+                <div class="text-4xl mb-3">📚</div>
+                <h3 class="text-lg font-bold">Flashcards</h3>
+            </a>
+            <a href="quizzes.html" class="glass-card p-6 text-center hover:scale-105 transition-transform cursor-pointer block">
+                <div class="text-4xl mb-3">📝</div>
+                <h3 class="text-lg font-bold">Quizzes</h3>
+            </a>
+            </div>
+    </section>
+
+    <!-- Lessons Grid -->
+    <section class="container mx-auto px-6 pb-16">
+        <h2 class="text-3xl font-bold mb-8 text-center">
+            <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                Available Lessons
+            </span>
+        </h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="lessonsGrid">
+            <!-- Lessons will be populated by JS -->
+                            </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                            </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                            </div>
+                        </div>
+                    </div>
+    </footer>
+
+    <!-- Star Map Roadmap Modal -->
+    <div id="starMapModal" class="star-map-modal hidden">
+        <div class="star-map-overlay" id="starMapOverlay"></div>
+        <div class="star-map-content">
+            <div class="star-map-header">
+                <h2 class="text-3xl md:text-4xl font-bold mb-2">
+                    <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                        Your Learning Roadmap
+                    </span>
+                </h2>
+                <p class="text-[#F5F7FA]/70">Your personalized pace chart through the stars</p>
+                <button id="closeStarMap" class="close-btn">✕</button>
+                            </div>
+            <div class="star-map-body" id="roadmapContent">
+                <!-- Roadmap will be generated here -->
+                            </div>
+            <div class="star-map-footer">
+                <button class="btn-primary" onclick="downloadRoadmap()">Download as PDF</button>
+                <button class="btn-secondary" id="closeStarMapBtn">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Check authentication before loading page
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!checkAuth()) {
+                return; // Will redirect to login
+            }
+            updateNavigation();
+        });
+
+        const lessons = [
+            { id: 1, title: "Algebra Basics", subject: "Math", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+            { id: 2, title: "Cell Structure", subject: "Biology", difficulty: "Medium", icon: "🧬", color: "#FF6EC7" },
+            { id: 3, title: "World War II", subject: "History", difficulty: "Medium", icon: "🌍", color: "#482880" },
+            { id: 4, title: "Periodic Table", subject: "Chemistry", difficulty: "Hard", icon: "⚗️", color: "#4FC3F7" },
+            { id: 5, title: "Quantum Physics", subject: "Physics", difficulty: "Hard", icon: "🌌", color: "#FF6EC7" },
+            { id: 6, title: "Shakespeare", subject: "Literature", difficulty: "Medium", icon: "📚", color: "#482880" },
+            { id: 7, title: "Calculus I", subject: "Math", difficulty: "Hard", icon: "🔭", color: "#4FC3F7" },
+            { id: 8, title: "Genetics", subject: "Biology", difficulty: "Medium", icon: "🧬", color: "#FF6EC7" }
+        ];
+
+        function getDifficultyColor(difficulty) {
+            switch(difficulty) {
+                case 'Easy': return '#4FC3F7';
+                case 'Medium': return '#FF6EC7';
+                case 'Hard': return '#482880';
+                default: return '#4FC3F7';
+            }
+        }
+
+        function loadLessons() {
+            const grid = document.getElementById('lessonsGrid');
+            grid.innerHTML = lessons.map(lesson => `
+                <div class="lesson-card glass-card p-6 hover:scale-105 transition-transform" style="animation-delay: ${Math.random() * 2}s">
+                    <div class="text-5xl mb-4 text-center">${lesson.icon}</div>
+                    <h3 class="text-xl font-bold mb-2">${lesson.title}</h3>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-sm text-[#F5F7FA]/70">${lesson.subject}</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-bold" style="background: ${getDifficultyColor(lesson.difficulty)}33; color: ${getDifficultyColor(lesson.difficulty)}">
+                            ${lesson.difficulty}
+                        </span>
+                    </div>
+                    <button class="btn-primary w-full">Start Lesson</button>
+                </div>
+            `).join('');
+        }
+
+        // Get assignments from localStorage or use default
+        function getAssignments() {
+            const stored = localStorage.getItem('astrolearn_assignments');
+            if (stored) {
+                return JSON.parse(stored);
+            }
+            // Default assignments with future dates
+            const today = new Date();
+            const defaultAssignments = [
+                { id: 1, title: "Algebra Chapter 5", subject: "Math", dueDate: getFutureDate(3), priority: "High", status: "pending", estimatedHours: 3 },
+                { id: 2, title: "Biology Lab Report", subject: "Science", dueDate: getFutureDate(6), priority: "High", status: "in-progress", estimatedHours: 4 },
+                { id: 3, title: "Reading Comprehension Quiz", subject: "Reading", dueDate: getFutureDate(8), priority: "Medium", status: "pending", estimatedHours: 1 },
+                { id: 4, title: "Spanish Vocabulary Practice", subject: "Language", dueDate: getFutureDate(10), priority: "Medium", status: "pending", estimatedHours: 2 },
+                { id: 5, title: "Geometry Problem Set", subject: "Math", dueDate: getFutureDate(13), priority: "Low", status: "pending", estimatedHours: 2 },
+                { id: 6, title: "Chemistry Experiment", subject: "Science", dueDate: getFutureDate(16), priority: "High", status: "pending", estimatedHours: 5 },
+                { id: 7, title: "Literature Essay", subject: "Reading", dueDate: getFutureDate(19), priority: "Medium", status: "pending", estimatedHours: 4 },
+                { id: 8, title: "French Conversation Practice", subject: "Language", dueDate: getFutureDate(23), priority: "Low", status: "pending", estimatedHours: 1 }
+            ];
+            saveAssignments(defaultAssignments);
+            return defaultAssignments;
+        }
+
+        function getFutureDate(daysFromNow) {
+            const date = new Date();
+            date.setDate(date.getDate() + daysFromNow);
+            return date.toISOString().split('T')[0];
+        }
+
+        function saveAssignments(assignments) {
+            localStorage.setItem('astrolearn_assignments', JSON.stringify(assignments));
+        }
+
+        let assignments = getAssignments();
+        let nextId = Math.max(...assignments.map(a => a.id), 0) + 1;
+
+        function generateRoadmap() {
+            const roadmapContent = document.getElementById('roadmapContent');
+            
+            // Sort assignments by due date
+            const sortedAssignments = [...assignments].sort((a, b) => 
+                new Date(a.dueDate) - new Date(b.dueDate)
+            );
+            
+            // Calculate timeline
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            if (sortedAssignments.length === 0) {
+                roadmapContent.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="text-6xl mb-4">🌟</div>
+                        <h3 class="text-2xl font-bold mb-2">No Assignments Yet</h3>
+                        <p class="text-[#F5F7FA]/70 mb-6">Click "Add Assignment" to get started!</p>
+                        <button class="btn-primary" onclick="showAddAssignmentForm()">Add Your First Assignment</button>
+                    </div>
+                `;
+                return;
+            }
+            
+            const lastDueDate = new Date(sortedAssignments[sortedAssignments.length - 1].dueDate);
+            lastDueDate.setHours(0, 0, 0, 0);
+            const totalDays = Math.max(0, Math.ceil((lastDueDate - today) / (1000 * 60 * 60 * 24)));
+            
+            // Group by week - only include future assignments
+            const weeklyPlan = {};
+            sortedAssignments.forEach(assignment => {
+                const dueDate = new Date(assignment.dueDate);
+                dueDate.setHours(0, 0, 0, 0);
+                const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+                
+                // Only include assignments that are due today or in the future
+                if (daysUntilDue >= 0) {
+                    const week = Math.floor(daysUntilDue / 7) + 1;
+                    if (week > 0) {
+                        if (!weeklyPlan[week]) {
+                            weeklyPlan[week] = [];
+                        }
+                        weeklyPlan[week].push(assignment);
+                    }
+                }
+            });
+            
+            // Generate roadmap HTML
+            const futureAssignments = sortedAssignments.filter(a => {
+                const dueDate = new Date(a.dueDate);
+                dueDate.setHours(0, 0, 0, 0);
+                return dueDate >= today;
+            });
+            
+            let roadmapHTML = `
+                <div class="roadmap-summary mb-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">Summary</h3>
+                        <button class="btn-primary text-sm py-2 px-4" onclick="showAddAssignmentForm()">
+                            ➕ Add Assignment
+                        </button>
+                            </div>
+                    <div class="grid md:grid-cols-3 gap-4 mb-6">
+                        <div class="glass-card p-4 text-center">
+                            <div class="text-2xl mb-2">📅</div>
+                            <div class="text-2xl font-bold text-[#4FC3F7]">${futureAssignments.length}</div>
+                            <div class="text-sm text-[#F5F7FA]/70">Total Assignments</div>
+                        </div>
+                        <div class="glass-card p-4 text-center">
+                            <div class="text-2xl mb-2">⏰</div>
+                            <div class="text-2xl font-bold text-[#FF6EC7]">${futureAssignments.reduce((sum, a) => sum + a.estimatedHours, 0)}</div>
+                            <div class="text-sm text-[#F5F7FA]/70">Total Hours</div>
+                        </div>
+                        <div class="glass-card p-4 text-center">
+                            <div class="text-2xl mb-2">📆</div>
+                            <div class="text-2xl font-bold text-[#482880]">${totalDays}</div>
+                            <div class="text-sm text-[#F5F7FA]/70">Days Remaining</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="roadmap-timeline" id="roadmapTimeline">
+            `;
+            
+            // Create timeline visualization
+            const sortedWeeks = Object.keys(weeklyPlan).sort((a, b) => parseInt(a) - parseInt(b));
+            
+            if (sortedWeeks.length === 0) {
+                roadmapHTML += `
+                    <div class="text-center py-12">
+                        <div class="text-6xl mb-4">🌟</div>
+                        <h3 class="text-2xl font-bold mb-2">No Upcoming Assignments</h3>
+                        <p class="text-[#F5F7FA]/70 mb-6">Add assignments to see your roadmap!</p>
+                            </div>
+                `;
+            } else {
+                sortedWeeks.forEach((week, weekIndex) => {
+                    const weekAssignments = weeklyPlan[week];
+                    const weekNum = parseInt(week);
+                    const displayWeekNum = weekIndex + 1; // Display as Week 1, Week 2, etc.
+                    const weekStartDate = new Date(today);
+                    weekStartDate.setDate(today.getDate() + (weekNum - 1) * 7);
+                    const weekEndDate = new Date(weekStartDate);
+                    weekEndDate.setDate(weekStartDate.getDate() + 6);
+                
+                roadmapHTML += `
+                    <div class="roadmap-week mb-8">
+                        <div class="week-header mb-4">
+                            <h3 class="text-2xl font-bold mb-2">
+                                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                                    Week ${displayWeekNum}
+                                </span>
+                            </h3>
+                            <p class="text-sm text-[#F5F7FA]/70">
+                                ${weekStartDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - 
+                                ${weekEndDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} • 
+                                ${weekAssignments.length} assignment${weekAssignments.length !== 1 ? 's' : ''}
+                            </p>
+                            </div>
+                        <div class="roadmap-path">
+                `;
+                
+                    weekAssignments.forEach((assignment, index) => {
+                        const dueDate = new Date(assignment.dueDate);
+                        const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+                        const priorityColors = {
+                            'High': '#FF6EC7',
+                            'Medium': '#4FC3F7',
+                            'Low': '#482880'
+                        };
+                        const statusIcons = {
+                            'pending': '⏳',
+                            'in-progress': '🚀',
+                            'completed': '✅'
+                        };
+                        
+                        roadmapHTML += `
+                            <div class="roadmap-milestone draggable-milestone" 
+                                 draggable="true" 
+                                 data-assignment-id="${assignment.id}"
+                                 style="--priority-color: ${priorityColors[assignment.priority]}">
+                                <div class="milestone-line"></div>
+                                <div class="milestone-star">⭐</div>
+                                <div class="milestone-content glass-card p-4">
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div class="flex-1">
+                                            <h4 class="font-bold text-lg mb-1">${assignment.title}</h4>
+                                            <p class="text-sm text-[#F5F7FA]/70 mb-2">${assignment.subject}</p>
+                            </div>
+                                        <div class="flex items-center gap-2">
+                                            <div class="text-2xl">${statusIcons[assignment.status]}</div>
+                                            <button class="delete-assignment-btn text-red-400 hover:text-red-300 text-xl" 
+                                                    onclick="removeAssignment(${assignment.id})" 
+                                                    title="Delete assignment">
+                                                🗑️
+                                            </button>
+                        </div>
+                    </div>
+                                    <div class="flex items-center justify-between text-sm">
+                                        <span class="px-2 py-1 rounded" style="background: ${priorityColors[assignment.priority]}33; color: ${priorityColors[assignment.priority]}">
+                                            ${assignment.priority} Priority
+                                        </span>
+                                        <span class="text-[#F5F7FA]/70">
+                                            Due: ${dueDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                                        </span>
+                                </div>
+                                    <div class="mt-2 text-xs text-[#F5F7FA]/60">
+                                        ⏱️ ${assignment.estimatedHours} hours estimated
+                            </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                
+                    roadmapHTML += `
+                        </div>
+                    </div>
+                    `;
+                });
+            }
+            
+            roadmapHTML += `</div>`;
+            roadmapContent.innerHTML = roadmapHTML;
+            
+            // Setup drag and drop
+            setupDragAndDrop();
+        }
+
+        function showAddAssignmentForm() {
+            const formHTML = `
+                <div class="add-assignment-form glass-card p-6 max-w-md mx-auto">
+                    <h3 class="text-2xl font-bold mb-4">Add New Assignment</h3>
+                    <form id="addAssignmentForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Title</label>
+                            <input type="text" id="assignmentTitle" required 
+                                   class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-[#F5F7FA]"
+                                   placeholder="e.g., Algebra Chapter 5">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Subject</label>
+                            <input type="text" id="assignmentSubject" required 
+                                   class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-[#F5F7FA]"
+                                   placeholder="e.g., Math, Science, Reading">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Due Date</label>
+                            <input type="date" id="assignmentDueDate" required
+                                   class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-[#F5F7FA]">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Priority</label>
+                            <select id="assignmentPriority" required
+                                    class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-[#F5F7FA]">
+                                <option value="High">High</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Estimated Hours</label>
+                            <input type="number" id="assignmentHours" required min="1"
+                                   class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-[#F5F7FA]"
+                                   placeholder="e.g., 3" value="2">
+                        </div>
+                        <div class="flex gap-3">
+                            <button type="submit" class="btn-primary flex-1">Add Assignment</button>
+                            <button type="button" onclick="closeAddForm()" class="btn-secondary flex-1">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            const roadmapContent = document.getElementById('roadmapContent');
+            roadmapContent.innerHTML = formHTML;
+            
+            // Set minimum date to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('assignmentDueDate').min = today;
+            
+            document.getElementById('addAssignmentForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                addAssignment();
+            });
+        }
+
+        function addAssignment() {
+            const title = document.getElementById('assignmentTitle').value;
+            const subject = document.getElementById('assignmentSubject').value;
+            const dueDate = document.getElementById('assignmentDueDate').value;
+            const priority = document.getElementById('assignmentPriority').value;
+            const estimatedHours = parseInt(document.getElementById('assignmentHours').value);
+            
+            const newAssignment = {
+                id: nextId++,
+                title,
+                subject,
+                dueDate,
+                priority,
+                status: 'pending',
+                estimatedHours
+            };
+            
+            assignments.push(newAssignment);
+            saveAssignments(assignments);
+            generateRoadmap();
+        }
+
+        function removeAssignment(id) {
+            if (confirm('Are you sure you want to remove this assignment?')) {
+                assignments = assignments.filter(a => a.id !== id);
+                saveAssignments(assignments);
+                generateRoadmap();
+            }
+        }
+
+        function closeAddForm() {
+            generateRoadmap();
+        }
+
+        function setupDragAndDrop() {
+            const milestones = document.querySelectorAll('.draggable-milestone');
+            const roadmapPaths = document.querySelectorAll('.roadmap-path');
+            const timeline = document.getElementById('roadmapTimeline');
+            
+            milestones.forEach(milestone => {
+                milestone.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', milestone.dataset.assignmentId);
+                    e.dataTransfer.effectAllowed = 'move';
+                    milestone.classList.add('dragging');
+                });
+                
+                milestone.addEventListener('dragend', (e) => {
+                    milestone.classList.remove('dragging');
+                    // Remove any drop indicators
+                    document.querySelectorAll('.drop-indicator').forEach(ind => ind.remove());
+                });
+            });
+            
+            // Make each roadmap-path a drop zone
+            roadmapPaths.forEach(path => {
+                path.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    
+                    const afterElement = getDragAfterElement(path, e.clientY);
+                    const draggable = document.querySelector('.dragging');
+                    if (draggable == null) return;
+                    
+                    // Remove existing indicators
+                    document.querySelectorAll('.drop-indicator').forEach(ind => ind.remove());
+                    
+                    // Add drop indicator
+                    const indicator = document.createElement('div');
+                    indicator.className = 'drop-indicator';
+                    indicator.style.height = '4px';
+                    indicator.style.background = '#4FC3F7';
+                    indicator.style.margin = '0.5rem 0';
+                    indicator.style.borderRadius = '2px';
+                    indicator.style.opacity = '0.8';
+                    
+                    if (afterElement == null) {
+                        path.appendChild(indicator);
+                    } else {
+                        path.insertBefore(indicator, afterElement);
+                    }
+                });
+                
+                path.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const assignmentId = parseInt(e.dataTransfer.getData('text/plain'));
+                    
+                    // Find the assignment
+                    const assignment = assignments.find(a => a.id === assignmentId);
+                    if (!assignment) return;
+                    
+                    // Get the drop position
+                    const afterElement = getDragAfterElement(path, e.clientY);
+                    const milestones = Array.from(path.querySelectorAll('.draggable-milestone:not(.dragging)'));
+                    
+                    // Calculate new due date based on position
+                    let newDueDate = assignment.dueDate; // Keep original if we can't determine
+                    
+                    if (milestones.length > 0) {
+                        if (afterElement) {
+                            const afterIndex = milestones.indexOf(afterElement);
+                            if (afterIndex > 0) {
+                                const prevAssignment = assignments.find(a => 
+                                    a.id === parseInt(milestones[afterIndex - 1].dataset.assignmentId)
+                                );
+                                if (prevAssignment) {
+                                    const prevDate = new Date(prevAssignment.dueDate);
+                                    newDueDate = new Date(prevDate.getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+                                }
+                            }
+                        } else {
+                            const lastMilestone = milestones[milestones.length - 1];
+                            const lastAssignment = assignments.find(a => 
+                                a.id === parseInt(lastMilestone.dataset.assignmentId)
+                            );
+                            if (lastAssignment) {
+                                const lastDate = new Date(lastAssignment.dueDate);
+                                newDueDate = new Date(lastDate.getTime() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+                            }
+                        }
+                    }
+                    
+                    // Update assignment due date
+                    assignment.dueDate = newDueDate;
+                    saveAssignments(assignments);
+                    
+                    // Remove indicators
+                    document.querySelectorAll('.drop-indicator').forEach(ind => ind.remove());
+                    
+                    // Regenerate roadmap
+                    generateRoadmap();
+                });
+                
+                path.addEventListener('dragleave', (e) => {
+                    // Only remove indicator if we're actually leaving the path
+                    if (!path.contains(e.relatedTarget)) {
+                        document.querySelectorAll('.drop-indicator').forEach(ind => ind.remove());
+                    }
+                });
+            });
+            
+            // Also allow dropping on the timeline container itself
+            if (timeline) {
+                timeline.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                });
+            }
+        }
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.draggable-milestone:not(.dragging)')];
+            
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        function openStarMap() {
+            const modal = document.getElementById('starMapModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            generateRoadmap();
+        }
+
+        function closeStarMap() {
+            const modal = document.getElementById('starMapModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function downloadRoadmap() {
+            alert('Roadmap download feature coming soon! For now, you can take a screenshot of your roadmap.');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (isLoggedIn()) {
+                loadLessons();
+                initFloatingStars();
+                
+                // Star Map button functionality
+                const starMapBtn = document.getElementById('starMapBtn');
+                const closeBtn = document.getElementById('closeStarMap');
+                const closeBtn2 = document.getElementById('closeStarMapBtn');
+                const overlay = document.getElementById('starMapOverlay');
+                
+                if (starMapBtn) {
+                    starMapBtn.addEventListener('click', openStarMap);
+                }
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', closeStarMap);
+                }
+                if (closeBtn2) {
+                    closeBtn2.addEventListener('click', closeStarMap);
+                }
+                if (overlay) {
+                    overlay.addEventListener('click', closeStarMap);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

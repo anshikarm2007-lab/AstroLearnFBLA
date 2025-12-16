@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-3xl animate-pulse">⭐</span>
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Subject Header -->
+    <section class="container mx-auto px-6 py-12">
+        <div class="text-center mb-12">
+            <div class="text-6xl mb-4">📚</div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-[#482880] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Reading Mission
+                </span>
+            </h1>
+            <p class="text-xl text-[#F5F7FA]/80">Journey through literature and comprehension</p>
+            <div class="mt-4 inline-flex items-center gap-3 glass-card px-4 py-2">
+                <p class="text-sm text-[#F5F7FA]/70">
+                    <span class="font-semibold text-[#482880]">Grade Level:</span> 
+                    <select id="gradeSelector" class="bg-transparent border-none text-[#F5F7FA] font-bold cursor-pointer focus:outline-none ml-2">
+                        <option value="6">6th</option>
+                        <option value="7">7th</option>
+                        <option value="8">8th</option>
+                        <option value="9">9th</option>
+                        <option value="10">10th</option>
+                        <option value="11">11th</option>
+                        <option value="12">12th</option>
+                    </select>
+                </p>
+            </div>
+        </div>
+
+        <!-- Earth to Moon Progress Bar -->
+        <div class="glass-card p-8 mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-center">
+                <span class="bg-gradient-to-r from-[#482880] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Mission Progress
+                </span>
+            </h2>
+            <div class="space-journey-container">
+                <div class="space-journey-track">
+                    <div class="journey-start">
+                        <div class="planet-icon">🌍</div>
+                        <span class="journey-label">Earth</span>
+                    </div>
+                    <div class="journey-progress-bar">
+                        <div class="journey-progress-fill" id="readingProgress" style="width: 0%">
+                            <div class="space-shuttle" id="readingShuttle">🚀</div>
+                        </div>
+                    </div>
+                    <div class="journey-end">
+                        <div class="planet-icon">🌙</div>
+                        <span class="journey-label">Moon</span>
+                    </div>
+                </div>
+                <div class="progress-stats text-center mt-4">
+                    <p class="text-2xl font-bold text-[#482880]" id="readingProgressText">0%</p>
+                    <p class="text-sm text-[#F5F7FA]/70">Complete your journey to the Moon!</p>
+                    <p class="text-xs text-[#F5F7FA]/50 mt-2" id="lessonsCompletedText">0 of 0 lessons completed</p>
+                </div>
+            </div>
+            </div>
+
+        <!-- Lessons Section -->
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-[#482880] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Available Lessons
+                </span>
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch" id="lessonsGrid">
+                <!-- Lessons will be populated by JS -->
+            </div>
+            </div>
+
+        <!-- Lesson Modal -->
+        <div id="lessonModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div class="fixed inset-0 bg-black/70 backdrop-blur-sm" onclick="closeLessonModal()"></div>
+            <div class="relative glass-card p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto z-10">
+                <button onclick="closeLessonModal()" class="absolute top-4 right-4 text-2xl text-[#F5F7FA]/70 hover:text-[#F5F7FA]">✕</button>
+                <div id="lessonContent">
+                    <!-- Lesson content will be populated by JS -->
+            </div>
+                <div class="mt-6 flex gap-4 justify-end">
+                    <button onclick="closeLessonModal()" class="btn-secondary">Close</button>
+                    <button onclick="completeCurrentLesson()" class="btn-primary" id="completeLessonBtn">Mark as Complete</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back to Dashboard -->
+        <div class="text-center mb-8">
+            <a href="dashboard.html" class="btn-secondary inline-block">
+                ← Back to Dashboard
+            </a>
+    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!checkAuth()) {
+                return;
+            }
+            updateNavigation();
+            initFloatingStars();
+            
+            // Animate progress on load
+            setTimeout(() => {
+                animateShuttle();
+            }, 300);
+        });
+
+        // Grade-level specific reading lessons
+        const readingLessonsByGrade = {
+            6: [
+                { id: 1, title: "Basic Reading Comprehension", difficulty: "Easy", completed: false },
+                { id: 2, title: "Story Elements", difficulty: "Easy", completed: false },
+                { id: 3, title: "Vocabulary Building", difficulty: "Easy", completed: false },
+                { id: 4, title: "Main Idea and Details", difficulty: "Medium", completed: false },
+                { id: 5, title: "Character Analysis", difficulty: "Medium", completed: false },
+                { id: 6, title: "Reading Strategies", difficulty: "Medium", completed: false }
+            ],
+            7: [
+                { id: 1, title: "Advanced Comprehension", difficulty: "Easy", completed: false },
+                { id: 2, title: "Literary Devices", difficulty: "Medium", completed: false },
+                { id: 3, title: "Theme and Symbolism", difficulty: "Medium", completed: false },
+                { id: 4, title: "Point of View", difficulty: "Medium", completed: false },
+                { id: 5, title: "Text Structure", difficulty: "Medium", completed: false },
+                { id: 6, title: "Inference Skills", difficulty: "Hard", completed: false }
+            ],
+            8: [
+                { id: 1, title: "Literary Analysis", difficulty: "Medium", completed: false },
+                { id: 2, title: "Poetry Analysis", difficulty: "Medium", completed: false },
+                { id: 3, title: "Author's Purpose", difficulty: "Medium", completed: false },
+                { id: 4, title: "Textual Evidence", difficulty: "Medium", completed: false },
+                { id: 5, title: "Comparative Reading", difficulty: "Hard", completed: false },
+                { id: 6, title: "Critical Thinking", difficulty: "Hard", completed: false }
+            ],
+            9: [
+                { id: 1, title: "Reading Comprehension", difficulty: "Easy", completed: false },
+                { id: 2, title: "Literary Analysis", difficulty: "Medium", completed: false },
+                { id: 3, title: "Poetry Analysis", difficulty: "Medium", completed: false },
+                { id: 4, title: "Shakespeare Studies", difficulty: "Hard", completed: false },
+                { id: 5, title: "Modern Literature", difficulty: "Medium", completed: false },
+                { id: 6, title: "Critical Reading", difficulty: "Hard", completed: false }
+            ],
+            10: [
+                { id: 1, title: "Advanced Literary Analysis", difficulty: "Medium", completed: false },
+                { id: 2, title: "Rhetorical Analysis", difficulty: "Hard", completed: false },
+                { id: 3, title: "Classical Literature", difficulty: "Hard", completed: false },
+                { id: 4, title: "American Literature", difficulty: "Medium", completed: false },
+                { id: 5, title: "World Literature", difficulty: "Hard", completed: false },
+                { id: 6, title: "Literary Criticism", difficulty: "Hard", completed: false }
+            ],
+            11: [
+                { id: 1, title: "AP Literature Analysis", difficulty: "Hard", completed: false },
+                { id: 2, title: "British Literature", difficulty: "Hard", completed: false },
+                { id: 3, title: "Advanced Poetry", difficulty: "Hard", completed: false },
+                { id: 4, title: "Drama Analysis", difficulty: "Hard", completed: false },
+                { id: 5, title: "Literary Theory", difficulty: "Hard", completed: false },
+                { id: 6, title: "Research and Writing", difficulty: "Hard", completed: false }
+            ],
+            12: [
+                { id: 1, title: "Advanced Literary Theory", difficulty: "Hard", completed: false },
+                { id: 2, title: "Contemporary Literature", difficulty: "Hard", completed: false },
+                { id: 3, title: "Postmodern Analysis", difficulty: "Hard", completed: false },
+                { id: 4, title: "Comparative Literature", difficulty: "Hard", completed: false },
+                { id: 5, title: "Literary Research Methods", difficulty: "Hard", completed: false },
+                { id: 6, title: "Thesis Development", difficulty: "Hard", completed: false }
+            ]
+        };
+
+        function getGradeLevel() {
+            const prefs = localStorage.getItem('astrolearn_preferences');
+            if (prefs) {
+                try {
+                    const preferences = JSON.parse(prefs);
+                    return preferences.grade || 9;
+                } catch (e) {
+                    console.error('Error parsing preferences:', e);
+                }
+            }
+            return 9;
+        }
+
+        function getCompletedLessons() {
+            const completed = localStorage.getItem('astrolearn_completed_lessons');
+            if (completed) {
+                try {
+                    return JSON.parse(completed);
+                } catch (e) {
+                    console.error('Error parsing completed lessons:', e);
+                }
+            }
+            return [];
+        }
+
+        let currentLessonKey = null;
+        let currentLessonTitle = null;
+        let currentSubject = null;
+
+        const lessonContentByGrade = {
+            9: {
+                reading: {
+                    "Reading Comprehension": {
+                        title: "Reading Comprehension",
+                        introduction: "Reading comprehension is the ability to understand, analyze, and remember what you read. It's not just about reading words - it's about understanding meaning, making connections, and thinking critically about the text. Let's develop your reading superpowers!",
+                        concepts: [
+                            {
+                                heading: "What is Reading Comprehension?",
+                                explanation: "Reading comprehension is understanding what you read - not just the words, but the meaning, ideas, and information. It involves actively engaging with the text, thinking about what you're reading, and connecting it to what you already know. Good comprehension means you can explain what you read, answer questions about it, and use the information.",
+                                example: "If you read a story about a character who is nervous before a test, comprehension means understanding not just that they're nervous, but why they might be nervous and how that affects their actions."
+                            },
+                            {
+                                heading: "Previewing the Text",
+                                explanation: "Before you start reading, preview the text to get an overview. Look at the title, headings, subheadings, images, captions, and any bold or italicized words. This gives you a roadmap of what you're about to read and helps activate your prior knowledge. It's like looking at a map before starting a journey!",
+                                example: "If you see a heading 'The Water Cycle' and images of clouds and rain, you can predict the text will explain how water moves through the environment."
+                            },
+                            {
+                                heading: "Asking Questions While Reading",
+                                explanation: "Active readers ask questions as they read. Ask yourself: What is the main idea? What are the key details? Why did the author include this information? What do I not understand? What will happen next? These questions keep you engaged and help you monitor your understanding.",
+                                example: "While reading about photosynthesis, you might ask: 'What is photosynthesis?' 'Why do plants need it?' 'How does it work?' These questions guide your reading."
+                            },
+                            {
+                                heading: "Identifying Main Idea and Details",
+                                explanation: "The main idea is the most important point the author wants to convey - the central message. Supporting details are facts, examples, and information that explain, prove, or illustrate the main idea. The main idea is like the trunk of a tree, and details are like the branches.",
+                                example: "Main idea: 'Exercise is important for health.' Supporting details: 'It strengthens your heart, improves mood, and helps maintain a healthy weight.'"
+                            },
+                            {
+                                heading: "Using Context Clues",
+                                explanation: "Context clues are hints in the text that help you understand unfamiliar words. Look at the words and sentences around the unknown word. The context (surrounding text) often provides clues about meaning through definitions, examples, synonyms, antonyms, or explanations.",
+                                example: "If you read 'The arid desert had no water,' you can figure out that 'arid' means dry, even if you've never seen the word before, because the context mentions 'no water.'"
+                            },
+                            {
+                                heading: "Making Connections",
+                                explanation: "Good readers make connections between the text and their own experiences, other texts they've read, or things happening in the world. These connections help you understand and remember what you read. There are three types: text-to-self (connecting to your life), text-to-text (connecting to other readings), and text-to-world (connecting to world events).",
+                                example: "If you read about a character moving to a new school, you might connect it to your own experience of starting at a new place, which helps you understand the character's feelings."
+                            },
+                            {
+                                heading: "Summarizing",
+                                explanation: "After reading, summarize what you learned in your own words. A good summary includes the main idea and key supporting details, but leaves out minor details. It's like telling a friend what you read - you focus on the most important points. Summarizing helps you check your understanding and remember the information.",
+                                example: "After reading about the solar system, you might summarize: 'The solar system has eight planets orbiting the sun. The inner planets are rocky, and the outer planets are gas giants. Earth is the only planet known to support life.'"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What should you do before reading a text to improve comprehension?",
+                                solution: "Preview the text by looking at titles, headings, images, and bold words to get an overview and activate prior knowledge."
+                            },
+                            {
+                                problem: "What is the difference between main idea and supporting details?",
+                                solution: "The main idea is the central point the author wants to convey, while supporting details are facts and examples that explain or prove the main idea."
+                            },
+                            {
+                                problem: "How can you figure out the meaning of an unfamiliar word while reading?",
+                                solution: "Use context clues - look at the words and sentences around the unknown word for hints about its meaning, such as definitions, examples, or explanations."
+                            }
+                        ],
+                        summary: "Reading comprehension is understanding what you read. Preview texts before reading. Ask questions while reading. Identify main ideas and supporting details. Use context clues for unfamiliar words. Make connections to your experiences. Summarize after reading. These strategies help you become a better, more engaged reader!"
+                    },
+                    "Literary Analysis": {
+                        title: "Literary Analysis",
+                        introduction: "Literary analysis is like being a detective of stories! It's the process of examining how authors use language, techniques, and elements to create meaning. When you analyze literature, you look deeper than just what happens - you explore how and why the author tells the story the way they do.",
+                        concepts: [
+                            {
+                                heading: "What is Literary Analysis?",
+                                explanation: "Literary analysis examines how authors use language, literary devices, and narrative elements to create meaning and convey messages. It goes beyond summarizing what happens in a story to explore how the author crafts the work, why they make certain choices, and what deeper meanings or themes emerge. It's about understanding the 'how' and 'why' behind the story.",
+                                example: "Instead of just saying 'The character was sad,' literary analysis might explore: 'The author uses dark, rainy imagery and short, choppy sentences to convey the character's deep sadness and isolation.'"
+                            },
+                            {
+                                heading: "Literary Devices",
+                                explanation: "Literary devices are techniques authors use to create special effects and convey meaning. Common devices include: metaphors (direct comparisons: 'Time is a thief'), similes (comparisons using 'like' or 'as': 'She ran like the wind'), symbolism (objects representing ideas: a dove for peace), imagery (descriptive language that appeals to the senses), personification (giving human traits to non-human things), and alliteration (repeating consonant sounds).",
+                                example: "In 'The stars danced in the sky,' the author uses personification (stars can't dance) to create a sense of joy and movement in the night sky."
+                            },
+                            {
+                                heading: "Character Analysis",
+                                explanation: "Characters are the people (or animals, objects) in a story. To analyze characters, examine their traits (personality characteristics), motivations (what drives them), conflicts (internal or external struggles), relationships with other characters, and development (how they change throughout the story). Well-developed characters feel real and drive the plot forward.",
+                                example: "A character might start as shy and fearful, but through facing challenges, develop into someone brave and confident - this character development shows growth and is important to analyze."
+                            },
+                            {
+                                heading: "Setting",
+                                explanation: "Setting is the time and place where a story occurs. It includes not just the physical location, but also the historical period, social environment, and atmosphere. Setting can affect the mood, influence characters' actions, and even become symbolic. Sometimes setting is so important it's almost like a character itself.",
+                                example: "A story set in a dark, abandoned mansion creates a spooky, mysterious mood, while the same story set in a bright, sunny park would feel completely different - the setting shapes the story's atmosphere."
+                            },
+                            {
+                                heading: "Theme",
+                                explanation: "Theme is the underlying message, lesson, or insight about life that the author wants to convey. It's not the plot (what happens), but the deeper meaning (what the story teaches us). Themes are usually universal ideas that apply beyond the specific story, such as love, friendship, courage, loss, or the importance of family. A story can have multiple themes.",
+                                example: "A story about a character who learns to accept themselves despite differences might have themes of self-acceptance, diversity, and the importance of being true to yourself."
+                            },
+                            {
+                                heading: "Author's Purpose",
+                                explanation: "The author's purpose is why they wrote the text - what they want to achieve. Common purposes include: to inform (teach facts), to persuade (convince the reader), to entertain (amuse or engage), to express (share feelings or ideas), or to describe (paint a picture with words). Understanding the author's purpose helps you understand their choices and the text's overall goal.",
+                                example: "A news article's purpose is to inform, so it uses facts and objective language. A persuasive essay's purpose is to convince, so it uses arguments and emotional appeals. A novel's purpose might be to entertain while also exploring themes."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is the difference between a metaphor and a simile?",
+                                solution: "A metaphor is a direct comparison ('Time is a thief'), while a simile uses 'like' or 'as' to make a comparison ('Time flies like an arrow')."
+                            },
+                            {
+                                problem: "What is theme, and how is it different from the plot?",
+                                solution: "Theme is the underlying message or lesson about life that the author conveys, while plot is what happens in the story. Theme is the 'why' or 'what does this mean,' while plot is the 'what happens.'"
+                            },
+                            {
+                                problem: "How can setting affect a story?",
+                                solution: "Setting (time and place) affects the mood, influences characters' actions, can be symbolic, and helps create the story's atmosphere. The same plot would feel different in different settings."
+                            }
+                        ],
+                        summary: "Literary analysis examines how authors craft their work. Look for literary devices like metaphors, similes, and symbolism. Analyze characters' traits, motivations, and development. Examine how setting affects mood and meaning. Identify themes - the underlying messages. Consider the author's purpose. Literary analysis helps you appreciate the art of storytelling and discover deeper meanings in what you read!"
+                    }
+                }
+            }
+        };
+
+        function openLessonModal(lessonKey, lessonTitle, subject, isAlreadyCompleted = false) {
+            currentLessonKey = lessonKey;
+            currentLessonTitle = lessonTitle;
+            currentSubject = subject;
+            
+            const grade = getGradeLevel();
+            const content = lessonContentByGrade[grade]?.[subject]?.[lessonTitle];
+            
+            if (!content) {
+                const defaultContent = {
+                    title: lessonTitle,
+                    notes: [
+                        `Welcome to ${lessonTitle}!`,
+                        "This lesson will help you understand key concepts.",
+                        "Take your time to read through the notes carefully.",
+                        "Practice the examples to reinforce your learning.",
+                        "Complete this lesson to unlock practice quizzes!"
+                    ],
+                    examples: [
+                        "Example 1: Practice problem",
+                        "Example 2: Another practice problem"
+                    ]
+                };
+                displayLessonContent(defaultContent, isAlreadyCompleted);
+            } else {
+                displayLessonContent(content, isAlreadyCompleted);
+            }
+            
+            document.getElementById('lessonModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function displayLessonContent(content, isAlreadyCompleted = false) {
+            const lessonContentDiv = document.getElementById('lessonContent');
+            
+            // Build concepts section
+            const conceptsHTML = content.concepts ? `
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold mb-4 text-[#482880]">📚 Key Concepts</h3>
+                    <div class="space-y-4">
+                        ${content.concepts.map((concept, index) => `
+                            <div class="glass-card p-5">
+                                <h4 class="text-lg font-bold mb-2 text-[#FF6EC7]">${index + 1}. ${concept.heading}</h4>
+                                <p class="text-[#F5F7FA]/90 mb-3 leading-relaxed">${concept.explanation}</p>
+                                <div class="glass-card p-3 bg-[#482880]/20 mt-3">
+                                    <p class="text-sm font-semibold text-[#482880] mb-1">Example:</p>
+                                    <p class="text-[#F5F7FA]/90 font-mono text-sm">${concept.example}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : '';
+            
+            // Build practice problems section
+            const practiceHTML = content.practiceProblems ? `
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold mb-4 text-[#FF6EC7]">✏️ Practice Exercises</h3>
+                    <div class="space-y-4">
+                        ${content.practiceProblems.map((problem, index) => `
+                            <div class="glass-card p-5">
+                                <div class="mb-3">
+                                    <p class="text-sm font-semibold text-[#482880] mb-1">Exercise ${index + 1}:</p>
+                                    <p class="text-[#F5F7FA]/90 font-semibold">${problem.problem}</p>
+                                </div>
+                                <details class="mt-2">
+                                    <summary class="cursor-pointer text-sm text-[#FF6EC7] hover:text-[#482880] transition-colors">Show Answer</summary>
+                                    <div class="glass-card p-3 bg-[#482880]/20 mt-2">
+                                        <p class="text-[#F5F7FA]/90 font-mono text-sm">${problem.solution}</p>
+                                    </div>
+                                </details>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : '';
+            
+            lessonContentDiv.innerHTML = `
+                <div class="mb-6">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-3xl font-bold mb-4">
+                            <span class="bg-gradient-to-r from-[#482880] to-[#FF6EC7] bg-clip-text text-transparent">
+                                ${content.title}
+                            </span>
+                        </h2>
+                        ${isAlreadyCompleted ? '<span class="text-2xl" title="Lesson Completed">✅</span>' : ''}
+                    </div>
+                    ${content.introduction ? `
+                        <div class="glass-card p-4 bg-[#482880]/10 border border-[#482880]/30 mb-4">
+                            <p class="text-[#F5F7FA]/90 leading-relaxed">${content.introduction}</p>
+                        </div>
+                    ` : ''}
+                    ${isAlreadyCompleted ? '<p class="text-sm text-[#482880] mb-4">You\'ve completed this lesson! Review the content below.</p>' : ''}
+                </div>
+                
+                ${conceptsHTML}
+                
+                ${practiceHTML}
+                
+                ${content.summary ? `
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold mb-3 text-[#482880]">📋 Lesson Summary</h3>
+                        <div class="glass-card p-5 bg-[#482880]/20 border-2 border-[#482880]/50">
+                            <p class="text-[#F5F7FA]/90 leading-relaxed">${content.summary}</p>
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+            
+            // Update button text based on completion status
+            const completeBtn = document.getElementById('completeLessonBtn');
+            if (completeBtn) {
+                if (isAlreadyCompleted) {
+                    completeBtn.textContent = 'Mark as Complete Again';
+                    completeBtn.classList.remove('btn-primary');
+                    completeBtn.classList.add('btn-secondary');
+                } else {
+                    completeBtn.textContent = 'Mark as Complete';
+                    completeBtn.classList.remove('btn-secondary');
+                    completeBtn.classList.add('btn-primary');
+                }
+            }
+        }
+
+        function closeLessonModal() {
+            document.getElementById('lessonModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function completeCurrentLesson() {
+            if (currentLessonKey && currentLessonTitle) {
+                const completed = getCompletedLessons();
+                const isAlreadyCompleted = completed.includes(currentLessonKey);
+                
+                if (!isAlreadyCompleted) {
+                    markLessonCompleted(currentLessonKey, currentLessonTitle);
+                } else {
+                    // Already completed, just close
+                    alert('Lesson already completed! You can review it anytime.');
+                }
+                closeLessonModal();
+                loadLessons();
+            }
+        }
+
+        function markLessonCompleted(lessonKey, lessonTitle) {
+            const completed = getCompletedLessons();
+            if (!completed.includes(lessonKey)) {
+                completed.push(lessonKey);
+                localStorage.setItem('astrolearn_completed_lessons', JSON.stringify(completed));
+                updateProgress();
+            }
+        }
+
+        function updateProgress() {
+            const grade = getGradeLevel();
+            const lessons = readingLessonsByGrade[grade] || readingLessonsByGrade[9];
+            const completedLessons = getCompletedLessons();
+            
+            let completedCount = 0;
+            lessons.forEach(lesson => {
+                const lessonKey = `reading_${grade}_${lesson.title}`;
+                if (completedLessons.includes(lessonKey)) {
+                    completedCount++;
+                }
+            });
+            
+            const totalLessons = lessons.length;
+            const progress = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
+            
+            document.getElementById('readingProgressText').textContent = progress + '%';
+            document.getElementById('lessonsCompletedText').textContent = `${completedCount} of ${totalLessons} lessons completed`;
+            
+            const progressFill = document.getElementById('readingProgress');
+            if (progressFill) {
+                progressFill.style.width = progress + '%';
+            }
+            
+            animateShuttle();
+        }
+
+        function loadLessons() {
+            const grid = document.getElementById('lessonsGrid');
+            const grade = getGradeLevel();
+            const lessons = readingLessonsByGrade[grade] || readingLessonsByGrade[9];
+            
+            if (!lessons || lessons.length === 0) {
+                grid.innerHTML = '<p class="text-center text-[#F5F7FA]/70">No lessons available for this grade level.</p>';
+                return;
+            }
+            
+            // Load completed lessons
+            const completedLessons = getCompletedLessons();
+            
+            grid.innerHTML = lessons.map(lesson => {
+                const lessonKey = `reading_${grade}_${lesson.title}`;
+                const isCompleted = completedLessons.includes(lessonKey);
+                
+                return `
+                <div class="glass-card p-6 flex flex-col h-full ${isCompleted ? 'border-2 border-[#482880]' : ''}">
+                    <div class="flex items-start justify-between mb-4">
+                        <h3 class="text-xl font-bold flex-1">${lesson.title}</h3>
+                        ${isCompleted ? '<span class="text-2xl ml-2 flex-shrink-0">✅</span>' : ''}
+                    </div>
+                    <p class="text-sm text-[#F5F7FA]/70 mb-2">Difficulty: <span class="font-bold" style="color: ${lesson.difficulty === 'Easy' ? '#4FC3F7' : lesson.difficulty === 'Medium' ? '#FF6EC7' : '#482880'}">${lesson.difficulty}</span></p>
+                    <p class="text-xs text-[#F5F7FA]/50 mb-4">Grade ${grade} Level</p>
+                    <div class="mt-auto flex gap-2">
+                        <button class="btn-primary flex-1 complete-lesson-btn" 
+                                data-lesson-key="${lessonKey}"
+                                data-lesson-title="${lesson.title}"
+                                data-is-completed="${isCompleted}">
+                            ${isCompleted ? 'Review Lesson' : 'Start Lesson'}
+                        </button>
+                        ${isCompleted ? `
+                            <button class="btn-secondary complete-lesson-btn-again flex-shrink-0" 
+                                    data-lesson-key="${lessonKey}"
+                                    data-lesson-title="${lesson.title}"
+                                    title="Mark as incomplete to redo">
+                                🔄
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            }).join('');
+            
+            // Add event listeners for lesson buttons
+            document.querySelectorAll('.complete-lesson-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    openLessonModal(btn.dataset.lessonKey, btn.dataset.lessonTitle, 'reading', btn.dataset.isCompleted === 'true');
+                });
+            });
+            
+            // Add event listeners for redo buttons
+            document.querySelectorAll('.complete-lesson-btn-again').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (confirm('Mark this lesson as incomplete so you can redo it?')) {
+                        const lessonKey = btn.dataset.lessonKey;
+                        const completed = getCompletedLessons();
+                        const index = completed.indexOf(lessonKey);
+                        if (index > -1) {
+                            completed.splice(index, 1);
+                            localStorage.setItem('astrolearn_completed_lessons', JSON.stringify(completed));
+                            updateProgress();
+                            loadLessons(); // Reload to update UI
+                        }
+                    }
+                });
+            });
+            
+            updateProgress();
+        }
+
+        function animateShuttle() {
+            const progressText = document.getElementById('readingProgressText');
+            const progress = progressText ? parseInt(progressText.textContent) : 0;
+            const shuttle = document.getElementById('readingShuttle');
+            
+            if (shuttle) {
+                setTimeout(() => {
+                    shuttle.style.transform = 'translateX(0)';
+                }, 100);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (isLoggedIn()) {
+                // Set up grade selector
+                const gradeSelector = document.getElementById('gradeSelector');
+                if (gradeSelector) {
+                    const grade = getGradeLevel();
+                    gradeSelector.value = grade;
+                    
+                    gradeSelector.addEventListener('change', (e) => {
+                        const newGrade = parseInt(e.target.value);
+                        const prefs = localStorage.getItem('astrolearn_preferences');
+                        if (prefs) {
+                            try {
+                                const preferences = JSON.parse(prefs);
+                                preferences.grade = newGrade;
+                                localStorage.setItem('astrolearn_preferences', JSON.stringify(preferences));
+                                
+                                // Reload lessons and progress for new grade
+                                loadLessons();
+                                updateProgress();
+                                
+                                // Show feedback
+                                gradeSelector.style.backgroundColor = 'rgba(72, 40, 128, 0.2)';
+                                setTimeout(() => {
+                                    gradeSelector.style.backgroundColor = 'transparent';
+                                }, 500);
+                            } catch (e) {
+                                console.error('Error updating grade:', e);
+                            }
+                        }
+                    });
+                }
+                
+                loadLessons();
+                updateProgress();
+            }
+        });
+    </script>
+</body>
+</html>

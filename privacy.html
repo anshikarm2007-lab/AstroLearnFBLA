@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-3xl animate-pulse">⭐</span>
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Privacy Policy Section -->
+    <section class="container mx-auto px-6 py-16 max-w-4xl">
+        <div class="text-center mb-12">
+            <div class="text-6xl mb-4 animate-float">🔒</div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Privacy Policy
+                </span>
+            </h1>
+            <p class="text-xl text-[#F5F7FA]/80">Your privacy is important to us</p>
+            <p class="text-sm text-[#F5F7FA]/60 mt-2">Last updated: January 2024</p>
+        </div>
+
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Introduction
+                </span>
+            </h2>
+            <p class="text-lg leading-relaxed mb-4 text-[#F5F7FA]/90">
+                At AstroLearn, we are committed to protecting your privacy and ensuring a safe learning environment. This Privacy Policy explains how we collect, use, and safeguard your personal information when you use our platform.
+            </p>
+        </div>
+
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Information We Collect
+                </span>
+            </h2>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-xl font-bold mb-2">Account Information</h3>
+                    <p class="text-[#F5F7FA]/90">When you create an account, we collect your name, email address, and password. We also store your grade level, subject preferences, and difficulty settings to personalize your learning experience.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2">Usage Data</h3>
+                    <p class="text-[#F5F7FA]/90">We track your progress, completed lessons, and learning activities to help you monitor your growth and improve our platform.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2">Local Storage</h3>
+                    <p class="text-[#F5F7FA]/90">We use browser local storage to maintain your session and preferences. This data is stored on your device and is not shared with third parties.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    How We Use Your Information
+                </span>
+            </h2>
+            <ul class="space-y-3 text-[#F5F7FA]/90">
+                <li class="flex items-start">
+                    <span class="mr-3">✓</span>
+                    <span>To provide and personalize your learning experience</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-3">✓</span>
+                    <span>To track your progress and achievements</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-3">✓</span>
+                    <span>To improve our platform and develop new features</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-3">✓</span>
+                    <span>To communicate with you about your account and updates</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Data Security
+                </span>
+            </h2>
+            <p class="text-lg leading-relaxed mb-4 text-[#F5F7FA]/90">
+                We take data security seriously. Your information is stored locally on your device using browser local storage. We do not transmit your personal data to external servers without your explicit consent.
+            </p>
+            <p class="text-lg leading-relaxed text-[#F5F7FA]/90">
+                However, please note that this is a demonstration platform. In a production environment, we would implement additional security measures including encryption, secure authentication, and regular security audits.
+            </p>
+        </div>
+
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Your Rights
+                </span>
+            </h2>
+            <p class="text-lg leading-relaxed mb-4 text-[#F5F7FA]/90">
+                You have the right to:
+            </p>
+            <ul class="space-y-3 text-[#F5F7FA]/90">
+                <li class="flex items-start">
+                    <span class="mr-3">•</span>
+                    <span>Access and review your personal information</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-3">•</span>
+                    <span>Update or correct your account information</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-3">•</span>
+                    <span>Delete your account and associated data</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-3">•</span>
+                    <span>Opt out of certain data collection practices</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Children's Privacy
+                </span>
+            </h2>
+            <p class="text-lg leading-relaxed text-[#F5F7FA]/90">
+                AstroLearn is designed to be safe for learners of all ages. We do not knowingly collect personal information from children under 13 without parental consent. If you are a parent or guardian and believe your child has provided us with personal information, please contact us immediately.
+            </p>
+        </div>
+
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Changes to This Policy
+                </span>
+            </h2>
+            <p class="text-lg leading-relaxed text-[#F5F7FA]/90">
+                We may update this Privacy Policy from time to time. We will notify you of any significant changes by posting the new policy on this page and updating the "Last updated" date.
+            </p>
+        </div>
+
+        <div class="glass-card p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Contact Us
+                </span>
+            </h2>
+            <p class="text-lg leading-relaxed text-[#F5F7FA]/90">
+                If you have any questions about this Privacy Policy or our data practices, please contact us at <a href="contact.html" class="text-[#4FC3F7] hover:text-[#FF6EC7] transition-colors">support@astrolearn.space</a> or visit our <a href="contact.html" class="text-[#4FC3F7] hover:text-[#FF6EC7] transition-colors">Contact page</a>.
+            </p>
+        </div>
+
+        <div class="text-center">
+            <a href="index.html" class="btn-primary inline-block py-3 px-8">
+                Return Home
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initFloatingStars();
+            updateNavigation();
+            setupProtectedLinks();
+        });
+    </script>
+</body>
+</html>
+
+
+

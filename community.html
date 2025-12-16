@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - PeerHive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&family=Nunito:wght@400;600;700&family=Quicksand:wght@400;500;600&family=Lato:wght@300;400;700&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dark-mode-enhancements.css">
+    <link rel="stylesheet" href="community.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>🐝 PeerHive</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="schedule.html" class="nav-link">Schedule</a></li>
+                <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="resources.html" class="nav-link">Resources</a></li>
+                <li><a href="community.html" class="nav-link active">Community</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Community Page Content -->
+    <div class="community-page">
+        <div class="container">
+            <h1 class="page-title">Community Hub</h1>
+            <p class="page-subtitle">Connect with peers, join discussions, and find study buddies!</p>
+            
+            <!-- Study Buddy Finder -->
+            <div class="community-section">
+                <h2>🔍 Study Buddy Finder</h2>
+                <div class="buddy-finder">
+                    <div class="finder-filters">
+                        <select class="filter-select" id="subjectFilter">
+                            <option value="all">All Subjects</option>
+                            <option value="math">Math</option>
+                            <option value="science">Science</option>
+                            <option value="reading">Reading</option>
+                            <option value="language">Foreign Language</option>
+                        </select>
+                        <select class="filter-select" id="gradeFilter">
+                            <option value="all">All Grades</option>
+                            <option value="9">9th Grade</option>
+                            <option value="10">10th Grade</option>
+                            <option value="11">11th Grade</option>
+                            <option value="12">12th Grade</option>
+                        </select>
+                        <button class="btn btn-primary" id="searchBuddies">Search</button>
+                    </div>
+                    <div class="buddies-grid" id="buddiesGrid">
+                        <!-- Buddies will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Discussion Boards -->
+            <div class="community-section">
+                <h2>💬 Discussion Boards</h2>
+                <div class="board-tabs">
+                    <button class="board-tab active" data-board="all">All Discussions</button>
+                    <button class="board-tab" data-board="math">📐 Math</button>
+                    <button class="board-tab" data-board="science">🔬 Science</button>
+                    <button class="board-tab" data-board="reading">📚 Reading</button>
+                    <button class="board-tab" data-board="language">🌍 Foreign Language</button>
+                </div>
+                <div class="discussions-list" id="discussionsList">
+                    <!-- Discussions will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Collaborative Study Rooms -->
+            <div class="community-section">
+                <h2>🏠 Collaborative Study Rooms</h2>
+                <div class="study-rooms-grid" id="studyRoomsGrid">
+                    <!-- Study rooms will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Student Profiles -->
+            <div class="community-section">
+                <h2>👥 Featured Students</h2>
+                <div class="profiles-grid" id="profilesGrid">
+                    <!-- Profiles will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🐝 PeerHive</h3>
+                    <p>Student-powered learning hub for academic success.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="schedule.html">Schedule</a></li>
+                        <li><a href="dashboard.html">Dashboard</a></li>
+                        <li><a href="resources.html">Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: support@peerhive.edu</p>
+                    <p>Phone: (555) 123-4567</p>
+                </div>
+                <div class="footer-section">
+                    <h4>School Partnerships</h4>
+                    <p>Interested in bringing PeerHive to your school? <a href="#contact">Contact us</a> for partnership opportunities.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PeerHive. Built by students, for students.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="community.js"></script>
+</body>
+</html>
+

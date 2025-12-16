@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Timetable - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-3xl animate-pulse">⭐</span>
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </h1>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link active protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center block" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Schedule Header -->
+    <section class="container mx-auto px-6 py-16 text-center">
+        <h1 class="text-5xl md:text-7xl font-bold mb-4">
+            <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                Galaxy Timetable
+            </span>
+        </h1>
+        <p class="text-xl text-[#F5F7FA]/80">Upcoming Study Missions</p>
+    </section>
+
+    <!-- Sessions Grid -->
+    <section class="container mx-auto px-6 pb-16">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="sessionsGrid">
+            <!-- Sessions will be populated by JS -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        const sessions = [
+            { id: 1, subject: "Math", tutor: "Ava J.", time: "Monday 5 PM", planetColor: "#4FC3F7", icon: "🔭" },
+            { id: 2, subject: "Biology", tutor: "Leo R.", time: "Tuesday 4 PM", planetColor: "#FF6EC7", icon: "🧬" },
+            { id: 3, subject: "History", tutor: "Maya K.", time: "Friday 3 PM", planetColor: "#482880", icon: "🌍" },
+            { id: 4, subject: "Chemistry", tutor: "Sam T.", time: "Wednesday 6 PM", planetColor: "#4FC3F7", icon: "⚗️" },
+            { id: 5, subject: "Physics", tutor: "Zoe L.", time: "Thursday 5 PM", planetColor: "#FF6EC7", icon: "🌌" },
+            { id: 6, subject: "Literature", tutor: "Max D.", time: "Saturday 2 PM", planetColor: "#482880", icon: "📚" }
+        ];
+
+        function loadSessions() {
+            const grid = document.getElementById('sessionsGrid');
+            grid.innerHTML = sessions.map(session => `
+                <div class="planet-card glass-card p-6 relative overflow-hidden" style="animation-delay: ${Math.random() * 2}s">
+                    <div class="absolute top-4 right-4 text-4xl opacity-50">${session.icon}</div>
+                    <div class="planet-circle mb-4" style="background: radial-gradient(circle, ${session.planetColor}, ${session.planetColor}88)">
+                        <div class="planet-inner"></div>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">${session.subject}</h3>
+                    <p class="text-[#F5F7FA]/70 mb-1">👨‍🏫 Tutor: ${session.tutor}</p>
+                    <p class="text-[#F5F7FA]/70 mb-4">🕐 ${session.time}</p>
+                    <button class="btn-primary w-full">Join Mission</button>
+                </div>
+            `).join('');
+        }
+
+        // Check authentication before loading page
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!checkAuth()) {
+                return; // Will redirect to login or onboarding
+            }
+            
+            // Load content and update navigation
+            loadSessions();
+            initFloatingStars();
+            updateNavigation();
+            setupProtectedLinks();
+        });
+    </script>
+</body>
+</html>

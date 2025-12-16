@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroLearn - Mission Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <span class="text-3xl animate-pulse">⭐</span>
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </h1>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section relative py-20 px-6">
+        <div class="container mx-auto text-center relative z-10">
+            <div class="floating-planet">🪐</div>
+            <h1 class="text-6xl md:text-8xl font-bold mb-6 animate-float">
+                <span class="bg-gradient-to-r from-[#4FC3F7] via-[#FF6EC7] to-[#4FC3F7] bg-clip-text text-transparent">
+                    Welcome to AstroLearn
+                </span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-12 text-[#F5F7FA]/80">
+                Explore a universe of knowledge
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+                <button class="btn-primary" onclick="window.location.href='resources.html'">
+                    Begin Mission
+                </button>
+                <button class="btn-secondary" onclick="window.location.href='dashboard.html'">
+                    View Dashboard
+                </button>
+                <button class="btn-tertiary" onclick="window.location.href='schedule.html'">
+                    Join Live Session
+                </button>
+            </div>
+        </div>
+        <!-- Solar System Animation -->
+        <div class="solar-system">
+            <div class="planet planet-1">🪐</div>
+            <div class="planet planet-2">🌍</div>
+            <div class="planet planet-3">🪐</div>
+            <div class="planet planet-4">🌙</div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container mx-auto px-6 py-16">
+        <h2 class="text-4xl font-bold text-center mb-12">
+            <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                Mission Features
+            </span>
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8" id="featuresGrid">
+            <!-- Features will be populated by JS -->
+        </div>
+    </section>
+
+    <!-- What Is AstroLearn Section -->
+    <section class="container mx-auto px-6 py-16">
+        <div class="glass-card max-w-4xl mx-auto p-8">
+            <h2 class="text-3xl font-bold mb-6 text-center">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    What Is AstroLearn?
+                </span>
+            </h2>
+            <p class="text-lg leading-relaxed mb-4 text-[#F5F7FA]/90">
+                AstroLearn is your launchpad into a fun, engaging world of learning. Explore "constellations" of subjects, join live study sessions, and watch your progress shine brighter as you move through your own universe of knowledge.
+            </p>
+            <p class="text-lg leading-relaxed mb-4 text-[#F5F7FA]/90">
+                Our platform pairs a clean, easy-to-use design with helpful learning tools to make every subject feel exciting—whether you're practicing math, exploring science, or discovering new parts of history. AstroLearn gives you everything you need to learn at your own pace in a friendly, welcoming space.
+            </p>
+            <p class="text-lg leading-relaxed text-[#F5F7FA]/90">
+                Join learners of all ages who are already blasting off on their AstroLearn adventure. Your journey starts now!
+            </p>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="container mx-auto px-6 py-16">
+        <h2 class="text-4xl font-bold text-center mb-12">
+            <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                Cadet Testimonials
+            </span>
+        </h2>
+        <div class="grid md:grid-cols-3 gap-8" id="testimonialsGrid">
+            <!-- Testimonials will be populated by JS -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn ⭐</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Update navigation on home page
+        document.addEventListener('DOMContentLoaded', () => {
+            updateNavigation();
+            setupProtectedLinks();
+        });
+
+        // Load features and testimonials
+        const homeFeatures = [
+            { title: "Interactive Lessons", desc: "Explore knowledge constellations.", icon: "🪐" },
+            { title: "Live Study Sessions", desc: "Join real-time galaxy classrooms.", icon: "🚀" },
+            { title: "Track Progress", desc: "Grow your skill constellation.", icon: "⭐" }
+        ];
+
+        const testimonials = [
+            { name: "Cadet Sarah", role: "Math Explorer", text: "AstroLearn transformed how I study. The galaxy theme makes learning fun!" },
+            { name: "Cadet Alex", role: "Science Navigator", text: "The live sessions are amazing. I feel like I'm exploring space while learning." },
+            { name: "Cadet Jordan", role: "History Pilot", text: "Best educational platform I've used. The UI is absolutely stunning!" }
+        ];
+
+        function loadFeatures() {
+            const grid = document.getElementById('featuresGrid');
+            grid.innerHTML = homeFeatures.map(feature => `
+                <div class="glass-card p-6 text-center animate-float" style="animation-delay: ${Math.random() * 2}s">
+                    <div class="text-5xl mb-4">${feature.icon}</div>
+                    <h3 class="text-xl font-bold mb-2">${feature.title}</h3>
+                    <p class="text-[#F5F7FA]/70">${feature.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        function loadTestimonials() {
+            const grid = document.getElementById('testimonialsGrid');
+            grid.innerHTML = testimonials.map(testimonial => `
+                <div class="glass-card p-6">
+                    <p class="text-[#F5F7FA]/90 mb-4 italic">"${testimonial.text}"</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] flex items-center justify-center mr-4">
+                            👨‍🚀
+                        </div>
+                        <div>
+                            <p class="font-bold">${testimonial.name}</p>
+                            <p class="text-sm text-[#F5F7FA]/70">${testimonial.role}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadFeatures();
+            loadTestimonials();
+            initFloatingStars();
+        });
+    </script>
+</body>
+</html>

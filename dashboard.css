@@ -1,0 +1,491 @@
+/* Dashboard Page Styles */
+.dashboard-page {
+    padding: 2rem 0 4rem;
+    min-height: calc(100vh - 200px);
+    background: linear-gradient(135deg, rgba(0, 137, 123, 0.05) 0%, rgba(38, 166, 154, 0.05) 50%, rgba(77, 208, 225, 0.05) 100%);
+    position: relative;
+}
+
+.page-title {
+    font-size: 2.8rem;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(224, 247, 250, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 6px var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px var(--shadow-lg);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+}
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-primary);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+/* Dashboard Sections */
+.dashboard-section {
+    margin-bottom: 3rem;
+}
+
+.dashboard-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Progress Cards */
+.progress-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.progress-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(224, 247, 250, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px var(--shadow);
+    border-left: 4px solid;
+}
+
+.progress-card.math-card {
+    border-left-color: var(--accent-teal);
+}
+
+.progress-card.science-card {
+    border-left-color: var(--accent-turquoise);
+}
+
+.progress-card.reading-card {
+    border-left-color: var(--accent-aqua);
+}
+
+.progress-card.language-card {
+    border-left-color: var(--accent-turquoise);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.progress-header h3 {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+.progress-percent {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 12px;
+    background: linear-gradient(135deg, rgba(0, 137, 123, 0.2) 0%, rgba(38, 166, 154, 0.2) 100%);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.5s ease;
+}
+
+.math-fill {
+    background: linear-gradient(90deg, #00897b, #26a69a);
+}
+
+.science-fill {
+    background: linear-gradient(90deg, #26a69a, #4dd0e1);
+}
+
+.reading-fill {
+    background: linear-gradient(90deg, #4dd0e1, #80deea);
+}
+
+.language-fill {
+    background: linear-gradient(90deg, #26a69a, #4dd0e1);
+}
+
+.progress-details {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Badges Grid */
+.badges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1.5rem;
+}
+
+.badge-item {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(224, 247, 250, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 6px var(--shadow);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.badge-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px var(--shadow-lg);
+}
+
+.badge-item.earned {
+    border-color: #00897b;
+    background: linear-gradient(135deg, rgba(0, 137, 123, 0.1), rgba(0, 137, 123, 0.05));
+}
+
+.badge-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.badge-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.badge-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.badge-locked {
+    opacity: 0.5;
+}
+
+/* Goals Editor */
+.goals-editor {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(224, 247, 250, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px var(--shadow);
+}
+
+.goal-input-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.goal-input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(224, 247, 250, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+}
+
+.goal-input:focus {
+    outline: none;
+    border-color: var(--accent-red);
+}
+
+.goals-list-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.goal-item-dashboard {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(224, 247, 250, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+}
+
+.goal-item-dashboard input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.goal-item-dashboard label {
+    flex: 1;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
+.goal-item-dashboard.completed label {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+}
+
+.goal-delete {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Sessions List */
+.sessions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.session-item {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(224, 247, 250, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px var(--shadow);
+    border-left: 4px solid;
+}
+
+.session-item.math {
+    border-left-color: var(--accent-teal);
+}
+
+.session-item.science {
+    border-left-color: var(--accent-turquoise);
+}
+
+.session-item.reading {
+    border-left-color: var(--accent-aqua);
+}
+
+.session-item.language {
+    border-left-color: var(--accent-turquoise);
+}
+
+.session-info h4 {
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+
+.session-info p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.session-time-badge {
+    background: linear-gradient(135deg, rgba(0, 137, 123, 0.2) 0%, rgba(38, 166, 154, 0.2) 100%);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Recommendations Grid */
+.recommendations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.recommendation-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(224, 247, 250, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px var(--shadow);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.recommendation-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px var(--shadow-lg);
+}
+
+.recommendation-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.recommendation-card h4 {
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+}
+
+.recommendation-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Pomodoro Timer */
+.pomodoro-timer {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(224, 247, 250, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 6px var(--shadow);
+}
+
+.timer-display {
+    font-size: 4rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+}
+
+.timer-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.timer-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--accent-teal);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.timer-btn:hover {
+    background-color: #26a69a;
+    transform: translateY(-2px);
+}
+
+.timer-presets {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.preset-btn {
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--border-color);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(224, 247, 250, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    color: var(--text-primary);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.preset-btn:hover {
+    border-color: var(--accent-red);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(224, 247, 250, 0.9) 100%);
+    backdrop-filter: blur(10px);
+}
+
+/* Notes Textarea */
+.notes-textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(224, 247, 250, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+.notes-textarea:focus {
+    outline: none;
+    border-color: var(--accent-red);
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .progress-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .goal-input-group {
+        flex-direction: column;
+    }
+
+    .session-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .timer-display {
+        font-size: 3rem;
+    }
+}
+

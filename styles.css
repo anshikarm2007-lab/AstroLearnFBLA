@@ -1,0 +1,622 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Navbar Styles */
+.navbar {
+    background: rgba(11, 15, 47, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(79, 195, 247, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-link {
+    color: #F5F7FA;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+.nav-link:hover {
+    color: #4FC3F7;
+}
+
+.nav-link.active {
+    color: #4FC3F7;
+    background: rgba(79, 195, 247, 0.1);
+}
+
+/* Button Styles */
+.btn-primary,
+.btn-secondary,
+.btn-tertiary {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #4FC3F7 0%, #FF6EC7 100%);
+    color: #0B0F2F;
+    border: 2px solid rgba(79, 195, 247, 0.5);
+    box-shadow: 0 4px 15px rgba(79, 195, 247, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(79, 195, 247, 0.5);
+    border-color: #4FC3F7;
+}
+
+.btn-secondary {
+    background: rgba(72, 40, 128, 0.6);
+    color: #F5F7FA;
+    border: 2px solid rgba(79, 195, 247, 0.3);
+    box-shadow: 0 4px 15px rgba(72, 40, 128, 0.3);
+}
+
+.btn-secondary:hover {
+    background: rgba(72, 40, 128, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(72, 40, 128, 0.5);
+    border-color: #4FC3F7;
+}
+
+.btn-tertiary {
+    background: rgba(255, 110, 199, 0.2);
+    color: #F5F7FA;
+    border: 2px solid rgba(255, 110, 199, 0.5);
+    box-shadow: 0 4px 15px rgba(255, 110, 199, 0.2);
+}
+
+.btn-tertiary:hover {
+    background: rgba(255, 110, 199, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 110, 199, 0.4);
+    border-color: #FF6EC7;
+}
+
+/* Glass Card Effect */
+.glass-card {
+    background: rgba(72, 40, 128, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(79, 195, 247, 0.2);
+    border-radius: 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: rgba(79, 195, 247, 0.4);
+    box-shadow: 0 12px 40px rgba(79, 195, 247, 0.2);
+}
+
+/* Floating Stars Animation */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Floating Stars Background */
+#floatingStars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite;
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.floating-planet {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    font-size: 8rem;
+    animation: float 6s ease-in-out infinite;
+    opacity: 0.2;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Solar System Animation */
+.solar-system {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.planet {
+    position: absolute;
+    font-size: 3rem;
+    animation: float 8s ease-in-out infinite;
+}
+
+.planet-1 {
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.planet-2 {
+    top: 60%;
+    right: 15%;
+    animation-delay: 2s;
+}
+
+.planet-3 {
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 4s;
+}
+
+.planet-4 {
+    top: 15%;
+    right: 10%;
+    animation-delay: 1s;
+}
+
+/* Footer */
+.footer {
+    background: rgba(11, 15, 47, 0.8);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(79, 195, 247, 0.2);
+    margin-top: 4rem;
+    padding: 2rem 0;
+}
+
+.footer-link {
+    color: #F5F7FA;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: #4FC3F7;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+    background: rgba(72, 40, 128, 0.5);
+    border-radius: 9999px;
+    overflow: hidden;
+    height: 12px;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #4FC3F7, #FF6EC7);
+    border-radius: 9999px;
+    transition: width 0.5s ease;
+    position: relative;
+}
+
+/* Shuttle Animation */
+.shuttle {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    transition: left 0.5s ease;
+    z-index: 10;
+}
+
+/* Lesson Modal */
+.lesson-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.lesson-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+}
+
+.lesson-content {
+    position: relative;
+    background: rgba(72, 40, 128, 0.95);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(79, 195, 247, 0.3);
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 56rem;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.lesson-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.lesson-body {
+    margin-bottom: 1.5rem;
+}
+
+.lesson-footer {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: #F5F7FA;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: rgba(255, 110, 199, 0.2);
+    color: #FF6EC7;
+}
+
+/* Star Map Modal */
+.star-map-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.star-map-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+}
+
+.star-map-content {
+    position: relative;
+    background: rgba(72, 40, 128, 0.95);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(79, 195, 247, 0.3);
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 90vw;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Roadmap Styles */
+.roadmap-summary {
+    margin-bottom: 2rem;
+}
+
+.roadmap-timeline {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.roadmap-week {
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.roadmap-path {
+    position: relative;
+    min-height: 100px;
+    padding: 1rem;
+    border: 2px dashed rgba(79, 195, 247, 0.3);
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.roadmap-path:hover {
+    border-color: rgba(79, 195, 247, 0.6);
+    background: rgba(79, 195, 247, 0.05);
+}
+
+.roadmap-milestone {
+    display: inline-block;
+    margin: 0.5rem;
+    cursor: move;
+}
+
+.milestone-star {
+    font-size: 2rem;
+    filter: drop-shadow(0 0 10px currentColor);
+    transition: all 0.3s ease;
+}
+
+.milestone-star:hover {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 20px currentColor);
+}
+
+.milestone-content {
+    background: rgba(72, 40, 128, 0.6);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid rgba(79, 195, 247, 0.3);
+}
+
+.drop-indicator {
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background: #4FC3F7;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.draggable-milestone {
+    cursor: move;
+}
+
+.draggable-milestone.dragging {
+    opacity: 0.5;
+}
+
+.add-assignment-form {
+    background: rgba(72, 40, 128, 0.5);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(79, 195, 247, 0.3);
+    margin-top: 1rem;
+}
+
+/* Constellation Map */
+.constellation-star {
+    animation: pulse 3s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+.constellation-star:hover {
+    filter: drop-shadow(0 0 20px currentColor) !important;
+    animation-play-state: paused;
+}
+
+.constellation-hit-area {
+    fill: transparent;
+    cursor: pointer;
+}
+
+/* Space Journey Progress Bar */
+.space-journey-container {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.space-journey-track {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+.journey-start,
+.journey-end {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 5;
+}
+
+.planet-icon {
+    font-size: 3rem;
+    filter: drop-shadow(0 0 10px rgba(79, 195, 247, 0.5));
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.journey-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #F5F7FA;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.journey-progress-bar {
+    flex: 1;
+    height: 12px;
+    background: rgba(72, 40, 128, 0.5);
+    border-radius: 9999px;
+    margin: 0 2rem;
+    position: relative;
+    overflow: visible;
+    border: 2px solid rgba(79, 195, 247, 0.2);
+}
+
+.journey-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4FC3F7 0%, #FF6EC7 100%);
+    border-radius: 9999px;
+    position: relative;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 20px rgba(79, 195, 247, 0.5);
+}
+
+/* Reading-specific progress bar color */
+#readingProgress {
+    background: linear-gradient(90deg, #482880 0%, #FF6EC7 100%) !important;
+    box-shadow: 0 0 20px rgba(72, 40, 128, 0.5);
+}
+
+/* Science-specific progress bar color */
+#scienceProgress {
+    background: linear-gradient(90deg, #FF6EC7 0%, #4FC3F7 100%) !important;
+    box-shadow: 0 0 20px rgba(255, 110, 199, 0.5);
+}
+
+/* Language-specific progress bar color */
+#languageProgress {
+    background: linear-gradient(90deg, #4FC3F7 0%, #482880 100%) !important;
+    box-shadow: 0 0 20px rgba(79, 195, 247, 0.5);
+}
+
+.space-shuttle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) translateX(50%);
+    font-size: 2rem;
+    filter: drop-shadow(0 0 15px rgba(255, 110, 199, 0.8));
+    transition: right 0.5s ease;
+    z-index: 10;
+    animation: float 3s ease-in-out infinite;
+}
+
+.progress-stats {
+    margin-top: 1.5rem;
+}
+
+.progress-stats p {
+    margin-bottom: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .btn-primary,
+    .btn-secondary,
+    .btn-tertiary {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.875rem;
+    }
+
+    .glass-card {
+        padding: 1rem;
+    }
+
+    .lesson-content,
+    .star-map-content {
+        padding: 1.5rem;
+        max-width: 95vw;
+    }
+
+    .floating-planet {
+        font-size: 4rem;
+    }
+}
+
+/* Learning Path Selection Styles */
+.grade-selected {
+    border: 2px solid #4FC3F7 !important;
+    background: rgba(79, 195, 247, 0.2) !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(79, 195, 247, 0.5);
+}
+
+.subject-selected {
+    border: 2px solid currentColor !important;
+    background: rgba(79, 195, 247, 0.1) !important;
+    transform: scale(1.02);
+}
+
+.difficulty-selected {
+    border: 2px solid currentColor !important;
+    background: rgba(79, 195, 247, 0.1) !important;
+    transform: scale(1.02);
+}
+
+@media (max-width: 480px) {
+    .btn-primary,
+    .btn-secondary,
+    .btn-tertiary {
+        padding: 0.5rem 1rem;
+        font-size: 0.75rem;
+    }
+}
