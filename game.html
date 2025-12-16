@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         .game-container {
-            min-height: calc(100vh - 200px);
+            min-height: 500px;
             position: relative;
             overflow: hidden;
         }
@@ -100,7 +100,26 @@
                 opacity: 0;
             }
         }
+        .game-layout {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .game-container {
+            flex: 1;
+            min-width: 300px;
+        }
         .question-overlay {
+            flex: 0 0 400px;
+            min-width: 300px;
+            max-width: 500px;
+            display: none;
+        }
+        .question-overlay:not(.hidden) {
+            display: block;
+        }
+        .fullscreen-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -114,14 +133,41 @@
             justify-content: center;
             padding: 2rem;
         }
+        .fullscreen-overlay.hidden {
+            display: none;
+        }
         .question-card {
             background: linear-gradient(135deg, rgba(11, 15, 47, 0.95) 0%, rgba(72, 40, 128, 0.9) 100%);
             border: 3px solid rgba(79, 195, 247, 0.5);
             border-radius: 24px;
             padding: 2rem;
-            max-width: 600px;
             width: 100%;
             box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 2rem;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+        .fullscreen-overlay .question-card {
+            position: relative;
+            top: 0;
+            max-height: none;
+            max-width: 600px;
+            width: 100%;
+        }
+        @media (max-width: 768px) {
+            .game-layout {
+                flex-direction: column;
+            }
+            .question-overlay {
+                flex: 1;
+                max-width: 100%;
+            }
+            .question-card {
+                position: relative;
+                top: 0;
+                max-height: none;
+            }
         }
         .level-info {
             text-align: center;
@@ -201,6 +247,42 @@
             transform: scale(1.05);
             box-shadow: 0 8px 24px rgba(79, 195, 247, 0.4);
         }
+        .exit-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9) 0%, rgba(220, 38, 38, 0.9) 100%);
+            border: 2px solid rgba(239, 68, 68, 0.5);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        .question-card .exit-btn {
+            top: 0.75rem;
+            right: 0.75rem;
+        }
+        .exit-btn:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 1) 0%, rgba(220, 38, 38, 1) 100%);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+            border-color: rgba(239, 68, 68, 0.8);
+        }
+        .exit-btn:active {
+            transform: scale(0.95);
+        }
+        .question-card {
+            position: relative;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
@@ -238,43 +320,48 @@
         </div>
     </nav>
 
-    <!-- Game Container -->
-    <section class="container mx-auto px-6 py-8">
-        <div class="text-center mb-6">
-            <h1 class="text-5xl md:text-7xl font-bold mb-4">
-                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
-                    Space Quest
-                </span>
-            </h1>
-            <p class="text-xl text-[#F5F7FA]/80">Answer questions correctly to fly to new planets!</p>
-        </div>
-
-        <div class="game-container glass-card p-6" id="gameContainer">
-            <div class="space-background" id="spaceBackground"></div>
-            <div class="planet-path" id="planetPath"></div>
-            <div class="rocket" id="rocket">🚀</div>
-            <div id="asteroidContainer"></div>
-        </div>
-
-        <!-- Question Overlay -->
-        <div class="question-overlay hidden" id="questionOverlay">
-            <div class="question-card">
-                <div class="level-info">
-                    <h2 class="text-2xl font-bold mb-2">
-                        <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
-                            Level <span id="currentLevel">1</span> - Planet <span id="currentPlanetNum">1</span>
-                        </span>
-                    </h2>
-                    <div class="planet-progress" id="planetProgress"></div>
-                </div>
-                <h3 class="text-xl font-bold mb-4" id="questionText">Question</h3>
-                <div id="answerOptions"></div>
-                <div class="mt-4 text-sm text-[#F5F7FA]/70 text-center" id="feedbackText"></div>
+        <!-- Game Container -->
+        <section class="container mx-auto px-6 py-8">
+            <div class="text-center mb-6">
+                <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                    <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                        Space Quest
+                    </span>
+                </h1>
+                <p class="text-xl text-[#F5F7FA]/80">Answer questions correctly to fly to new planets!</p>
             </div>
-        </div>
+
+            <div class="game-layout">
+                <div class="game-container glass-card p-6" id="gameContainer">
+                    <button class="exit-btn" id="exitGameBtn" title="Exit Game">✕</button>
+                    <div class="space-background" id="spaceBackground"></div>
+                    <div class="planet-path" id="planetPath"></div>
+                    <div class="rocket" id="rocket">🚀</div>
+                    <div id="asteroidContainer"></div>
+                </div>
+
+                <!-- Question Card -->
+                <div class="question-overlay hidden" id="questionOverlay">
+                    <div class="question-card">
+                        <button class="exit-btn" id="exitQuestionBtn" title="Exit Game">✕</button>
+                        <div class="level-info">
+                            <h2 class="text-2xl font-bold mb-2">
+                                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                                    Level <span id="currentLevel">1</span> - Planet <span id="currentPlanetNum">1</span>
+                                </span>
+                            </h2>
+                            <div class="planet-progress" id="planetProgress"></div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4" id="questionText">Question</h3>
+                        <div id="answerOptions"></div>
+                        <div class="mt-4 text-sm text-[#F5F7FA]/70 text-center" id="feedbackText"></div>
+                    </div>
+                </div>
+            </div>
 
         <!-- Level Complete Overlay -->
-        <div class="question-overlay hidden" id="levelCompleteOverlay">
+        <div class="fullscreen-overlay hidden" id="levelCompleteOverlay">
+            <button class="exit-btn" id="exitLevelCompleteBtn" title="Exit Game">✕</button>
             <div class="question-card level-complete">
                 <div class="text-6xl mb-4">🎉</div>
                 <h2 class="text-3xl font-bold mb-4">
@@ -288,7 +375,8 @@
         </div>
 
         <!-- Game Complete Overlay -->
-        <div class="question-overlay hidden" id="gameCompleteOverlay">
+        <div class="fullscreen-overlay hidden" id="gameCompleteOverlay">
+            <button class="exit-btn" id="exitGameCompleteBtn" title="Exit Game">✕</button>
             <div class="question-card game-complete">
                 <div class="text-6xl mb-4">🏆</div>
                 <h2 class="text-3xl font-bold mb-4">
@@ -702,9 +790,20 @@
             initGame();
         }
 
+        // Exit game function
+        function exitGame() {
+            if (confirm('Are you sure you want to exit Space Quest? Your progress will not be saved.')) {
+                window.location.href = 'dashboard.html';
+            }
+        }
+
         // Event listeners
         document.getElementById('nextLevelBtn').addEventListener('click', nextLevel);
         document.getElementById('restartGameBtn').addEventListener('click', restartGame);
+        document.getElementById('exitGameBtn').addEventListener('click', exitGame);
+        document.getElementById('exitQuestionBtn').addEventListener('click', exitGame);
+        document.getElementById('exitLevelCompleteBtn').addEventListener('click', exitGame);
+        document.getElementById('exitGameCompleteBtn').addEventListener('click', exitGame);
 
         // Initialize on load
         document.addEventListener('DOMContentLoaded', () => {
