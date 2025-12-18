@@ -3,285 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Quest - AstroLearn</title>
+    <title>Space Quest Game - AstroLearn</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
     <style>
         .game-container {
-            min-height: 500px;
             position: relative;
-            overflow: hidden;
-        }
-        .space-background {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, #0B0F2F 0%, #1a1a3a 50%, #0B0F2F 100%);
+            min-height: 400px;
+            background: linear-gradient(to bottom, #0B0F2F 0%, #1a1f3f 50%, #0B0F2F 100%);
+            border-radius: 20px;
             overflow: hidden;
+            border: 2px solid #482880;
         }
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 2s infinite;
-        }
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
-        .planet-path {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            padding: 0 5%;
-        }
+        
         .planet {
+            position: absolute;
             width: 80px;
             height: 80px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            position: relative;
-            transition: all 0.3s;
-            filter: drop-shadow(0 0 10px rgba(79, 195, 247, 0.3));
+            font-size: 40px;
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 0 10px currentColor);
         }
-        .planet.visited {
-            filter: drop-shadow(0 0 20px rgba(79, 195, 247, 0.8));
-            transform: scale(1.2);
+        
+        .planet.reached {
+            animation: planetGlow 1s infinite alternate;
         }
-        .planet.current {
-            filter: drop-shadow(0 0 30px rgba(255, 110, 199, 1));
-            transform: scale(1.3);
-            animation: pulse 1s infinite;
+        
+        @keyframes planetGlow {
+            from { filter: drop-shadow(0 0 10px currentColor); }
+            to { filter: drop-shadow(0 0 20px currentColor); }
         }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1.3); }
-            50% { transform: scale(1.4); }
-        }
-        .rocket {
+        
+        .spaceship {
             position: absolute;
-            font-size: 4rem;
-            transition: all 1s ease-in-out;
+            font-size: 50px;
+            transition: all 0.8s ease;
             z-index: 10;
-            filter: drop-shadow(0 0 20px rgba(79, 195, 247, 0.8));
+            filter: drop-shadow(0 0 15px #4FC3F7);
         }
-        .rocket.moving {
-            animation: rocketMove 1s ease-in-out;
-        }
-        @keyframes rocketMove {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(-10deg); }
-            100% { transform: translateY(0) rotate(0deg); }
-        }
+        
         .asteroid {
             position: absolute;
-            font-size: 5rem;
-            animation: asteroidHit 0.5s ease-out;
-            z-index: 20;
+            font-size: 60px;
+            animation: asteroidFall 1s ease-in forwards;
+            z-index: 5;
         }
-        @keyframes asteroidHit {
-            0% { 
-                transform: translate(-50%, -50%) scale(0) rotate(0deg);
-                opacity: 0;
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
+        
+        @keyframes asteroidFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
                 opacity: 1;
             }
             100% {
-                transform: translate(-50%, -50%) scale(2) rotate(360deg);
+                transform: translateY(500px) rotate(360deg);
                 opacity: 0;
             }
         }
-        .game-layout {
-            display: flex;
-            gap: 2rem;
-            align-items: flex-start;
-            flex-wrap: wrap;
-        }
-        .game-container {
-            flex: 1;
-            min-width: 300px;
-        }
-        .question-overlay {
-            flex: 0 0 400px;
-            min-width: 300px;
-            max-width: 500px;
-            display: none;
-        }
-        .question-overlay:not(.hidden) {
-            display: block;
-        }
-        .fullscreen-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(11, 15, 47, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-        .fullscreen-overlay.hidden {
-            display: none;
-        }
-        .question-card {
-            background: linear-gradient(135deg, rgba(11, 15, 47, 0.95) 0%, rgba(72, 40, 128, 0.9) 100%);
-            border: 3px solid rgba(79, 195, 247, 0.5);
-            border-radius: 24px;
-            padding: 2rem;
-            width: 100%;
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
-            position: sticky;
-            top: 2rem;
-            max-height: calc(100vh - 200px);
-            overflow-y: auto;
-        }
-        .fullscreen-overlay .question-card {
-            position: relative;
-            top: 0;
-            max-height: none;
-            max-width: 600px;
-            width: 100%;
-        }
-        @media (max-width: 768px) {
-            .game-layout {
-                flex-direction: column;
-            }
-            .question-overlay {
-                flex: 1;
-                max-width: 100%;
-            }
-            .question-card {
-                position: relative;
-                top: 0;
-                max-height: none;
-            }
-        }
-        .level-info {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding: 1rem;
-            background: rgba(79, 195, 247, 0.1);
-            border-radius: 12px;
-        }
-        .planet-progress {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-        .planet-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            border: 2px solid rgba(79, 195, 247, 0.5);
-        }
-        .planet-indicator.visited {
-            background: rgba(79, 195, 247, 0.8);
-            border-color: #4FC3F7;
-        }
-        .planet-indicator.current {
-            background: rgba(255, 110, 199, 1);
-            border-color: #FF6EC7;
-            animation: pulse 1s infinite;
-        }
-        .answer-btn {
-            width: 100%;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(11, 15, 47, 0.8) 100%);
-            border: 2px solid rgba(79, 195, 247, 0.3);
-            border-radius: 12px;
-            color: #F5F7FA;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: left;
-        }
-        .answer-btn:hover {
-            border-color: rgba(79, 195, 247, 0.6);
-            transform: translateX(5px);
-            background: linear-gradient(135deg, rgba(79, 195, 247, 0.2) 0%, rgba(72, 40, 128, 0.3) 100%);
-        }
-        .answer-btn.correct {
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.3) 0%, rgba(34, 197, 94, 0.2) 100%);
-            border-color: #22c55e;
-        }
-        .answer-btn.incorrect {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.3) 0%, rgba(239, 68, 68, 0.2) 100%);
-            border-color: #ef4444;
-        }
-        .level-complete {
-            text-align: center;
-            padding: 2rem;
-        }
-        .game-complete {
-            text-align: center;
-            padding: 2rem;
-        }
-        .restart-btn {
-            margin-top: 1rem;
-            padding: 0.75rem 2rem;
-            background: linear-gradient(135deg, #4FC3F7 0%, #FF6EC7 100%);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .restart-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 24px rgba(79, 195, 247, 0.4);
-        }
-        .exit-btn {
+        
+        .blackhole {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 40px;
-            height: 40px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9) 0%, rgba(220, 38, 38, 0.9) 100%);
-            border: 2px solid rgba(239, 68, 68, 0.5);
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            cursor: pointer;
+            background: radial-gradient(circle, #000 0%, #482880 50%, #000 100%);
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            animation: blackholeExpand 2s ease-out forwards;
+            z-index: 20;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 50;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            font-size: 60px;
         }
-        .question-card .exit-btn {
-            top: 0.75rem;
-            right: 0.75rem;
+        
+        @keyframes blackholeExpand {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(3);
+            }
         }
-        .exit-btn:hover {
-            transform: scale(1.1);
-            background: linear-gradient(135deg, rgba(239, 68, 68, 1) 0%, rgba(220, 38, 38, 1) 100%);
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
-            border-color: rgba(239, 68, 68, 0.8);
+        
+        .explosion {
+            position: absolute;
+            font-size: 80px;
+            animation: explode 0.5s ease-out forwards;
+            z-index: 15;
         }
-        .exit-btn:active {
-            transform: scale(0.95);
-        }
-        .question-card {
-            position: relative;
+        
+        @keyframes explode {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -293,7 +122,7 @@
     <nav class="navbar">
         <div class="container mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <img src="sticker.webp" alt="AstroLearn Logo" class="h-8 w-8 object-contain">
+                <img src="sticker.webp" alt="AstroLearn Logo" class="h-12 w-12 object-contain">
                 <h1 class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
                     AstroLearn
                 </h1>
@@ -303,7 +132,7 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
-                <a href="game.html" class="nav-link active protected-link">Space Quest</a>
+                <a href="game.html" class="nav-link active protected-link">Games</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
             </div>
             <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
@@ -314,78 +143,98 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
-                <a href="game.html" class="nav-link active protected-link">Space Quest</a>
-                <a href="login.html" class="btn-secondary py-2 px-4 text-center block" id="authBtnMobile">Sign In</a>
+                <a href="game.html" class="nav-link protected-link">Games</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
             </div>
         </div>
     </nav>
 
-        <!-- Game Container -->
-        <section class="container mx-auto px-6 py-8">
-            <div class="text-center mb-6">
-                <h1 class="text-5xl md:text-7xl font-bold mb-4">
-                    <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
-                        Space Quest
-                    </span>
-                </h1>
-                <p class="text-xl text-[#F5F7FA]/80">Answer questions correctly to fly to new planets!</p>
+    <!-- Game Header -->
+    <section class="container mx-auto px-6 py-12">
+        <div class="text-center mb-8">
+            <div class="text-6xl mb-4">🚀</div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Space Quest
+                </span>
+            </h1>
+            <p class="text-xl text-[#F5F7FA]/80">Answer questions correctly to travel through planets. Get one wrong and an asteroid will send you back!</p>
+        </div>
+
+        <!-- Game Stats -->
+        <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <div class="glass-card p-6 text-center">
+                <div class="text-3xl mb-2">🌍</div>
+                <h3 class="text-lg font-bold mb-2">Current Level</h3>
+                <p class="text-2xl font-bold text-[#4FC3F7]" id="currentLevel">1</p>
             </div>
-
-            <div class="game-layout">
-                <div class="game-container glass-card p-6" id="gameContainer">
-                    <button class="exit-btn" id="exitGameBtn" title="Exit Game">✕</button>
-                    <div class="space-background" id="spaceBackground"></div>
-                    <div class="planet-path" id="planetPath"></div>
-                    <div class="rocket" id="rocket">🚀</div>
-                    <div id="asteroidContainer"></div>
-                </div>
-
-                <!-- Question Card -->
-                <div class="question-overlay hidden" id="questionOverlay">
-                    <div class="question-card">
-                        <button class="exit-btn" id="exitQuestionBtn" title="Exit Game">✕</button>
-                        <div class="level-info">
-                            <h2 class="text-2xl font-bold mb-2">
-                                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
-                                    Level <span id="currentLevel">1</span> - Planet <span id="currentPlanetNum">1</span>
-                                </span>
-                            </h2>
-                            <div class="planet-progress" id="planetProgress"></div>
-                        </div>
-                        <h3 class="text-xl font-bold mb-4" id="questionText">Question</h3>
-                        <div id="answerOptions"></div>
-                        <div class="mt-4 text-sm text-[#F5F7FA]/70 text-center" id="feedbackText"></div>
-                    </div>
-                </div>
+            <div class="glass-card p-6 text-center">
+                <div class="text-3xl mb-2">🪐</div>
+                <h3 class="text-lg font-bold mb-2">Planets Reached</h3>
+                <p class="text-2xl font-bold text-[#FF6EC7]" id="planetsReached">0</p>
             </div>
-
-        <!-- Level Complete Overlay -->
-        <div class="fullscreen-overlay hidden" id="levelCompleteOverlay">
-            <button class="exit-btn" id="exitLevelCompleteBtn" title="Exit Game">✕</button>
-            <div class="question-card level-complete">
-                <div class="text-6xl mb-4">🎉</div>
-                <h2 class="text-3xl font-bold mb-4">
-                    <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
-                        Level <span id="completedLevel">1</span> Complete!
-                    </span>
-                </h2>
-                <p class="text-lg mb-6">You've successfully navigated through all 8 planets!</p>
-                <button class="restart-btn" id="nextLevelBtn">Continue to Next Level</button>
+            <div class="glass-card p-6 text-center">
+                <div class="text-3xl mb-2">⭐</div>
+                <h3 class="text-lg font-bold mb-2">Game XP</h3>
+                <p class="text-2xl font-bold text-[#4FC3F7]" id="gameXP">0</p>
             </div>
         </div>
 
-        <!-- Game Complete Overlay -->
-        <div class="fullscreen-overlay hidden" id="gameCompleteOverlay">
-            <button class="exit-btn" id="exitGameCompleteBtn" title="Exit Game">✕</button>
-            <div class="question-card game-complete">
-                <div class="text-6xl mb-4">🏆</div>
-                <h2 class="text-3xl font-bold mb-4">
+        <!-- Game and Question Area - Side by Side -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <!-- Game Area - Left Side -->
+            <div class="glass-card p-4 md:p-6">
+                <h3 class="text-xl font-bold mb-4 text-center">
                     <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
-                        Congratulations!
+                        Your Journey
+                    </span>
+                </h3>
+                <div class="game-container" id="gameContainer" style="height: 400px;">
+                    <!-- Spaceship, planets, and game elements will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Question Area - Right Side -->
+            <div id="questionArea" class="glass-card p-4 md:p-6 hidden">
+                <h2 class="text-2xl font-bold mb-4 text-center">
+                    <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                        Question <span id="questionNumber">1</span>
                     </span>
                 </h2>
-                <p class="text-lg mb-6">You've completed all 5 levels of Space Quest!</p>
-                <button class="restart-btn" id="restartGameBtn">Play Again</button>
+                <div class="mb-4">
+                    <p class="text-lg md:text-xl text-center mb-4" id="questionText">Loading question...</p>
+                    <div class="grid grid-cols-1 gap-3" id="optionsContainer">
+                        <!-- Options will be populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level Complete Modal -->
+        <div id="levelCompleteModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div class="fixed inset-0 bg-black/70 backdrop-blur-sm"></div>
+            <div class="relative glass-card p-8 max-w-md w-full z-10 text-center">
+                <div class="text-6xl mb-4">🌌</div>
+                <h2 class="text-3xl font-bold mb-4">Level Complete!</h2>
+                <p class="text-lg mb-6">You've entered the black hole and reached the next level!</p>
+                <div class="flex gap-4 justify-center">
+                    <button class="btn-primary" id="nextLevelBtn">Continue to Next Level</button>
+                    <button class="btn-secondary" id="restartGameBtn">Restart Game</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Modal -->
+        <div id="gameOverModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div class="fixed inset-0 bg-black/70 backdrop-blur-sm"></div>
+            <div class="relative glass-card p-8 max-w-md w-full z-10 text-center">
+                <div class="text-6xl mb-4">💥</div>
+                <h2 class="text-3xl font-bold mb-4">Asteroid Hit!</h2>
+                <p class="text-lg mb-6">You got hit by an asteroid! The answer was incorrect.</p>
+                <div class="flex gap-4 justify-center">
+                    <button class="btn-primary" id="restartAfterAsteroidBtn">Try Again</button>
+                    <button class="btn-secondary" onclick="location.reload()">Back to Menu</button>
+                </div>
             </div>
         </div>
     </section>
@@ -394,8 +243,9 @@
     <footer class="footer">
         <div class="container mx-auto px-6 py-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <p class="text-sm text-[#F5F7FA]/70 flex items-center gap-1"><img src="sticker.webp" alt="AstroLearn Logo" class="h-5 w-5 object-contain"> Powered by AstroLearn</p>
+                <div class="mb-4 md:mb-0 flex items-center gap-2">
+                    <img src="sticker.webp" alt="AstroLearn Logo" class="w-6 h-6">
+                    <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn</p>
                 </div>
                 <div class="flex space-x-6">
                     <a href="about.html" class="footer-link">About</a>
@@ -408,411 +258,504 @@
 
     <script src="script.js"></script>
     <script>
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!checkAuth()) {
+                return;
+            }
+            updateNavigation();
+            initFloatingStars();
+            initGame();
+        });
+
         // Game state
         let currentLevel = 1;
         let currentPlanet = 0;
-        let currentQuestionIndex = 0;
+        let currentQuestion = 0;
+        let planetsReached = 0;
+        let gameXP = 0;
         let questions = [];
-        let answered = false;
+        let userAnswers = [];
+        const QUESTIONS_PER_LEVEL = 10; // Increased from 5 to 10 planets
 
-        // Planet emojis
-        const planetEmojis = ['🪐', '🌍', '🌙', '🪐', '🌍', '🌙', '🪐', '🌍'];
+        // Get grade level from preferences
+        function getGradeLevel() {
+            const prefs = localStorage.getItem('astrolearn_preferences');
+            if (prefs) {
+                try {
+                    const preferences = JSON.parse(prefs);
+                    return preferences.grade || 9;
+                } catch (e) {
+                    console.error('Error parsing preferences:', e);
+                }
+            }
+            return 9;
+        }
 
-        // Generate questions for all 5 levels (40 questions total)
-        function generateGameQuestions() {
+        // Get selected subjects
+        function getSelectedSubjects() {
+            const prefs = localStorage.getItem('astrolearn_preferences');
+            if (prefs) {
+                try {
+                    const preferences = JSON.parse(prefs);
+                    if (preferences.subjects && Array.isArray(preferences.subjects) && preferences.subjects.length > 0) {
+                        return preferences.subjects;
+                    }
+                } catch (e) {
+                    console.error('Error parsing preferences:', e);
+                }
+            }
+            return ['math', 'science', 'reading', 'language'];
+        }
+
+        // Quiz questions by grade and subject (from quizzes.html)
+        const quizQuestionsByGrade = {
+            6: {
+                math: {
+                    "Introduction to Fractions": [
+                        { question: "What is 1/2 + 1/4?", options: ["2/4", "3/4", "1/6", "2/6"], correct: 1 },
+                        { question: "Which fraction is larger: 1/3 or 1/4?", options: ["1/3", "1/4", "They're equal", "Cannot determine"], correct: 0 },
+                        { question: "What is the decimal form of 3/4?", options: ["0.25", "0.5", "0.75", "1.0"], correct: 2 },
+                        { question: "What is 2/3 of 12?", options: ["6", "8", "9", "10"], correct: 1 },
+                        { question: "Which is equivalent to 1/2?", options: ["2/4", "3/6", "4/8", "All of the above"], correct: 3 }
+                    ],
+                    "Decimal Operations": [
+                        { question: "What is 2.5 + 3.7?", options: ["5.2", "6.2", "5.12", "6.12"], correct: 1 },
+                        { question: "What is 5.8 - 2.3?", options: ["3.5", "3.3", "2.5", "2.3"], correct: 0 },
+                        { question: "What is 0.5 × 4?", options: ["2.0", "2.5", "1.5", "0.2"], correct: 0 },
+                        { question: "What is 6.4 ÷ 2?", options: ["3.2", "3.4", "2.2", "2.4"], correct: 0 },
+                        { question: "Round 3.789 to the nearest tenth", options: ["3.7", "3.8", "3.79", "4.0"], correct: 1 }
+                    ],
+                    "Basic Geometry Shapes": [
+                        { question: "How many sides does a triangle have?", options: ["2", "3", "4", "5"], correct: 1 },
+                        { question: "What is the area of a rectangle with length 5 and width 3?", options: ["8", "15", "16", "20"], correct: 1 },
+                        { question: "What is the perimeter of a square with side length 4?", options: ["8", "12", "16", "20"], correct: 2 },
+                        { question: "How many degrees are in a right angle?", options: ["45", "90", "180", "360"], correct: 1 },
+                        { question: "What shape has 4 equal sides?", options: ["Rectangle", "Square", "Rhombus", "All of the above"], correct: 3 }
+                    ],
+                    "Ratios and Proportions": [
+                        { question: "If 2:3 = 4:x, what is x?", options: ["5", "6", "7", "8"], correct: 1 },
+                        { question: "What is the ratio of 8 to 12 in simplest form?", options: ["2:3", "4:6", "8:12", "1:2"], correct: 0 },
+                        { question: "If 3 apples cost $6, how much do 5 apples cost?", options: ["$8", "$10", "$12", "$15"], correct: 1 },
+                        { question: "What percentage is 3/4?", options: ["30%", "50%", "75%", "100%"], correct: 2 },
+                        { question: "If a recipe calls for 2 cups flour and 1 cup sugar, what is the ratio?", options: ["1:2", "2:1", "2:3", "3:2"], correct: 1 }
+                    ],
+                    "Number Operations": [
+                        { question: "What is 15 × 4?", options: ["50", "60", "70", "80"], correct: 1 },
+                        { question: "What is 144 ÷ 12?", options: ["10", "11", "12", "13"], correct: 2 },
+                        { question: "What is the prime factorization of 12?", options: ["2×2×3", "3×4", "2×6", "1×12"], correct: 0 },
+                        { question: "What is the LCM of 4 and 6?", options: ["12", "18", "24", "30"], correct: 0 },
+                        { question: "What is the GCF of 12 and 18?", options: ["3", "6", "9", "12"], correct: 1 }
+                    ],
+                    "Measurement and Data": [
+                        { question: "How many centimeters are in a meter?", options: ["10", "100", "1000", "10000"], correct: 1 },
+                        { question: "What is the volume of a cube with side length 3?", options: ["9", "18", "27", "36"], correct: 2 },
+                        { question: "How many milliliters are in a liter?", options: ["10", "100", "1000", "10000"], correct: 2 },
+                        { question: "What is the mean of 4, 6, 8, 10?", options: ["6", "7", "8", "9"], correct: 1 },
+                        { question: "What is the median of 3, 5, 7, 9, 11?", options: ["5", "7", "9", "11"], correct: 1 }
+                    ]
+                },
+                science: {
+                    "Introduction to Matter": [
+                        { question: "What are the three states of matter?", options: ["Solid, Liquid, Gas", "Hot, Cold, Warm", "Big, Medium, Small", "Hard, Soft, Medium"], correct: 0 },
+                        { question: "What happens when water freezes?", options: ["It becomes a gas", "It becomes a solid", "It disappears", "It becomes a liquid"], correct: 1 },
+                        { question: "What is matter made of?", options: ["Energy", "Atoms", "Light", "Sound"], correct: 1 },
+                        { question: "What is the process called when a solid turns into a liquid?", options: ["Freezing", "Melting", "Evaporation", "Condensation"], correct: 1 },
+                        { question: "Which state of matter has a definite shape?", options: ["Solid", "Liquid", "Gas", "Plasma"], correct: 0 }
+                    ],
+                    "Earth Science Basics": [
+                        { question: "What is the outermost layer of Earth?", options: ["Core", "Mantle", "Crust", "Atmosphere"], correct: 2 },
+                        { question: "What causes day and night?", options: ["Earth's rotation", "Earth's revolution", "The moon", "The sun"], correct: 0 },
+                        { question: "What is the water cycle?", options: ["Movement of water on Earth", "Creation of water", "Destruction of water", "Storage of water"], correct: 0 },
+                        { question: "What are the four seasons?", options: ["Spring, Summer, Fall, Winter", "Hot, Cold, Warm, Cool", "Day, Night, Dawn, Dusk", "North, South, East, West"], correct: 0 },
+                        { question: "What is a renewable resource?", options: ["A resource that can be replaced", "A resource that cannot be replaced", "A resource that is expensive", "A resource that is rare"], correct: 0 }
+                    ],
+                    "Plant Life": [
+                        { question: "What do plants need to make food?", options: ["Water, sunlight, carbon dioxide", "Soil, air, water", "Sunlight, oxygen, water", "Carbon dioxide, oxygen, soil"], correct: 0 },
+                        { question: "What is photosynthesis?", options: ["The process plants use to make food", "The process plants use to breathe", "The process plants use to grow", "The process plants use to reproduce"], correct: 0 },
+                        { question: "What part of the plant absorbs water?", options: ["Leaves", "Stem", "Roots", "Flowers"], correct: 2 },
+                        { question: "What gas do plants release during photosynthesis?", options: ["Carbon dioxide", "Oxygen", "Nitrogen", "Hydrogen"], correct: 1 },
+                        { question: "What is the main function of leaves?", options: ["To absorb water", "To make food", "To support the plant", "To produce seeds"], correct: 1 }
+                    ],
+                    "Animal Life": [
+                        { question: "What do animals need to survive?", options: ["Food, water, shelter, air", "Food, water, toys, games", "Water, shelter, clothes, money", "Food, water, friends, family"], correct: 0 },
+                        { question: "What is a habitat?", options: ["An animal's home", "An animal's food", "An animal's friend", "An animal's enemy"], correct: 0 },
+                        { question: "What is an adaptation?", options: ["A trait that helps an animal survive", "A trait that harms an animal", "A trait that does nothing", "A trait that is invisible"], correct: 0 },
+                        { question: "What is a food chain?", options: ["How energy moves through an ecosystem", "How animals move", "How plants grow", "How water flows"], correct: 0 },
+                        { question: "What is a predator?", options: ["An animal that hunts other animals", "An animal that is hunted", "An animal that eats plants", "An animal that lives in water"], correct: 0 }
+                    ],
+                    "Weather and Climate": [
+                        { question: "What is weather?", options: ["The condition of the atmosphere at a specific time", "The condition of the ocean", "The condition of the ground", "The condition of space"], correct: 0 },
+                        { question: "What is climate?", options: ["The average weather over a long time", "The weather today", "The weather tomorrow", "The weather next week"], correct: 0 },
+                        { question: "What causes wind?", options: ["Differences in air pressure", "Differences in temperature", "Differences in humidity", "All of the above"], correct: 3 },
+                        { question: "What is precipitation?", options: ["Water that falls from the sky", "Water that rises to the sky", "Water that stays on the ground", "Water that evaporates"], correct: 0 },
+                        { question: "What is a thermometer used for?", options: ["Measuring temperature", "Measuring wind", "Measuring rain", "Measuring time"], correct: 0 }
+                    ],
+                    "Forces and Motion": [
+                        { question: "What is a force?", options: ["A push or pull", "A type of energy", "A type of matter", "A type of light"], correct: 0 },
+                        { question: "What is gravity?", options: ["A force that pulls objects toward Earth", "A force that pushes objects away", "A force that makes objects float", "A force that makes objects disappear"], correct: 0 },
+                        { question: "What is friction?", options: ["A force that opposes motion", "A force that helps motion", "A force that creates motion", "A force that destroys motion"], correct: 0 },
+                        { question: "What is speed?", options: ["How fast something moves", "How slow something moves", "How big something is", "How heavy something is"], correct: 0 },
+                        { question: "What is momentum?", options: ["The tendency of a moving object to keep moving", "The tendency of an object to stop", "The tendency of an object to change direction", "The tendency of an object to disappear"], correct: 0 }
+                    ]
+                },
+                reading: {
+                    "Basic Reading Comprehension": [
+                        { question: "What is the main idea of a text?", options: ["The first sentence", "The most important point", "The title", "The last sentence"], correct: 1 },
+                        { question: "What do supporting details do?", options: ["Contradict the main idea", "Explain or support the main idea", "Replace the main idea", "Hide the main idea"], correct: 1 },
+                        { question: "What is a summary?", options: ["A brief retelling of the main points", "A detailed copy of the text", "The title of the text", "The author's name"], correct: 0 },
+                        { question: "What is inference?", options: ["A conclusion based on evidence", "A direct statement", "A question", "An opinion"], correct: 0 },
+                        { question: "What is context?", options: ["The surrounding information that helps understand meaning", "The title", "The author", "The date"], correct: 0 }
+                    ],
+                    "Story Elements": [
+                        { question: "What is a character?", options: ["A person or animal in a story", "The setting", "The plot", "The theme"], correct: 0 },
+                        { question: "What is the setting?", options: ["Where and when the story takes place", "Who the story is about", "What happens in the story", "The lesson of the story"], correct: 0 },
+                        { question: "What is the plot?", options: ["The sequence of events in a story", "The characters", "The setting", "The theme"], correct: 0 },
+                        { question: "What is the conflict?", options: ["The problem in the story", "The solution", "The characters", "The setting"], correct: 0 },
+                        { question: "What is the resolution?", options: ["How the conflict is solved", "The beginning of the story", "The middle of the story", "The characters"], correct: 0 }
+                    ],
+                    "Vocabulary Building": [
+                        { question: "What is a synonym?", options: ["A word with the same meaning", "A word with opposite meaning", "A word that sounds the same", "A word that looks the same"], correct: 0 },
+                        { question: "What is an antonym?", options: ["A word with opposite meaning", "A word with the same meaning", "A word that sounds the same", "A word that looks the same"], correct: 0 },
+                        { question: "What is a prefix?", options: ["A word part added to the beginning of a word", "A word part added to the end", "The root word", "The meaning"], correct: 0 },
+                        { question: "What is a suffix?", options: ["A word part added to the end of a word", "A word part added to the beginning", "The root word", "The meaning"], correct: 0 },
+                        { question: "What is context clues?", options: ["Hints in the text that help understand meaning", "The title", "The author", "The date"], correct: 0 }
+                    ]
+                },
+                language: {
+                    "Spanish Basics": [
+                        { question: "How do you say 'hello' in Spanish?", options: ["Hola", "Adiós", "Gracias", "Por favor"], correct: 0 },
+                        { question: "How do you say 'thank you' in Spanish?", options: ["Hola", "Adiós", "Gracias", "Por favor"], correct: 2 },
+                        { question: "How do you say 'goodbye' in Spanish?", options: ["Hola", "Adiós", "Gracias", "Por favor"], correct: 1 },
+                        { question: "How do you say 'please' in Spanish?", options: ["Hola", "Adiós", "Gracias", "Por favor"], correct: 3 },
+                        { question: "What does 'sí' mean?", options: ["Yes", "No", "Maybe", "Hello"], correct: 0 }
+                    ],
+                    "French Greetings": [
+                        { question: "How do you say 'hello' in French?", options: ["Bonjour", "Au revoir", "Merci", "S'il vous plaît"], correct: 0 },
+                        { question: "How do you say 'thank you' in French?", options: ["Bonjour", "Au revoir", "Merci", "S'il vous plaît"], correct: 2 },
+                        { question: "How do you say 'goodbye' in French?", options: ["Bonjour", "Au revoir", "Merci", "S'il vous plaît"], correct: 1 },
+                        { question: "How do you say 'please' in French?", options: ["Bonjour", "Au revoir", "Merci", "S'il vous plaît"], correct: 3 },
+                        { question: "What does 'oui' mean?", options: ["Yes", "No", "Maybe", "Hello"], correct: 0 }
+                    ]
+                }
+            },
+            9: {
+                math: {
+                    "Algebra Basics": [
+                        { question: "What is the value of x if 2x + 5 = 13?", options: ["3", "4", "5", "6"], correct: 1 },
+                        { question: "Simplify: 3x + 2x", options: ["5x", "6x", "x", "5"], correct: 0 },
+                        { question: "What is 2(x + 3)?", options: ["2x + 3", "2x + 6", "x + 6", "2x"], correct: 1 },
+                        { question: "Solve for x: x - 7 = 12", options: ["5", "19", "12", "7"], correct: 1 },
+                        { question: "What is the coefficient of x in 5x + 3?", options: ["5", "3", "x", "8"], correct: 0 }
+                    ],
+                    "Quadratic Equations": [
+                        { question: "What is the standard form of a quadratic equation?", options: ["ax² + bx + c = 0", "ax + b = 0", "a² + b² = c²", "y = mx + b"], correct: 0 },
+                        { question: "What is the solution to x² = 16?", options: ["4", "±4", "8", "±8"], correct: 1 },
+                        { question: "What is the vertex form of a quadratic?", options: ["y = a(x-h)² + k", "y = ax² + bx + c", "y = mx + b", "y = ax"], correct: 0 },
+                        { question: "What is the discriminant of x² + 5x + 6?", options: ["1", "25", "24", "49"], correct: 0 },
+                        { question: "How many solutions does x² + 1 = 0 have?", options: ["0 real solutions", "1 real solution", "2 real solutions", "Infinite solutions"], correct: 0 }
+                    ]
+                },
+                science: {
+                    "Cell Biology": [
+                        { question: "What is the control center of the cell?", options: ["Nucleus", "Mitochondria", "Ribosome", "Cell membrane"], correct: 0 },
+                        { question: "What organelle produces energy?", options: ["Nucleus", "Mitochondria", "Ribosome", "Cell membrane"], correct: 1 },
+                        { question: "What is the function of the cell membrane?", options: ["Controls what enters and exits", "Produces energy", "Makes proteins", "Stores DNA"], correct: 0 },
+                        { question: "What organelle makes proteins?", options: ["Nucleus", "Mitochondria", "Ribosome", "Cell membrane"], correct: 2 },
+                        { question: "What is the difference between plant and animal cells?", options: ["Plant cells have cell walls", "Animal cells have cell walls", "They are identical", "Plant cells have no nucleus"], correct: 0 }
+                    ],
+                    "Genetics": [
+                        { question: "What is DNA?", options: ["Genetic material", "A protein", "A cell", "An organelle"], correct: 0 },
+                        { question: "What is a gene?", options: ["A segment of DNA", "A type of cell", "A protein", "An organelle"], correct: 0 },
+                        { question: "What is dominant trait?", options: ["A trait that shows even with one copy", "A trait that needs two copies", "A trait that never shows", "A trait that changes"], correct: 0 },
+                        { question: "What is a chromosome?", options: ["Structure containing DNA", "A type of cell", "A protein", "An organelle"], correct: 0 },
+                        { question: "What is heredity?", options: ["Passing traits from parents to offspring", "Creating new traits", "Destroying traits", "Changing traits"], correct: 0 }
+                    ]
+                },
+                reading: {
+                    "Reading Comprehension": [
+                        { question: "What is the author's purpose?", options: ["Why the author wrote the text", "Who the author is", "When it was written", "Where it was written"], correct: 0 },
+                        { question: "What is theme?", options: ["The main message or lesson", "The setting", "The characters", "The plot"], correct: 0 },
+                        { question: "What is tone?", options: ["The author's attitude", "The setting", "The characters", "The plot"], correct: 0 },
+                        { question: "What is mood?", options: ["The feeling created for the reader", "The author's attitude", "The setting", "The characters"], correct: 0 },
+                        { question: "What is point of view?", options: ["The perspective from which the story is told", "The setting", "The characters", "The plot"], correct: 0 }
+                    ],
+                    "Literary Analysis": [
+                        { question: "What is symbolism?", options: ["Using objects to represent ideas", "The plot", "The characters", "The setting"], correct: 0 },
+                        { question: "What is a metaphor?", options: ["A comparison without 'like' or 'as'", "A comparison with 'like' or 'as'", "A description", "A question"], correct: 0 },
+                        { question: "What is a simile?", options: ["A comparison with 'like' or 'as'", "A comparison without 'like' or 'as'", "A description", "A question"], correct: 0 },
+                        { question: "What is personification?", options: ["Giving human traits to non-human things", "Describing a person", "Creating a character", "Writing dialogue"], correct: 0 },
+                        { question: "What is alliteration?", options: ["Repetition of beginning sounds", "Repetition of ending sounds", "Repetition of words", "Repetition of sentences"], correct: 0 }
+                    ]
+                },
+                language: {
+                    "Spanish Basics": [
+                        { question: "How do you say 'hello' in Spanish?", options: ["Hola", "Adiós", "Gracias", "Por favor"], correct: 0 },
+                        { question: "How do you say 'thank you' in Spanish?", options: ["Hola", "Adiós", "Gracias", "Por favor"], correct: 2 },
+                        { question: "How do you say 'goodbye' in Spanish?", options: ["Hola", "Adiós", "Gracias", "Por favor"], correct: 1 },
+                        { question: "How do you say 'please' in Spanish?", options: ["Hola", "Adiós", "Gracias", "Por favor"], correct: 3 },
+                        { question: "What does 'sí' mean?", options: ["Yes", "No", "Maybe", "Hello"], correct: 0 }
+                    ],
+                    "French Greetings": [
+                        { question: "How do you say 'hello' in French?", options: ["Bonjour", "Au revoir", "Merci", "S'il vous plaît"], correct: 0 },
+                        { question: "How do you say 'thank you' in French?", options: ["Bonjour", "Au revoir", "Merci", "S'il vous plaît"], correct: 2 },
+                        { question: "How do you say 'goodbye' in French?", options: ["Bonjour", "Au revoir", "Merci", "S'il vous plaît"], correct: 1 },
+                        { question: "How do you say 'please' in French?", options: ["Bonjour", "Au revoir", "Merci", "S'il vous plaît"], correct: 3 },
+                        { question: "What does 'oui' mean?", options: ["Yes", "No", "Maybe", "Hello"], correct: 0 }
+                    ]
+                }
+            }
+        };
+
+        // Generate questions from lesson-based quiz data
+        function generateQuestionsForLevel(level) {
+            const grade = getGradeLevel();
+            const selectedSubjects = getSelectedSubjects();
             const allQuestions = [];
             
-            // Level 1: Basic Math (Grade 6 level)
-            for (let i = 0; i < 8; i++) {
-                allQuestions.push({
-                    level: 1,
-                    question: [
-                        "What is 2 + 3?",
-                        "What is 5 × 4?",
-                        "What is 10 - 6?",
-                        "What is 12 ÷ 3?",
-                        "What is 3²?",
-                        "What is 1/2 + 1/4?",
-                        "What is 0.5 × 4?",
-                        "What is the area of a square with side 5?"
-                    ][i],
-                    options: [
-                        ["3", "4", "5", "6"],
-                        ["15", "18", "20", "25"],
-                        ["3", "4", "5", "6"],
-                        ["3", "4", "5", "6"],
-                        ["6", "9", "12", "15"],
-                        ["1/4", "3/4", "1/6", "2/6"],
-                        ["1.5", "2.0", "2.5", "3.0"],
-                        ["20", "25", "30", "35"]
-                    ][i],
-                    correct: [2, 2, 1, 1, 1, 1, 1, 1][i]
-                });
+            // Get questions from all selected subjects for the user's grade
+            const gradeData = quizQuestionsByGrade[grade] || quizQuestionsByGrade[9];
+            
+            selectedSubjects.forEach(subjectId => {
+                const subjectData = gradeData[subjectId];
+                if (subjectData) {
+                    Object.keys(subjectData).forEach(lessonTitle => {
+                        const lessonQuestions = subjectData[lessonTitle];
+                        allQuestions.push(...lessonQuestions);
+                    });
+                }
+            });
+            
+            // If no questions found, use fallback questions
+            if (allQuestions.length === 0) {
+                return getFallbackQuestions(level);
             }
-
-            // Level 2: Algebra (Grade 9 level)
-            for (let i = 0; i < 8; i++) {
-                allQuestions.push({
-                    level: 2,
-                    question: [
-                        "Solve for x: 2x + 5 = 13",
-                        "What is 3x - 7 = 14?",
-                        "Simplify: 2x + 3x",
-                        "What is the slope of y = 2x + 3?",
-                        "What is the y-intercept of y = -x + 5?",
-                        "What is (x+2)(x+3)?",
-                        "What is √16?",
-                        "What is x² - 9 = 0?"
-                    ][i],
-                    options: [
-                        ["x = 3", "x = 4", "x = 5", "x = 6"],
-                        ["x = 5", "x = 6", "x = 7", "x = 8"],
-                        ["5x", "6x", "5x²", "6x²"],
-                        ["1", "2", "3", "5"],
-                        ["-1", "1", "5", "-5"],
-                        ["x²+5x+6", "x²+6x+5", "x²+5x+5", "x²+6x+6"],
-                        ["2", "4", "8", "16"],
-                        ["x = 3", "x = -3", "x = 3 or -3", "x = 9"]
-                    ][i],
-                    correct: [1, 2, 0, 1, 2, 0, 1, 2][i]
-                });
-            }
-
-            // Level 3: Science (Grade 9 level)
-            for (let i = 0; i < 8; i++) {
-                allQuestions.push({
-                    level: 3,
-                    question: [
-                        "What is the powerhouse of the cell?",
-                        "Where is DNA located in a cell?",
-                        "What process do plants use to make food?",
-                        "What is a gene?",
-                        "How many chromosomes do humans have?",
-                        "What is the smallest unit of matter?",
-                        "What is H₂O?",
-                        "What gas do plants absorb from the air?"
-                    ][i],
-                    options: [
-                        ["Nucleus", "Mitochondria", "Ribosome", "Cell membrane"],
-                        ["Mitochondria", "Nucleus", "Cytoplasm", "Cell membrane"],
-                        ["Respiration", "Photosynthesis", "Digestion", "Circulation"],
-                        ["A type of cell", "A unit of heredity", "A type of protein", "A type of molecule"],
-                        ["23", "46", "44", "48"],
-                        ["Atom", "Molecule", "Cell", "Tissue"],
-                        ["Hydrogen", "Oxygen", "Water", "Carbon dioxide"],
-                        ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"]
-                    ][i],
-                    correct: [1, 1, 1, 1, 1, 0, 2, 1][i]
-                });
-            }
-
-            // Level 4: Reading/Language (Grade 9 level)
-            for (let i = 0; i < 8; i++) {
-                allQuestions.push({
-                    level: 4,
-                    question: [
-                        "What is the main idea of a text?",
-                        "What do supporting details do?",
-                        "What is a theme in literature?",
-                        "What is symbolism?",
-                        "How do you say 'Hello' in Spanish?",
-                        "How do you say 'Thank you' in Spanish?",
-                        "What is 'Good morning' in Spanish?",
-                        "What is the purpose of literary analysis?"
-                    ][i],
-                    options: [
-                        ["The first sentence", "The most important point", "The title", "The last sentence"],
-                        ["Contradict the main idea", "Explain or support the main idea", "Replace the main idea", "Hide the main idea"],
-                        ["The main character", "The setting", "The underlying message", "The plot"],
-                        ["Using symbols to represent ideas", "Writing in symbols", "Drawing symbols", "Speaking in symbols"],
-                        ["Hola", "Adiós", "Gracias", "Por favor"],
-                        ["Hola", "Adiós", "Gracias", "Por favor"],
-                        ["Buenas noches", "Buenos días", "Buenas tardes", "Hola"],
-                        ["To summarize the plot", "To examine meaning and techniques", "To memorize quotes", "To count pages"]
-                    ][i],
-                    correct: [1, 1, 2, 0, 0, 2, 1, 1][i]
-                });
-            }
-
-            // Level 5: Advanced (Mixed Grade 12 level)
-            for (let i = 0; i < 8; i++) {
-                allQuestions.push({
-                    level: 5,
-                    question: [
-                        "What is d/dx(x²)?",
-                        "What is ∫x dx?",
-                        "What is d/dx(sin x)?",
-                        "What is lim(x→2) x²?",
-                        "What is the chain rule for d/dx(f(g(x)))?",
-                        "What is the derivative of e^x?",
-                        "What is the integral of 1/x?",
-                        "What is the derivative of ln(x)?"
-                    ][i],
-                    options: [
-                        ["x", "2x", "x²", "2x²"],
-                        ["x²/2 + C", "x² + C", "x + C", "2x + C"],
-                        ["cos x", "-cos x", "sin x", "-sin x"],
-                        ["2", "4", "6", "8"],
-                        ["f'(g(x))", "f'(g(x))g'(x)", "f(g'(x))", "f'(x)g'(x)"],
-                        ["e^x", "xe^x", "e^(x-1)", "ln(x)"],
-                        ["ln|x| + C", "1/x + C", "x + C", "x²/2 + C"],
-                        ["1/x", "x", "ln(x)", "e^x"]
-                    ][i],
-                    correct: [1, 0, 0, 1, 1, 0, 0, 0][i]
-                });
-            }
-
-            return allQuestions;
+            
+            // Shuffle and select questions for this level
+            const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, QUESTIONS_PER_LEVEL);
         }
 
-        // Initialize game
+        // Fallback questions if no lesson data available
+        function getFallbackQuestions(level) {
+            const baseQuestions = [
+                { question: "What is 5 + 3?", options: ["6", "7", "8", "9"], correct: 2 },
+                { question: "What is 10 - 4?", options: ["4", "5", "6", "7"], correct: 2 },
+                { question: "What is 12 × 3?", options: ["33", "34", "35", "36"], correct: 3 },
+                { question: "What is 15 ÷ 3?", options: ["3", "4", "5", "6"], correct: 2 },
+                { question: "What is 20 × 5?", options: ["95", "100", "105", "110"], correct: 1 },
+                { question: "What is 8 + 7?", options: ["14", "15", "16", "17"], correct: 1 },
+                { question: "What is 25 - 8?", options: ["15", "16", "17", "18"], correct: 2 },
+                { question: "What is 9 × 4?", options: ["34", "35", "36", "37"], correct: 2 },
+                { question: "What is 6 × 7?", options: ["40", "41", "42", "43"], correct: 2 },
+                { question: "What is 100 ÷ 4?", options: ["20", "25", "30", "35"], correct: 1 }
+            ];
+            return baseQuestions;
+        }
+
         function initGame() {
-            questions = generateGameQuestions();
-            currentLevel = 1;
-            currentPlanet = 0;
-            currentQuestionIndex = 0;
-            createStars();
-            loadLevel();
+            currentLevel = parseInt(localStorage.getItem('astrolearn_game_level') || '1');
+            planetsReached = parseInt(localStorage.getItem('astrolearn_planets_reached') || '0');
+            gameXP = parseInt(localStorage.getItem('astrolearn_game_xp') || '0');
+            
+            updateStats();
+            loadLevel(currentLevel);
         }
 
-        // Create stars in background
-        function createStars() {
-            const spaceBackground = document.getElementById('spaceBackground');
-            for (let i = 0; i < 100; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.width = Math.random() * 3 + 'px';
-                star.style.height = star.style.width;
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.animationDelay = Math.random() * 2 + 's';
-                spaceBackground.appendChild(star);
-            }
-        }
-
-        // Load level
-        function loadLevel() {
-            const levelQuestions = questions.filter(q => q.level === currentLevel);
-            currentQuestionIndex = 0;
+        function loadLevel(level) {
+            questions = generateQuestionsForLevel(level);
+            currentQuestion = 0;
             currentPlanet = 0;
+            userAnswers = [];
             
-            // Create planets
-            const planetPath = document.getElementById('planetPath');
-            planetPath.innerHTML = '';
-            
-            for (let i = 0; i < 8; i++) {
-                const planet = document.createElement('div');
-                planet.className = 'planet';
-                planet.textContent = planetEmojis[i % planetEmojis.length];
-                planet.id = `planet-${i}`;
-                if (i === 0) planet.classList.add('current');
-                planetPath.appendChild(planet);
+            // Ensure both game and question areas are visible
+            const gameContainerParent = document.getElementById('gameContainer').parentElement;
+            if (gameContainerParent) {
+                gameContainerParent.style.display = 'block';
             }
-
-            // Position rocket at first planet
-            positionRocket(0);
             
-            // Show first question
+            renderGameScene();
             showQuestion();
         }
 
-        // Position rocket
-        function positionRocket(planetIndex) {
-            const rocket = document.getElementById('rocket');
-            const planets = document.querySelectorAll('.planet');
-            if (planets[planetIndex]) {
-                const planetRect = planets[planetIndex].getBoundingClientRect();
-                const containerRect = document.getElementById('gameContainer').getBoundingClientRect();
-                const planetPathRect = document.getElementById('planetPath').getBoundingClientRect();
-                
-                const left = planetRect.left - containerRect.left + planetRect.width / 2 - 32;
-                const top = planetPathRect.top - containerRect.top - 40;
-                
-                rocket.style.left = left + 'px';
-                rocket.style.top = top + 'px';
+        function renderGameScene() {
+            const container = document.getElementById('gameContainer');
+            container.innerHTML = '';
+            
+            // Render planets (10 planets for 10 questions)
+            const planetEmojis = ['🪐', '🌍', '🌕', '🔴', '🟠', '🟣', '🔵', '🟢', '🟡', '⚪'];
+            const planetColors = ['#4FC3F7', '#FF6EC7', '#FFD700', '#FF6B6B', '#FFA500', '#9B59B6', '#3498DB', '#2ECC71', '#F1C40F', '#ECF0F1'];
+            
+            const numPlanets = Math.min(QUESTIONS_PER_LEVEL, questions.length);
+            const spacing = 80 / (numPlanets - 1); // Distribute planets across 80% of width
+            
+            for (let i = 0; i < numPlanets; i++) {
+                const planet = document.createElement('div');
+                planet.className = `planet ${i <= currentPlanet ? 'reached' : ''}`;
+                planet.style.left = `${10 + i * spacing}%`;
+                planet.style.top = `${20 + (i % 3) * 25}%`; // Vary height more
+                planet.style.color = planetColors[i % planetColors.length];
+                planet.textContent = planetEmojis[i % planetEmojis.length];
+                planet.id = `planet-${i}`;
+                container.appendChild(planet);
             }
+            
+            // Render spaceship
+            const spaceship = document.createElement('div');
+            spaceship.className = 'spaceship';
+            spaceship.id = 'spaceship';
+            spaceship.textContent = '🚀';
+            spaceship.style.left = `${10 + currentPlanet * spacing}%`;
+            spaceship.style.top = `${20 + (currentPlanet % 3) * 25}%`;
+            spaceship.style.transform = 'translate(-50%, -50%)';
+            container.appendChild(spaceship);
         }
 
-        // Show question
         function showQuestion() {
-            const levelQuestions = questions.filter(q => q.level === currentLevel);
-            const question = levelQuestions[currentPlanet];
-            
-            if (!question) {
-                // Level complete
-                showLevelComplete();
+            if (currentQuestion >= questions.length) {
+                // All questions answered correctly - show black hole
+                showBlackHole();
                 return;
             }
-
-            document.getElementById('questionOverlay').classList.remove('hidden');
-            document.getElementById('currentLevel').textContent = currentLevel;
-            document.getElementById('currentPlanetNum').textContent = currentPlanet + 1;
+            
+            const question = questions[currentQuestion];
+            document.getElementById('questionNumber').textContent = currentQuestion + 1;
             document.getElementById('questionText').textContent = question.question;
             
-            // Update planet progress
-            const progressContainer = document.getElementById('planetProgress');
-            progressContainer.innerHTML = '';
-            for (let i = 0; i < 8; i++) {
-                const indicator = document.createElement('div');
-                indicator.className = 'planet-indicator';
-                if (i < currentPlanet) indicator.classList.add('visited');
-                if (i === currentPlanet) indicator.classList.add('current');
-                progressContainer.appendChild(indicator);
-            }
-
-            // Show answer options
-            const answerOptions = document.getElementById('answerOptions');
-            answerOptions.innerHTML = '';
-            question.options.forEach((option, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'answer-btn';
-                btn.textContent = option;
-                btn.onclick = () => selectAnswer(index, question.correct);
-                answerOptions.appendChild(btn);
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = question.options.map((option, index) => `
+                <button class="glass-card p-4 text-left hover:scale-105 transition-transform option-btn" 
+                        data-answer="${index}">
+                    <span class="font-bold text-[#4FC3F7] mr-2">${String.fromCharCode(65 + index)}.</span>
+                    ${option}
+                </button>
+            `).join('');
+            
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const selectedAnswer = parseInt(btn.dataset.answer);
+                    checkAnswer(selectedAnswer);
+                });
             });
-
-            document.getElementById('feedbackText').textContent = '';
-            answered = false;
+            
+            document.getElementById('questionArea').classList.remove('hidden');
+            // Ensure game container is visible
+            document.getElementById('gameContainer').parentElement.style.display = 'block';
         }
 
-        // Select answer
-        function selectAnswer(selectedIndex, correctIndex) {
-            if (answered) return;
-            answered = true;
-
-            const buttons = document.querySelectorAll('.answer-btn');
-            buttons[correctIndex].classList.add('correct');
+        function checkAnswer(selectedAnswer) {
+            const question = questions[currentQuestion];
+            userAnswers.push(selectedAnswer);
             
-            if (selectedIndex !== correctIndex) {
-                buttons[selectedIndex].classList.add('incorrect');
-                document.getElementById('feedbackText').textContent = 'Wrong answer! You hit an asteroid. Restarting...';
+            if (selectedAnswer === question.correct) {
+                // Correct answer - move to next planet
+                currentPlanet++;
+                planetsReached++;
+                gameXP += 50;
+                updateStats();
+                renderGameScene();
                 
-                // Show asteroid collision
-                showAsteroidCollision();
+                // Move spaceship
+                setTimeout(() => {
+                    const spaceship = document.getElementById('spaceship');
+                    const numPlanets = Math.min(QUESTIONS_PER_LEVEL, questions.length);
+                    const spacing = 80 / (numPlanets - 1);
+                    spaceship.style.left = `${10 + currentPlanet * spacing}%`;
+                    spaceship.style.top = `${20 + (currentPlanet % 3) * 25}%`;
+                }, 100);
                 
-                // Restart level after delay
-                setTimeout(() => {
-                    restartLevel();
-                }, 2000);
-                return;
-            }
-
-            document.getElementById('feedbackText').textContent = 'Correct! Flying to next planet...';
-            
-            // Update planet state
-            const planets = document.querySelectorAll('.planet');
-            if (planets[currentPlanet]) {
-                planets[currentPlanet].classList.remove('current');
-                planets[currentPlanet].classList.add('visited');
-            }
-
-            // Move to next planet
-            currentPlanet++;
-            
-            if (currentPlanet >= 8) {
-                // Level complete
-                setTimeout(() => {
-                    document.getElementById('questionOverlay').classList.add('hidden');
-                    showLevelComplete();
-                }, 1500);
-            } else {
-                // Move rocket and show next question
-                setTimeout(() => {
-                    positionRocket(currentPlanet);
-                    const planets = document.querySelectorAll('.planet');
-                    if (planets[currentPlanet]) {
-                        planets[currentPlanet].classList.add('current');
-                    }
-                    document.getElementById('questionOverlay').classList.add('hidden');
+                currentQuestion++;
+                
+                if (currentQuestion >= questions.length) {
+                    // Level complete
+                    setTimeout(() => {
+                        showBlackHole();
+                    }, 1000);
+                } else {
                     setTimeout(() => {
                         showQuestion();
-                    }, 500);
-                }, 1500);
+                    }, 1000);
+                }
+            } else {
+                // Wrong answer - asteroid hit
+                showAsteroidHit();
             }
         }
 
-        // Show asteroid collision
-        function showAsteroidCollision() {
-            const rocket = document.getElementById('rocket');
-            const rocketRect = rocket.getBoundingClientRect();
-            const containerRect = document.getElementById('gameContainer').getBoundingClientRect();
+        function showAsteroidHit() {
+            const container = document.getElementById('gameContainer');
+            const spaceship = document.getElementById('spaceship');
             
+            // Create asteroid
             const asteroid = document.createElement('div');
             asteroid.className = 'asteroid';
             asteroid.textContent = '☄️';
-            asteroid.style.left = (rocketRect.left - containerRect.left + rocketRect.width / 2) + 'px';
-            asteroid.style.top = (rocketRect.top - containerRect.top + rocketRect.height / 2) + 'px';
+            asteroid.style.left = spaceship.style.left;
+            asteroid.style.top = '0%';
+            container.appendChild(asteroid);
             
-            document.getElementById('asteroidContainer').appendChild(asteroid);
-            
+            // Create explosion
             setTimeout(() => {
-                asteroid.remove();
+                const explosion = document.createElement('div');
+                explosion.className = 'explosion';
+                explosion.textContent = '💥';
+                explosion.style.left = spaceship.style.left;
+                explosion.style.top = spaceship.style.top;
+                container.appendChild(explosion);
+                
+                setTimeout(() => {
+                    // Keep game visible but hide question area during game over
+                    document.getElementById('questionArea').classList.add('hidden');
+                    document.getElementById('gameOverModal').classList.remove('hidden');
+                }, 500);
             }, 500);
         }
 
-        // Restart level
-        function restartLevel() {
-            currentPlanet = 0;
-            const planets = document.querySelectorAll('.planet');
-            planets.forEach((p, i) => {
-                p.classList.remove('visited', 'current');
-                if (i === 0) p.classList.add('current');
-            });
-            positionRocket(0);
-            document.getElementById('questionOverlay').classList.add('hidden');
+        function showBlackHole() {
+            const container = document.getElementById('gameContainer');
+            // Hide question area but keep game visible
+            document.getElementById('questionArea').classList.add('hidden');
+            
+            const blackhole = document.createElement('div');
+            blackhole.className = 'blackhole';
+            blackhole.textContent = '🕳️';
+            container.appendChild(blackhole);
+            
             setTimeout(() => {
-                showQuestion();
-            }, 500);
+                document.getElementById('levelCompleteModal').classList.remove('hidden');
+            }, 2000);
         }
 
-        // Show level complete
-        function showLevelComplete() {
-            document.getElementById('completedLevel').textContent = currentLevel;
-            document.getElementById('levelCompleteOverlay').classList.remove('hidden');
-        }
-
-        // Next level
-        function nextLevel() {
-            currentLevel++;
-            if (currentLevel > 5) {
-                // Game complete
-                document.getElementById('levelCompleteOverlay').classList.add('hidden');
-                document.getElementById('gameCompleteOverlay').classList.remove('hidden');
-            } else {
-                document.getElementById('levelCompleteOverlay').classList.add('hidden');
-                loadLevel();
-            }
-        }
-
-        // Restart game
-        function restartGame() {
-            document.getElementById('gameCompleteOverlay').classList.add('hidden');
-            initGame();
-        }
-
-        // Exit game function
-        function exitGame() {
-            if (confirm('Are you sure you want to exit Space Quest? Your progress will not be saved.')) {
-                window.location.href = 'dashboard.html';
-            }
+        function updateStats() {
+            document.getElementById('currentLevel').textContent = currentLevel;
+            document.getElementById('planetsReached').textContent = planetsReached;
+            document.getElementById('gameXP').textContent = gameXP;
+            
+            localStorage.setItem('astrolearn_game_level', currentLevel.toString());
+            localStorage.setItem('astrolearn_planets_reached', planetsReached.toString());
+            localStorage.setItem('astrolearn_game_xp', gameXP.toString());
         }
 
         // Event listeners
-        document.getElementById('nextLevelBtn').addEventListener('click', nextLevel);
-        document.getElementById('restartGameBtn').addEventListener('click', restartGame);
-        document.getElementById('exitGameBtn').addEventListener('click', exitGame);
-        document.getElementById('exitQuestionBtn').addEventListener('click', exitGame);
-        document.getElementById('exitLevelCompleteBtn').addEventListener('click', exitGame);
-        document.getElementById('exitGameCompleteBtn').addEventListener('click', exitGame);
+        document.getElementById('nextLevelBtn').addEventListener('click', () => {
+            currentLevel++;
+            document.getElementById('levelCompleteModal').classList.add('hidden');
+            loadLevel(currentLevel);
+        });
 
-        // Initialize on load
-        document.addEventListener('DOMContentLoaded', () => {
-            initFloatingStars();
-            updateNavigation();
-            setupProtectedLinks();
-            initGame();
+        document.getElementById('restartGameBtn').addEventListener('click', () => {
+            currentLevel = 1;
+            planetsReached = 0;
+            gameXP = 0;
+            updateStats();
+            document.getElementById('levelCompleteModal').classList.add('hidden');
+            loadLevel(1);
+        });
+
+        document.getElementById('restartAfterAsteroidBtn').addEventListener('click', () => {
+            document.getElementById('gameOverModal').classList.add('hidden');
+            loadLevel(currentLevel);
         });
     </script>
 </body>
 </html>
-

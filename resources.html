@@ -6,6 +6,19 @@
     <title>Knowledge Constellations - AstroLearn</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Style dropdown options in launchpad */
+        #assignmentSubject option,
+        #assignmentPriority option {
+            color: #F5F7FA !important;
+            background-color: #0B0F2F !important;
+        }
+        
+        #assignmentSubject:focus,
+        #assignmentPriority:focus {
+            color: #F5F7FA !important;
+        }
+    </style>
 </head>
 <body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
     <!-- Floating Stars Background -->
@@ -15,7 +28,7 @@
     <nav class="navbar">
         <div class="container mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <img src="sticker.webp" alt="AstroLearn Logo" class="h-8 w-8 object-contain">
+                <img src="sticker.webp" alt="AstroLearn Logo" class="h-12 w-12 object-contain">
                 <h1 class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
                     AstroLearn
                 </h1>
@@ -25,7 +38,7 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link active protected-link">Resources</a>
-                <a href="game.html" class="nav-link protected-link">Space Quest</a>
+                <a href="games.html" class="nav-link protected-link">Games</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
             </div>
             <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
@@ -36,7 +49,7 @@
                 <a href="dashboard.html" class="nav-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link">Schedule</a>
                 <a href="resources.html" class="nav-link">Resources</a>
-                <a href="game.html" class="nav-link protected-link">Space Quest</a>
+                <a href="games.html" class="nav-link">Games</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-center block" id="authBtnMobile">Sign In</a>
             </div>
         </div>
@@ -54,56 +67,44 @@
 
     <!-- Quick Access -->
     <section class="container mx-auto px-6 mb-12">
-        <h2 class="text-3xl font-bold mb-6 text-center">
-            <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
-                Interactive Tools
-            </span>
-        </h2>
-        <div class="grid md:grid-cols-3 gap-6">
-            <button id="starMapBtn" class="glass-card p-6 text-center hover:scale-105 transition-transform cursor-pointer">
-                <div class="text-4xl mb-3">📥</div>
-                <h3 class="text-lg font-bold mb-2">Download Materials</h3>
-                <p class="text-sm text-[#F5F7FA]/70">Study guides & resources</p>
+        <div class="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <button id="launchpadBtn" class="glass-card p-6 text-center hover:scale-105 transition-transform cursor-pointer">
+                <div class="text-4xl mb-3">🚀</div>
+                <h3 class="text-lg font-bold">Launchpad</h3>
             </button>
             <a href="flashcards.html" class="glass-card p-6 text-center hover:scale-105 transition-transform cursor-pointer block">
                 <div class="text-4xl mb-3">📚</div>
-                <h3 class="text-lg font-bold mb-2">Flashcards</h3>
-                <p class="text-sm text-[#F5F7FA]/70">Interactive study cards</p>
+                <h3 class="text-lg font-bold">Flashcards</h3>
             </a>
             <a href="quizzes.html" class="glass-card p-6 text-center hover:scale-105 transition-transform cursor-pointer block">
                 <div class="text-4xl mb-3">📝</div>
-                <h3 class="text-lg font-bold mb-2">Quizzes</h3>
-                <p class="text-sm text-[#F5F7FA]/70">Test your knowledge</p>
+                <h3 class="text-lg font-bold">Quizzes</h3>
             </a>
-        </div>
-    </section>
-
-    <!-- Educational Videos Section -->
-    <section class="container mx-auto px-6 mb-12">
-        <h2 class="text-3xl font-bold mb-8 text-center">
-            <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
-                📹 Educational Videos
-            </span>
-        </h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="videosGrid">
-            <!-- Videos will be populated by JS -->
+            <a href="videos.html" class="glass-card p-6 text-center hover:scale-105 transition-transform cursor-pointer block">
+                <div class="text-4xl mb-3">🎥</div>
+                <h3 class="text-lg font-bold">Videos</h3>
+            </a>
         </div>
     </section>
 
     <!-- Downloadable Materials Section -->
-    <section class="container mx-auto px-6 mb-12">
-        <h2 class="text-3xl font-bold mb-8 text-center">
-            <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
-                📥 Downloadable Materials
-            </span>
-        </h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="downloadsGrid">
-            <!-- Downloadable materials will be populated by JS -->
-        </div>
+    <section class="container mx-auto px-6 pb-12">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-4 text-center">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    📥 Downloadable Materials
+                </span>
+            </h2>
+            <p class="text-center text-[#F5F7FA]/70 mb-8">Study guides, worksheets, and reference materials organized by subject.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="downloadableMaterialsGrid">
+                <!-- Downloadable materials will be populated by JS -->
+            </div>
+            </div>
     </section>
 
     <!-- Lessons Grid -->
     <section class="container mx-auto px-6 pb-16">
+        <div class="max-w-6xl mx-auto">
         <h2 class="text-3xl font-bold mb-8 text-center">
             <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
                 Available Lessons
@@ -111,15 +112,56 @@
         </h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="lessonsGrid">
             <!-- Lessons will be populated by JS -->
+            </div>
                             </div>
     </section>
+
+    <!-- Videos Section -->
+    <section id="videos" class="container mx-auto px-6 pb-16 hidden">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-8 text-center">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Educational Videos
+                </span>
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="videosGrid">
+                <!-- Videos will be populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Lesson Modal -->
+    <div id="lessonModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-2 md:p-4">
+        <div class="fixed inset-0 bg-black/70 backdrop-blur-sm" onclick="closeLessonModal()"></div>
+        <div class="relative glass-card max-w-5xl w-full max-h-[90vh] flex flex-col z-10">
+            <!-- Header with Title - Always Visible -->
+            <div class="flex-shrink-0 p-4 md:p-6 pb-4 border-b border-white/10 relative">
+                <button onclick="closeLessonModal()" class="absolute top-4 right-4 text-xl md:text-2xl text-[#F5F7FA]/70 hover:text-[#F5F7FA] z-20 bg-[#0B0F2F]/90 rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center shadow-lg">✕</button>
+                <div id="lessonTitle" class="pr-12">
+                    <!-- Title will be populated by JS -->
+                </div>
+            </div>
+            <!-- Scrollable Content Area -->
+            <div id="lessonContent" class="overflow-y-auto flex-1 p-4 md:p-6" style="scrollbar-width: thin; max-height: calc(90vh - 200px);">
+                <!-- Lesson content will be populated by JS -->
+            </div>
+            <!-- Footer with Buttons - Always Visible -->
+            <div class="flex-shrink-0 flex gap-3 md:gap-4 justify-end p-4 md:p-6 pt-4 border-t border-white/10">
+                <button onclick="closeLessonModal()" class="btn-secondary text-sm md:text-base px-4 py-2">Close</button>
+                <button onclick="completeCurrentLesson()" class="btn-primary text-sm md:text-base px-4 py-2" id="completeLessonBtn">Mark as Complete</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container mx-auto px-6 py-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
-                    <p class="text-sm text-[#F5F7FA]/70 flex items-center gap-1"><img src="sticker.webp" alt="AstroLearn Logo" class="h-5 w-5 object-contain"> Powered by AstroLearn</p>
+                    <div class="flex items-center gap-2">
+                        <img src="sticker.webp" alt="AstroLearn Logo" class="w-6 h-6">
+                        <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn</p>
+                    </div>
                             </div>
                 <div class="flex space-x-6">
                     <a href="about.html" class="footer-link">About</a>
@@ -130,32 +172,30 @@
                     </div>
     </footer>
 
-    <!-- Star Map Roadmap Modal -->
-    <div id="starMapModal" class="star-map-modal hidden">
-        <div class="star-map-overlay" id="starMapOverlay"></div>
+    <!-- Launchpad Modal -->
+    <div id="launchpadModal" class="star-map-modal hidden">
+        <div class="star-map-overlay" id="launchpadOverlay"></div>
         <div class="star-map-content">
             <div class="star-map-header">
                 <h2 class="text-3xl md:text-4xl font-bold mb-2">
                     <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
-                        Your Learning Roadmap
+                        Launchpad - Assignment Manager
                     </span>
                 </h2>
-                <p class="text-[#F5F7FA]/70">Your personalized pace chart through the stars</p>
-                <button id="closeStarMap" class="close-btn">✕</button>
+                <p class="text-[#F5F7FA]/70">Create and manage your assignments with due dates</p>
+                <button id="closeLaunchpad" class="close-btn">✕</button>
                             </div>
-            <div class="star-map-body" id="roadmapContent">
-                <!-- Roadmap will be generated here -->
+            <div class="star-map-body" id="launchpadContent">
+                <!-- Assignments will be generated here -->
                             </div>
             <div class="star-map-footer">
-                <button class="btn-primary" onclick="downloadRoadmap()">Download as PDF</button>
-                <button class="btn-secondary" id="closeStarMapBtn">Close</button>
+                <button class="btn-primary" onclick="showAddAssignmentForm()">➕ Add Assignment</button>
+                <button class="btn-secondary" id="closeLaunchpadBtn">Close</button>
                             </div>
                         </div>
                     </div>
 
     <script src="script.js"></script>
-    <script src="lesson.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
         // Check authentication before loading page
         document.addEventListener('DOMContentLoaded', () => {
@@ -163,200 +203,1170 @@
                 return; // Will redirect to login
             }
             updateNavigation();
-            loadLessons();
-            loadVideos();
-            loadDownloads();
         });
 
-        const lessons = [
-            { id: 1, title: "Algebra Basics", subject: "Math", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
-            { id: 2, title: "Cell Structure", subject: "Biology", difficulty: "Medium", icon: "🧬", color: "#FF6EC7" },
-            { id: 3, title: "World War II", subject: "History", difficulty: "Medium", icon: "🌍", color: "#482880" },
-            { id: 4, title: "Periodic Table", subject: "Chemistry", difficulty: "Hard", icon: "⚗️", color: "#4FC3F7" },
-            { id: 5, title: "Quantum Physics", subject: "Physics", difficulty: "Hard", icon: "🌌", color: "#FF6EC7" },
-            { id: 6, title: "Shakespeare", subject: "Literature", difficulty: "Medium", icon: "📚", color: "#482880" },
-            { id: 7, title: "Calculus I", subject: "Math", difficulty: "Hard", icon: "🔭", color: "#4FC3F7" },
-            { id: 8, title: "Genetics", subject: "Biology", difficulty: "Medium", icon: "🧬", color: "#FF6EC7" }
+        // Grade-specific lessons organized by subject
+        const lessonsByGradeAndSubject = {
+            math: {
+                6: [
+                    { id: 1, title: "Introduction to Fractions", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 2, title: "Decimal Operations", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 3, title: "Basic Geometry Shapes", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 4, title: "Ratios and Proportions", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 5, title: "Percentages", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 6, title: "Area and Perimeter", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" }
+                ],
+                7: [
+                    { id: 1, title: "Integers and Operations", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 2, title: "Expressions and Equations", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 3, title: "Proportional Relationships", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 4, title: "Angle Relationships", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 5, title: "Statistics and Probability", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 6, title: "Surface Area and Volume", difficulty: "Hard", icon: "🔭", color: "#4FC3F7" }
+                ],
+                8: [
+                    { id: 1, title: "Linear Equations", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 2, title: "Systems of Equations", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 3, title: "Functions", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 4, title: "Pythagorean Theorem", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 5, title: "Transformations", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 6, title: "Scientific Notation", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" }
+                ],
+                9: [
+                    { id: 1, title: "Algebra Basics", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 2, title: "Linear Equations and Inequalities", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 3, title: "Quadratic Equations", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 4, title: "Polynomials", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 5, title: "Exponential Functions", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 6, title: "Radical Expressions", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" }
+                ],
+                10: [
+                    { id: 1, title: "Advanced Algebra", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 2, title: "Quadratic Functions", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 3, title: "Polynomial Functions", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 4, title: "Rational Expressions", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 5, title: "Logarithmic Functions", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 6, title: "Sequences and Series", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" }
+                ],
+                11: [
+                    { id: 1, title: "Trigonometry Basics", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 2, title: "Trigonometric Functions", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 3, title: "Trigonometric Identities", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 4, title: "Analytic Geometry", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 5, title: "Complex Numbers", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 6, title: "Conic Sections", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" }
+                ],
+                12: [
+                    { id: 1, title: "Calculus Introduction", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 2, title: "Limits and Continuity", difficulty: "Easy", icon: "🔭", color: "#4FC3F7" },
+                    { id: 3, title: "Derivatives", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 4, title: "Applications of Derivatives", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 5, title: "Integrals", difficulty: "Medium", icon: "🔭", color: "#4FC3F7" },
+                    { id: 6, title: "Applications of Integrals", difficulty: "Hard", icon: "🔭", color: "#4FC3F7" }
+                ]
+            },
+            science: {
+                6: [
+                    { id: 1, title: "Introduction to Matter", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 2, title: "Earth's Layers", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 3, title: "Weather and Climate", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 4, title: "Plant Life Cycles", difficulty: "Medium", icon: "🧬", color: "#FF6EC7" },
+                    { id: 5, title: "Simple Machines", difficulty: "Medium", icon: "🧬", color: "#FF6EC7" },
+                    { id: 6, title: "Solar System Basics", difficulty: "Medium", icon: "🧬", color: "#FF6EC7" }
+                ],
+                7: [
+                    { id: 1, title: "Cell Structure", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 2, title: "Ecosystems", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 3, title: "Chemical Reactions", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 4, title: "Forces and Motion", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 5, title: "Energy Transfer", difficulty: "Medium", icon: "🧬", color: "#FF6EC7" },
+                    { id: 6, title: "Earth's Resources", difficulty: "Medium", icon: "🧬", color: "#FF6EC7" }
+                ],
+                8: [
+                    { id: 1, title: "Genetics and Heredity", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 2, title: "Evolution", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 3, title: "Atomic Structure", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 4, title: "Periodic Table", difficulty: "Easy", icon: "⚗️", color: "#4FC3F7" },
+                    { id: 5, title: "Waves and Sound", difficulty: "Medium", icon: "🧬", color: "#FF6EC7" },
+                    { id: 6, title: "Light and Optics", difficulty: "Medium", icon: "🧬", color: "#FF6EC7" }
+                ],
+                9: [
+                    { id: 1, title: "Cell Biology", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 2, title: "Photosynthesis", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 3, title: "Genetics", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 4, title: "Chemistry Basics", difficulty: "Easy", icon: "⚗️", color: "#4FC3F7" },
+                    { id: 5, title: "Physics Fundamentals", difficulty: "Easy", icon: "🌌", color: "#FF6EC7" },
+                    { id: 6, title: "Astronomy", difficulty: "Easy", icon: "🌌", color: "#FF6EC7" }
+                ],
+                10: [
+                    { id: 1, title: "Advanced Biology", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 2, title: "Organic Chemistry", difficulty: "Easy", icon: "⚗️", color: "#4FC3F7" },
+                    { id: 3, title: "Thermodynamics", difficulty: "Medium", icon: "🌌", color: "#FF6EC7" },
+                    { id: 4, title: "Electromagnetism", difficulty: "Medium", icon: "🌌", color: "#FF6EC7" },
+                    { id: 5, title: "Environmental Science", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 6, title: "Molecular Biology", difficulty: "Medium", icon: "🧬", color: "#FF6EC7" }
+                ],
+                11: [
+                    { id: 1, title: "Advanced Chemistry", difficulty: "Easy", icon: "⚗️", color: "#4FC3F7" },
+                    { id: 2, title: "Physics: Mechanics", difficulty: "Easy", icon: "🌌", color: "#FF6EC7" },
+                    { id: 3, title: "Physics: Electricity", difficulty: "Medium", icon: "🌌", color: "#FF6EC7" },
+                    { id: 4, title: "Human Anatomy", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 5, title: "Biochemistry", difficulty: "Medium", icon: "🧬", color: "#FF6EC7" },
+                    { id: 6, title: "Quantum Physics", difficulty: "Medium", icon: "🌌", color: "#FF6EC7" }
+                ],
+                12: [
+                    { id: 1, title: "AP Biology", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 2, title: "AP Chemistry", difficulty: "Easy", icon: "⚗️", color: "#4FC3F7" },
+                    { id: 3, title: "AP Physics", difficulty: "Medium", icon: "🌌", color: "#FF6EC7" },
+                    { id: 4, title: "Advanced Genetics", difficulty: "Easy", icon: "🧬", color: "#FF6EC7" },
+                    { id: 5, title: "Organic Synthesis", difficulty: "Medium", icon: "⚗️", color: "#4FC3F7" },
+                    { id: 6, title: "Astrophysics", difficulty: "Medium", icon: "🌌", color: "#FF6EC7" }
+                ]
+            },
+            reading: {
+                6: [
+                    { id: 1, title: "Basic Reading Comprehension", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 2, title: "Story Elements", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 3, title: "Vocabulary Building", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 4, title: "Main Idea and Details", difficulty: "Medium", icon: "📚", color: "#482880" },
+                    { id: 5, title: "Character Analysis", difficulty: "Medium", icon: "📚", color: "#482880" },
+                    { id: 6, title: "Reading Strategies", difficulty: "Medium", icon: "📚", color: "#482880" }
+                ],
+                7: [
+                    { id: 1, title: "Advanced Comprehension", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 2, title: "Literary Devices", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 3, title: "Theme and Symbolism", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 4, title: "Point of View", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 5, title: "Text Structure", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 6, title: "Inference Skills", difficulty: "Medium", icon: "📚", color: "#482880" }
+                ],
+                8: [
+                    { id: 1, title: "Literary Analysis", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 2, title: "Poetry Analysis", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 3, title: "Author's Purpose", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 4, title: "Textual Evidence", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 5, title: "Comparative Reading", difficulty: "Medium", icon: "📚", color: "#482880" },
+                    { id: 6, title: "Critical Thinking", difficulty: "Medium", icon: "📚", color: "#482880" }
+                ],
+                9: [
+                    { id: 1, title: "Reading Comprehension", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 2, title: "Literary Analysis", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 3, title: "Poetry Analysis", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 4, title: "Shakespeare Studies", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 5, title: "Modern Literature", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 6, title: "Critical Reading", difficulty: "Medium", icon: "📚", color: "#482880" }
+                ],
+                10: [
+                    { id: 1, title: "Advanced Literary Analysis", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 2, title: "Rhetorical Analysis", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 3, title: "Classical Literature", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 4, title: "American Literature", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 5, title: "World Literature", difficulty: "Medium", icon: "📚", color: "#482880" },
+                    { id: 6, title: "Literary Criticism", difficulty: "Medium", icon: "📚", color: "#482880" }
+                ],
+                11: [
+                    { id: 1, title: "AP Literature Analysis", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 2, title: "British Literature", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 3, title: "Advanced Poetry", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 4, title: "Drama Analysis", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 5, title: "Literary Theory", difficulty: "Medium", icon: "📚", color: "#482880" },
+                    { id: 6, title: "Research and Writing", difficulty: "Medium", icon: "📚", color: "#482880" }
+                ],
+                12: [
+                    { id: 1, title: "Advanced Literary Theory", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 2, title: "Contemporary Literature", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 3, title: "Postmodern Analysis", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 4, title: "Comparative Literature", difficulty: "Easy", icon: "📚", color: "#482880" },
+                    { id: 5, title: "Literary Research Methods", difficulty: "Medium", icon: "📚", color: "#482880" },
+                    { id: 6, title: "Thesis Development", difficulty: "Medium", icon: "📚", color: "#482880" }
+                ]
+            },
+            language: {
+                6: [
+                    { id: 1, title: "Basic Greetings", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 2, title: "Numbers and Colors", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 3, title: "Family and Friends", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 4, title: "Daily Activities", difficulty: "Medium", icon: "🌍", color: "#4FC3F7" },
+                    { id: 5, title: "Food and Drinks", difficulty: "Medium", icon: "🌍", color: "#4FC3F7" },
+                    { id: 6, title: "Simple Conversations", difficulty: "Medium", icon: "🌍", color: "#4FC3F7" }
+                ],
+                7: [
+                    { id: 1, title: "Present Tense Verbs", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 2, title: "Common Phrases", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 3, title: "Describing People", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 4, title: "School and Hobbies", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 5, title: "Weather and Seasons", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 6, title: "Basic Grammar Rules", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" }
+                ],
+                8: [
+                    { id: 1, title: "Past Tense Introduction", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 2, title: "Future Tense", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 3, title: "Adjectives and Adverbs", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 4, title: "Question Formation", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 5, title: "Travel Vocabulary", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 6, title: "Cultural Context", difficulty: "Medium", icon: "🌍", color: "#4FC3F7" }
+                ],
+                9: [
+                    { id: 1, title: "Spanish Basics", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 2, title: "French Greetings", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 3, title: "German Vocabulary", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 4, title: "Spanish Grammar", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 5, title: "French Conversation", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 6, title: "German Grammar", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" }
+                ],
+                10: [
+                    { id: 1, title: "Advanced Verb Tenses", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 2, title: "Subjunctive Mood", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 3, title: "Complex Sentences", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 4, title: "Idiomatic Expressions", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 5, title: "Literary Analysis", difficulty: "Medium", icon: "🌍", color: "#4FC3F7" },
+                    { id: 6, title: "Advanced Conversation", difficulty: "Medium", icon: "🌍", color: "#4FC3F7" }
+                ],
+                11: [
+                    { id: 1, title: "AP Language Preparation", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 2, title: "Advanced Literature", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 3, title: "Formal Writing", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 4, title: "Cultural Studies", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 5, title: "Translation Skills", difficulty: "Medium", icon: "🌍", color: "#4FC3F7" },
+                    { id: 6, title: "Linguistic Analysis", difficulty: "Medium", icon: "🌍", color: "#4FC3F7" }
+                ],
+                12: [
+                    { id: 1, title: "Advanced Literature", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 2, title: "Thesis Writing", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 3, title: "Literary Criticism", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 4, title: "Advanced Grammar", difficulty: "Easy", icon: "🌍", color: "#4FC3F7" },
+                    { id: 5, title: "Professional Communication", difficulty: "Medium", icon: "🌍", color: "#4FC3F7" },
+                    { id: 6, title: "Research in Language", difficulty: "Medium", icon: "🌍", color: "#4FC3F7" }
+                ]
+            }
+        };
+
+        const videos = [
+            { id: 1, title: "Introduction to Algebra", subject: "Math", duration: "12:30", thumbnail: "🔭", color: "#4FC3F7" },
+            { id: 2, title: "Cell Biology Explained", subject: "Science", duration: "15:45", thumbnail: "🧬", color: "#FF6EC7" },
+            { id: 3, title: "Reading Comprehension Tips", subject: "Reading", duration: "10:20", thumbnail: "📚", color: "#FF6EC7" },
+            { id: 4, title: "Spanish Basics for Beginners", subject: "Language", duration: "18:15", thumbnail: "🌍", color: "#4FC3F7" },
+            { id: 5, title: "Quadratic Equations Tutorial", subject: "Math", duration: "14:50", thumbnail: "🔭", color: "#4FC3F7" },
+            { id: 6, title: "Genetics and Heredity", subject: "Science", duration: "16:30", thumbnail: "🧬", color: "#FF6EC7" },
+            { id: 7, title: "Literary Analysis Techniques", subject: "Reading", duration: "13:25", thumbnail: "📚", color: "#482880" },
+            { id: 8, title: "French Greetings and Phrases", subject: "Language", duration: "11:40", thumbnail: "🌍", color: "#4FC3F7" },
+            { id: 9, title: "Geometry Fundamentals", subject: "Math", duration: "19:10", thumbnail: "🔭", color: "#4FC3F7" }
+        ];
+
+        // Downloadable materials data
+        const downloadableMaterials = [
+            // Math Materials
+            { id: 1, title: "Math Formula Sheet", subject: "Math", type: "Reference Guide", icon: "📐", color: "#4FC3F7", description: "Essential formulas for algebra, geometry, and calculus", filename: "math-formula-sheet.html" },
+            { id: 2, title: "Algebra Practice Worksheets", subject: "Math", type: "Worksheet", icon: "✏️", color: "#4FC3F7", description: "Practice problems for solving equations and expressions", filename: "algebra-worksheets.html" },
+            { id: 3, title: "Geometry Study Guide", subject: "Math", type: "Study Guide", icon: "📊", color: "#4FC3F7", description: "Complete guide to shapes, angles, and measurements", filename: "geometry-study-guide.html" },
+            { id: 4, title: "Calculus Quick Reference", subject: "Math", type: "Reference Guide", icon: "📈", color: "#4FC3F7", description: "Derivatives, integrals, and key calculus concepts", filename: "calculus-reference.html" },
+            
+            // Science Materials
+            { id: 5, title: "Periodic Table Reference", subject: "Science", type: "Reference Guide", icon: "⚗️", color: "#FF6EC7", description: "Complete periodic table with element properties", filename: "periodic-table.html" },
+            { id: 6, title: "Biology Study Guide", subject: "Science", type: "Study Guide", icon: "🧬", color: "#FF6EC7", description: "Cell structure, genetics, and biological processes", filename: "biology-study-guide.html" },
+            { id: 7, title: "Chemistry Lab Safety Guide", subject: "Science", type: "Reference Guide", icon: "🔬", color: "#FF6EC7", description: "Safety protocols and procedures for chemistry labs", filename: "lab-safety-guide.html" },
+            { id: 8, title: "Physics Formula Sheet", subject: "Science", type: "Reference Guide", icon: "🌌", color: "#FF6EC7", description: "Essential physics formulas and equations", filename: "physics-formulas.html" },
+            
+            // Reading Materials
+            { id: 9, title: "Literary Analysis Guide", subject: "Reading", type: "Study Guide", icon: "📖", color: "#482880", description: "How to analyze literature and identify themes", filename: "literary-analysis-guide.html" },
+            { id: 10, title: "Reading Comprehension Strategies", subject: "Reading", type: "Study Guide", icon: "📚", color: "#482880", description: "Techniques for improving reading comprehension", filename: "reading-strategies.html" },
+            { id: 11, title: "Vocabulary Building Workbook", subject: "Reading", type: "Worksheet", icon: "📝", color: "#482880", description: "Exercises to expand your vocabulary", filename: "vocabulary-workbook.html" },
+            { id: 12, title: "Essay Writing Template", subject: "Reading", type: "Template", icon: "✍️", color: "#482880", description: "Structured template for writing essays", filename: "essay-template.html" },
+            
+            // Language Materials
+            { id: 13, title: "Spanish Vocabulary Flashcards", subject: "Language", type: "Study Guide", icon: "🌍", color: "#4FC3F7", description: "Common Spanish words and phrases", filename: "spanish-vocabulary.html" },
+            { id: 14, title: "French Grammar Guide", subject: "Language", type: "Reference Guide", icon: "🇫🇷", color: "#4FC3F7", description: "Complete guide to French grammar rules", filename: "french-grammar.html" },
+            { id: 15, title: "Language Learning Tips", subject: "Language", type: "Study Guide", icon: "💡", color: "#4FC3F7", description: "Strategies for effective language learning", filename: "language-learning-tips.html" },
+            { id: 16, title: "Conversation Practice Sheets", subject: "Language", type: "Worksheet", icon: "🗣️", color: "#4FC3F7", description: "Practice dialogues and conversation exercises", filename: "conversation-practice.html" },
+            
+            // General Study Materials
+            { id: 17, title: "Study Schedule Template", subject: "General", type: "Template", icon: "📅", color: "#FF6EC7", description: "Plan your study time effectively", filename: "study-schedule-template.html" },
+            { id: 18, title: "Note-Taking Guide", subject: "General", type: "Study Guide", icon: "📋", color: "#FF6EC7", description: "Effective note-taking strategies and templates", filename: "note-taking-guide.html" },
+            { id: 19, title: "Test Preparation Checklist", subject: "General", type: "Reference Guide", icon: "✅", color: "#FF6EC7", description: "Checklist for preparing for exams", filename: "test-prep-checklist.html" }
         ];
 
         function getDifficultyColor(difficulty) {
             switch(difficulty) {
                 case 'Easy': return '#4FC3F7';
                 case 'Medium': return '#FF6EC7';
-                case 'Hard': return '#482880';
+                case 'Hard': return '#F5F7FA'; // White
                 default: return '#4FC3F7';
             }
+        }
+        
+        // Map lesson subject names to system subject IDs
+        function getSubjectId(subjectName) {
+            const mapping = {
+                'Math': 'math',
+                'Biology': 'science',
+                'Chemistry': 'science',
+                'Physics': 'science',
+                'Literature': 'reading',
+                'History': 'reading',
+                'Science': 'science',
+                'Reading': 'reading',
+                'Language': 'language'
+            };
+            return mapping[subjectName] || subjectName.toLowerCase();
+        }
+
+        // Get subject display name from subject ID
+        function getSubjectDisplayName(subjectId) {
+            const mapping = {
+                'math': 'Math',
+                'science': 'Science',
+                'reading': 'Reading',
+                'language': 'Language'
+            };
+            return mapping[subjectId] || subjectId;
         }
 
         function loadLessons() {
             const grid = document.getElementById('lessonsGrid');
-            if (!grid) return;
             
-            // Get user's grade level from preferences
+            // Get completed lessons, grade, and selected subjects
+            const completedLessons = JSON.parse(localStorage.getItem('astrolearn_completed_lessons') || '[]');
             const prefs = JSON.parse(localStorage.getItem('astrolearn_preferences') || '{}');
             const grade = prefs.grade || 9;
+            const selectedSubjects = prefs.subjects || ['math', 'science', 'reading', 'language'];
             
-            // Get lessons for each subject
-            const subjects = ['math', 'science', 'reading', 'language'];
+            // Collect all lessons for selected subjects and current grade
             let allLessons = [];
-            
-            subjects.forEach(subject => {
-                const subjectLessons = getLessonsForSubject(subject, grade);
+            selectedSubjects.forEach(subjectId => {
+                const subjectLessons = lessonsByGradeAndSubject[subjectId]?.[grade] || [];
                 subjectLessons.forEach(lesson => {
                     allLessons.push({
                         ...lesson,
-                        subject: subject.charAt(0).toUpperCase() + subject.slice(1),
-                        icon: subject === 'math' ? '🔭' : subject === 'science' ? '🧬' : subject === 'reading' ? '📚' : '🌍',
-                        difficulty: grade <= 8 ? 'Easy' : grade <= 10 ? 'Medium' : 'Hard'
+                        subject: getSubjectDisplayName(subjectId),
+                        subjectId: subjectId
                     });
                 });
             });
             
+            // Update grade display
+            const gradeDisplay = document.getElementById('lessonsGradeDisplay');
+            if (gradeDisplay) {
+                gradeDisplay.textContent = `Showing lessons for Grade ${grade} - Content varies by grade level`;
+            }
+            
             if (allLessons.length === 0) {
-                grid.innerHTML = '<p class="col-span-full text-center text-[#F5F7FA]/70">No lessons available. Please select a grade level.</p>';
+                grid.innerHTML = '<p class="col-span-full text-center text-[#F5F7FA]/70 py-8">No lessons available for your selected subjects and grade level.</p>';
                 return;
             }
             
             grid.innerHTML = allLessons.map(lesson => {
-                const isCompleted = isLessonCompleted(lesson.id);
+                // Create lesson key to check completion (matching format: subject_grade_title)
+                const lessonKey = `${lesson.subjectId}_${grade}_${lesson.title}`;
+                const isCompleted = completedLessons.includes(lessonKey);
+                
                 return `
-                <div class="lesson-card glass-card p-6 hover:scale-105 transition-transform ${isCompleted ? 'border-2 border-green-500' : ''}" style="animation-delay: ${Math.random() * 2}s">
-                    <div class="flex items-center justify-between mb-2">
-                        <div class="text-5xl">${lesson.icon}</div>
-                        ${isCompleted ? '<span class="text-2xl">✅</span>' : ''}
+                <div class="lesson-card glass-card p-6 hover:scale-105 transition-transform ${isCompleted ? 'border-2 border-green-500/50' : ''}" style="animation-delay: ${Math.random() * 2}s">
+                    <div class="flex items-start justify-between mb-2">
+                        <div class="text-5xl mb-4 text-center flex-1">${lesson.icon}</div>
+                        ${isCompleted ? '<span class="text-2xl" title="Lesson Completed">✅</span>' : ''}
                     </div>
                     <h3 class="text-xl font-bold mb-2">${lesson.title}</h3>
                     <div class="flex justify-between items-center mb-3">
-                        <span class="text-sm text-[#F5F7FA]/70">${lesson.subject} - Grade ${lesson.grade}</span>
+                        <div class="flex flex-col gap-1">
+                        <span class="text-sm text-[#F5F7FA]/70">${lesson.subject}</span>
+                            <span class="text-xs text-[#4FC3F7] font-semibold">Grade ${grade}</span>
+                        </div>
                         <span class="px-3 py-1 rounded-full text-xs font-bold" style="background: ${getDifficultyColor(lesson.difficulty)}33; color: ${getDifficultyColor(lesson.difficulty)}">
                             ${lesson.difficulty}
                         </span>
                     </div>
-                    <button class="btn-primary w-full" onclick="openLesson('${lesson.id}', '${lesson.subject.toLowerCase()}')">
-                        ${isCompleted ? 'Review Lesson' : 'Start Lesson'}
-                    </button>
+                    ${isCompleted ? `
+                        <div class="mb-2 text-center">
+                            <span class="text-sm text-green-400 font-semibold">✓ Completed</span>
+                        </div>
+                    ` : ''}
+                    <div class="flex gap-2 items-center">
+                        <button class="btn-primary flex-1 start-lesson-btn" data-lesson-id="${lesson.id}" data-lesson-title="${lesson.title}" data-lesson-subject="${lesson.subject}" data-lesson-subject-id="${lesson.subjectId}">
+                            ${isCompleted ? 'Review Lesson' : 'Start Lesson'}
+                        </button>
+                        ${isCompleted ? `
+                            <button class="restart-lesson-btn px-3 py-2 text-xs bg-[#482880]/50 hover:bg-[#482880]/70 rounded-lg transition-colors" 
+                                    data-lesson-id="${lesson.id}" 
+                                    data-lesson-title="${lesson.title}" 
+                                    data-lesson-subject="${lesson.subject}"
+                                    data-lesson-subject-id="${lesson.subjectId}"
+                                    title="Restart Lesson">
+                                🔄
+                            </button>
+                        ` : ''}
+                    </div>
                 </div>
-            `;
-            }).join('');
-        }
-        
-        function openLesson(lessonId, subject) {
-            // Get user's grade level from preferences
-            const prefs = JSON.parse(localStorage.getItem('astrolearn_preferences') || '{}');
-            const grade = prefs.grade || 9;
+            `}).join('');
             
-            // Try to find lesson in user's grade first
-            let lessons = getLessonsForSubject(subject, grade);
-            let lesson = lessons.find(l => l.id === lessonId);
-            
-            if (!lesson) {
-                // Try to find in all grades
-                const allGrades = [6, 9, 12];
-                for (let g of allGrades) {
-                    const gradeLessons = getLessonsForSubject(subject, g);
-                    const found = gradeLessons.find(l => l.id === lessonId);
-                    if (found) {
-                        showLessonModal(found);
-                        return;
-                    }
-                }
-                alert('Lesson not found');
-                return;
-            }
-            showLessonModal(lesson);
-        }
-        
-        function showLessonModal(lesson) {
-            const isCompleted = isLessonCompleted(lesson.id);
-            const modal = document.getElementById('lessonModal');
-            if (!modal) {
-                createLessonModal();
-            }
-            
-            document.getElementById('lessonTitle').textContent = lesson.title;
-            // Format content with proper paragraph breaks for better readability
-            const contentDiv = document.getElementById('lessonContent');
-            // Split content into sentences and create paragraphs
-            const sentences = lesson.content.split(/\. /).filter(s => s.trim().length > 0);
-            const paragraphs = [];
-            let currentPara = [];
-            
-            // Group sentences into paragraphs (3-4 sentences per paragraph for readability)
-            sentences.forEach((sentence, index) => {
-                currentPara.push(sentence + (sentence.endsWith('.') ? '' : '.'));
-                if (currentPara.length >= 3 || index === sentences.length - 1) {
-                    paragraphs.push(currentPara.join(' '));
-                    currentPara = [];
-                }
+            // Add event listeners to Start Lesson buttons
+            document.querySelectorAll('.start-lesson-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lessonId = btn.dataset.lessonId;
+                    const lessonTitle = btn.dataset.lessonTitle;
+                    const lessonSubject = btn.dataset.lessonSubject;
+                    const lessonSubjectId = btn.dataset.lessonSubjectId;
+                    openLessonModal(lessonId, lessonTitle, lessonSubject, lessonSubjectId);
+                });
             });
             
-            // Create paragraph elements
-            contentDiv.innerHTML = paragraphs.map(p => `<p class="mb-4">${p}</p>`).join('');
-            document.getElementById('lessonExamples').innerHTML = lesson.examples.map(ex => `<li class="mb-2">${ex}</li>`).join('');
-            document.getElementById('lessonGrade').textContent = `Grade ${lesson.grade}`;
-            
-            const completeBtn = document.getElementById('completeLessonBtn');
-            const restartBtn = document.getElementById('restartLessonBtn');
-            
-            if (isCompleted) {
-                completeBtn.textContent = '✓ Lesson Completed';
-                completeBtn.disabled = true;
-                completeBtn.classList.add('opacity-50');
-                restartBtn.style.display = 'inline-block';
-            } else {
-                completeBtn.textContent = 'Complete Lesson';
-                completeBtn.disabled = false;
-                completeBtn.classList.remove('opacity-50');
-                restartBtn.style.display = 'none';
+            // Add event listeners to Restart buttons
+            document.querySelectorAll('.restart-lesson-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lessonId = btn.dataset.lessonId;
+                    const lessonTitle = btn.dataset.lessonTitle;
+                    const lessonSubject = btn.dataset.lessonSubject;
+                    const lessonSubjectId = btn.dataset.lessonSubjectId;
+                    restartLesson(lessonId, lessonTitle, lessonSubject, lessonSubjectId);
+                });
+            });
+        }
+        
+        function restartLesson(lessonId, lessonTitle, lessonSubject, lessonSubjectId) {
+            if (confirm(`Are you sure you want to restart "${lessonTitle}"? This will remove it from your completed lessons.`)) {
+                // Get grade level
+                const prefs = JSON.parse(localStorage.getItem('astrolearn_preferences') || '{}');
+                const grade = prefs.grade || 9;
+                
+                // Create lesson key
+                const subjectId = lessonSubjectId || getSubjectId(lessonSubject);
+                const lessonKey = `${subjectId}_${grade}_${lessonTitle}`;
+                
+                // Get completed lessons
+                const completed = JSON.parse(localStorage.getItem('astrolearn_completed_lessons') || '[]');
+                
+                // Remove from completed list
+                const updated = completed.filter(key => key !== lessonKey);
+                localStorage.setItem('astrolearn_completed_lessons', JSON.stringify(updated));
+                
+                // Reload lessons to update UI
+                loadLessons();
+                
+                // Optionally open the lesson modal
+                openLessonModal(lessonId, lessonTitle, lessonSubject, lessonSubjectId);
             }
+        }
+        
+        // Lesson content data
+        const lessonContentData = {
+            1: { // Algebra Basics
+                title: "Algebra Basics",
+                introduction: "Welcome to Algebra Basics! Algebra is a branch of mathematics that uses symbols and letters to represent numbers and quantities. It helps us solve problems and understand relationships between numbers.",
+                concepts: [
+                    {
+                        heading: "What is Algebra?",
+                        explanation: "Algebra uses letters (like x, y, z) to represent unknown numbers. These letters are called variables. We can use algebra to solve equations and find the value of these unknowns.",
+                        example: "In the equation 2x + 5 = 13, 'x' is the variable we need to find."
+                    },
+                    {
+                        heading: "Solving Simple Equations",
+                        explanation: "To solve an equation, we need to isolate the variable on one side. We do this by performing the same operation on both sides of the equation. Remember: whatever you do to one side, you must do to the other!",
+                        example: "To solve 2x + 5 = 13: Subtract 5 from both sides → 2x = 8, then divide by 2 → x = 4"
+                    },
+                    {
+                        heading: "Combining Like Terms",
+                        explanation: "Like terms are terms that have the same variable raised to the same power. You can add or subtract like terms by combining their coefficients (the numbers in front of the variables).",
+                        example: "2x + 3x = 5x (combine the coefficients: 2 + 3 = 5)"
+                    },
+                    {
+                        heading: "The Distributive Property",
+                        explanation: "The distributive property allows you to multiply a number or term across a sum or difference inside parentheses. It states that a(b + c) = ab + ac.",
+                        example: "3(x + 2) = 3x + 6 (multiply 3 by both x and 2)"
+                    }
+                ],
+                practiceProblems: [
+                    {
+                        problem: "Solve for x: 2x + 5 = 13",
+                        solution: "x = 4 (subtract 5: 2x = 8, then divide by 2: x = 4)"
+                    },
+                    {
+                        problem: "Simplify: 3x + 2x - 5",
+                        solution: "5x - 5 (combine like terms: 3x + 2x = 5x)"
+                    },
+                    {
+                        problem: "Expand: 2(x + 3)",
+                        solution: "2x + 6 (use distributive property: 2 × x + 2 × 3)"
+                    }
+                ],
+                summary: "Algebra helps us solve problems with unknown values. Remember to perform the same operations on both sides of an equation, combine like terms, and use the distributive property when needed. Practice makes perfect!"
+            },
+            2: { // Cell Structure
+                title: "Cell Structure",
+                introduction: "Welcome to Cell Structure! All living things are made of cells - the basic units of life. Understanding cell structure helps us understand how living organisms function.",
+                concepts: [
+                    {
+                        heading: "What is a Cell?",
+                        explanation: "A cell is the smallest unit of life. All living organisms are made of one or more cells. Cells carry out all the functions necessary for life, including growth, reproduction, and responding to their environment.",
+                        example: "Your body contains trillions of cells, each performing specific functions."
+                    },
+                    {
+                        heading: "Cell Membrane",
+                        explanation: "The cell membrane is a protective barrier that surrounds the cell. It controls what enters and exits the cell, allowing nutrients in and waste products out. It's like a gatekeeper for the cell.",
+                        example: "Think of the cell membrane as a security guard that decides who can enter and leave a building."
+                    },
+                    {
+                        heading: "Nucleus - The Control Center",
+                        explanation: "The nucleus is often called the 'control center' of the cell. It contains DNA, which holds the genetic instructions for the cell. The nucleus directs all cell activities and is responsible for cell division.",
+                        example: "The nucleus is like the brain of the cell, storing all the information needed to run the cell."
+                    },
+                    {
+                        heading: "Mitochondria - The Powerhouse",
+                        explanation: "Mitochondria are known as the 'powerhouses' of the cell. They convert food into energy that the cell can use. Cells that need more energy have more mitochondria.",
+                        example: "Muscle cells have many mitochondria because they need lots of energy to contract and move."
+                    },
+                    {
+                        heading: "Other Important Organelles",
+                        explanation: "Cells contain many other organelles with specific functions: ribosomes make proteins, the endoplasmic reticulum transports materials, the Golgi apparatus packages proteins, and lysosomes break down waste.",
+                        example: "Each organelle is like a specialized worker in a factory, each with a specific job to do."
+                    }
+                ],
+                practiceProblems: [
+                    {
+                        problem: "What is the function of the nucleus?",
+                        solution: "The nucleus controls cell activities and stores genetic information (DNA)."
+                    },
+                    {
+                        problem: "Why are mitochondria called the 'powerhouses'?",
+                        solution: "Mitochondria convert food into energy that cells can use for their functions."
+                    },
+                    {
+                        problem: "What does the cell membrane do?",
+                        solution: "The cell membrane controls what enters and exits the cell, protecting it and maintaining its internal environment."
+                    }
+                ],
+                summary: "Cells are the basic units of life. Each cell has specialized structures called organelles that perform specific functions. The nucleus controls the cell, mitochondria produce energy, and the cell membrane protects and regulates what enters and exits."
+            },
+            3: { // World War II
+                title: "World War II",
+                introduction: "Welcome to World War II! This was one of the most significant conflicts in human history, involving most of the world's nations and resulting in profound changes to global politics, society, and technology.",
+                concepts: [
+                    {
+                        heading: "Causes of World War II",
+                        explanation: "World War II was caused by several factors: the harsh terms of the Treaty of Versailles after WWI, economic depression, the rise of fascist and militaristic governments (especially in Germany, Italy, and Japan), and territorial ambitions.",
+                        example: "Germany's invasion of Poland in 1939 is often considered the official start of the war in Europe."
+                    },
+                    {
+                        heading: "Major Powers and Alliances",
+                        explanation: "The war was fought between two main alliances: the Axis Powers (Germany, Italy, Japan) and the Allied Powers (United States, United Kingdom, Soviet Union, France, and others).",
+                        example: "The 'Big Three' Allied leaders were Franklin D. Roosevelt (USA), Winston Churchill (UK), and Joseph Stalin (USSR)."
+                    },
+                    {
+                        heading: "Key Events and Battles",
+                        explanation: "Important events included the Battle of Britain (1940), Pearl Harbor attack (1941), D-Day invasion (1944), and the atomic bombings of Hiroshima and Nagasaki (1945). The war in Europe ended in May 1945, and the war in the Pacific ended in August 1945.",
+                        example: "D-Day (June 6, 1944) was the largest seaborne invasion in history, marking the beginning of the end for Nazi Germany."
+                    },
+                    {
+                        heading: "The Holocaust",
+                        explanation: "One of the most tragic aspects of WWII was the Holocaust - the systematic persecution and murder of six million Jews and millions of others by Nazi Germany. This genocide represents one of the darkest chapters in human history.",
+                        example: "Concentration camps like Auschwitz became symbols of the horrors of the Holocaust."
+                    },
+                    {
+                        heading: "Consequences and Impact",
+                        explanation: "WWII resulted in the deaths of approximately 70-85 million people. It led to the creation of the United Nations, the beginning of the Cold War, decolonization movements, and significant technological advances.",
+                        example: "The war accelerated developments in aviation, nuclear technology, and medicine."
+                    }
+                ],
+                practiceProblems: [
+                    {
+                        problem: "What event is considered the start of WWII in Europe?",
+                        solution: "Germany's invasion of Poland on September 1, 1939."
+                    },
+                    {
+                        problem: "What was D-Day?",
+                        solution: "The Allied invasion of Nazi-occupied Western Europe on June 6, 1944, which began the liberation of France."
+                    },
+                    {
+                        problem: "When did WWII end?",
+                        solution: "The war in Europe ended in May 1945, and the war in the Pacific ended in August 1945 after the atomic bombings."
+                    }
+                ],
+                summary: "World War II was a global conflict that reshaped the world. It was fought between the Axis and Allied powers, resulted in unprecedented destruction and loss of life, and led to significant political, social, and technological changes that continue to influence our world today."
+            },
+            4: { // Periodic Table
+                title: "Periodic Table",
+                introduction: "Welcome to the Periodic Table! The periodic table is a systematic arrangement of all known chemical elements. It's one of the most important tools in chemistry, organizing elements by their properties and atomic structure.",
+                concepts: [
+                    {
+                        heading: "What is the Periodic Table?",
+                        explanation: "The periodic table organizes all chemical elements in order of increasing atomic number (number of protons). Elements are arranged in rows (periods) and columns (groups) that show patterns in their properties.",
+                        example: "Hydrogen (H) is element 1, Helium (He) is element 2, and so on."
+                    },
+                    {
+                        heading: "Understanding the Structure",
+                        explanation: "Each element has a symbol (like H for Hydrogen), atomic number (number of protons), and atomic mass. Elements in the same column (group) have similar chemical properties. Elements in the same row (period) have the same number of electron shells.",
+                        example: "Group 1 elements (like Lithium, Sodium, Potassium) are all highly reactive metals."
+                    },
+                    {
+                        heading: "Major Element Categories",
+                        explanation: "Elements are categorized as metals (left side), nonmetals (right side), and metalloids (staircase line). Metals are typically shiny, conduct electricity, and are malleable. Nonmetals are often gases or brittle solids.",
+                        example: "Gold and silver are metals, oxygen and nitrogen are nonmetals, and silicon is a metalloid."
+                    },
+                    {
+                        heading: "Important Element Groups",
+                        explanation: "Key groups include: Alkali Metals (Group 1), Alkaline Earth Metals (Group 2), Halogens (Group 17), and Noble Gases (Group 18). Noble gases are particularly stable and rarely react with other elements.",
+                        example: "Helium and Neon are noble gases used in balloons and neon signs because they don't react easily."
+                    },
+                    {
+                        heading: "Using the Periodic Table",
+                        explanation: "The periodic table helps predict element properties, understand chemical reactions, and identify element relationships. It's essential for understanding how elements combine to form compounds.",
+                        example: "Elements in the same group often form similar types of compounds - for example, all Group 1 elements form +1 ions."
+                    }
+                ],
+                practiceProblems: [
+                    {
+                        problem: "What does the atomic number represent?",
+                        solution: "The atomic number represents the number of protons in an atom's nucleus, which determines the element's identity."
+                    },
+                    {
+                        problem: "Why do elements in the same group have similar properties?",
+                        solution: "Elements in the same group have the same number of valence electrons, which determines their chemical behavior and properties."
+                    },
+                    {
+                        problem: "What are noble gases and why are they special?",
+                        solution: "Noble gases (Group 18) have full outer electron shells, making them very stable and rarely reactive with other elements."
+                    }
+                ],
+                summary: "The periodic table is a powerful tool that organizes all chemical elements by their atomic structure and properties. Understanding its organization helps predict element behavior, chemical reactions, and the formation of compounds. It's the foundation of modern chemistry!"
+            },
+            5: { // Quantum Physics
+                title: "Quantum Physics",
+                introduction: "Welcome to Quantum Physics! Quantum physics is the branch of physics that studies matter and energy at the smallest scales - atoms and subatomic particles. It reveals a world very different from our everyday experience.",
+                concepts: [
+                    {
+                        heading: "What is Quantum Physics?",
+                        explanation: "Quantum physics describes the behavior of matter and energy at the atomic and subatomic level. At these tiny scales, particles behave in ways that seem strange compared to larger objects - they can exist in multiple states simultaneously and behave as both particles and waves.",
+                        example: "An electron can be in multiple places at once until it's observed, a concept called quantum superposition."
+                    },
+                    {
+                        heading: "Wave-Particle Duality",
+                        explanation: "One of the most fascinating aspects of quantum physics is that particles like electrons and photons can behave as both waves and particles. This dual nature depends on how they're observed or measured.",
+                        example: "Light behaves as a wave when it passes through a prism (creating a rainbow) but as particles (photons) when it hits a solar panel."
+                    },
+                    {
+                        heading: "Quantum States and Superposition",
+                        explanation: "In quantum mechanics, particles can exist in multiple states simultaneously until they're measured. This is called superposition. When measured, the particle 'collapses' into one specific state.",
+                        example: "A quantum bit (qubit) in a quantum computer can be in a superposition of 0 and 1 simultaneously, unlike a regular bit that's either 0 or 1."
+                    },
+                    {
+                        heading: "Heisenberg Uncertainty Principle",
+                        explanation: "This principle states that you cannot simultaneously know both the exact position and exact momentum of a particle. The more precisely you know one, the less precisely you can know the other. This isn't a limitation of measurement - it's a fundamental property of nature.",
+                        example: "If you know exactly where an electron is, you can't know exactly how fast it's moving, and vice versa."
+                    },
+                    {
+                        heading: "Quantum Entanglement",
+                        explanation: "Quantum entanglement is a phenomenon where two or more particles become connected in such a way that measuring one instantly affects the other, no matter how far apart they are. Einstein called this 'spooky action at a distance.'",
+                        example: "If two entangled electrons are separated by thousands of miles, measuring the spin of one instantly determines the spin of the other."
+                    },
+                    {
+                        heading: "Applications of Quantum Physics",
+                        explanation: "Quantum physics has led to many modern technologies: lasers, MRI machines, transistors (used in computers), and quantum computers. It's also essential for understanding chemistry, as it explains how atoms bond and form molecules.",
+                        example: "Your smartphone uses quantum physics - transistors rely on quantum mechanical principles to work."
+                    }
+                ],
+                practiceProblems: [
+                    {
+                        problem: "What is wave-particle duality?",
+                        solution: "The concept that particles like electrons and photons can exhibit both wave-like and particle-like properties depending on how they're observed."
+                    },
+                    {
+                        problem: "What does the Heisenberg Uncertainty Principle tell us?",
+                        solution: "It states that you cannot simultaneously know both the exact position and exact momentum of a particle with perfect precision."
+                    },
+                    {
+                        problem: "What is quantum entanglement?",
+                        solution: "A phenomenon where two or more particles become connected so that measuring one instantly affects the other, regardless of distance."
+                    }
+                ],
+                summary: "Quantum physics reveals a strange and fascinating world at the smallest scales. Particles can exist in multiple states, behave as both waves and particles, and become mysteriously entangled. Despite its weirdness, quantum physics is essential for understanding atoms, chemistry, and many modern technologies we use every day."
+            },
+            6: { // Shakespeare
+                title: "Shakespeare",
+                introduction: "Welcome to Shakespeare! William Shakespeare (1564-1616) is widely regarded as the greatest writer in the English language. His works have influenced literature, theater, and culture for over 400 years.",
+                concepts: [
+                    {
+                        heading: "Who Was Shakespeare?",
+                        explanation: "William Shakespeare was an English playwright, poet, and actor from Stratford-upon-Avon. He wrote approximately 39 plays, 154 sonnets, and several other poems. His works are still performed and studied worldwide today.",
+                        example: "Shakespeare's plays are performed more often than those of any other playwright."
+                    },
+                    {
+                        heading: "Major Works - Tragedies",
+                        explanation: "Shakespeare's tragedies explore themes of ambition, jealousy, revenge, and the consequences of human flaws. Famous tragedies include 'Hamlet,' 'Macbeth,' 'King Lear,' 'Othello,' and 'Romeo and Juliet.'",
+                        example: "'Hamlet' explores themes of revenge, madness, and moral corruption through the story of a prince seeking to avenge his father's murder."
+                    },
+                    {
+                        heading: "Major Works - Comedies",
+                        explanation: "Shakespeare's comedies often involve mistaken identities, love triangles, and happy endings. Popular comedies include 'A Midsummer Night's Dream,' 'Much Ado About Nothing,' 'Twelfth Night,' and 'The Merchant of Venice.'",
+                        example: "'A Midsummer Night's Dream' features fairies, magic, and multiple love stories that get hilariously mixed up."
+                    },
+                    {
+                        heading: "Major Works - Histories",
+                        explanation: "Shakespeare wrote historical plays about English kings, including 'Richard III,' 'Henry IV,' 'Henry V,' and others. These plays blend historical events with dramatic storytelling.",
+                        example: "'Henry V' tells the story of the young king's victory at the Battle of Agincourt during the Hundred Years' War."
+                    },
+                    {
+                        heading: "Literary Techniques",
+                        explanation: "Shakespeare used many literary devices: iambic pentameter (a rhythm pattern), soliloquies (characters speaking their thoughts aloud), metaphors, similes, and wordplay. His language is rich, poetic, and often complex.",
+                        example: "The famous line 'To be or not to be' from 'Hamlet' is a soliloquy where the character contemplates life and death."
+                    },
+                    {
+                        heading: "Themes and Impact",
+                        explanation: "Shakespeare explored universal themes: love, jealousy, ambition, power, betrayal, and the human condition. His works remain relevant because they address timeless human experiences and emotions.",
+                        example: "The theme of forbidden love in 'Romeo and Juliet' resonates with audiences across cultures and centuries."
+                    }
+                ],
+                practiceProblems: [
+                    {
+                        problem: "What are the three main categories of Shakespeare's plays?",
+                        solution: "Tragedies, Comedies, and Histories."
+                    },
+                    {
+                        problem: "What is a soliloquy?",
+                        solution: "A dramatic device where a character speaks their thoughts aloud, usually alone on stage, revealing their inner feelings and motivations."
+                    },
+                    {
+                        problem: "Why is Shakespeare still relevant today?",
+                        solution: "Shakespeare's works explore universal human themes and emotions that transcend time and culture, making them relatable to modern audiences."
+                    }
+                ],
+                summary: "Shakespeare is one of the most influential writers in history. His plays and poems explore universal themes through rich language and complex characters. His works continue to be performed, studied, and enjoyed worldwide, demonstrating the timeless power of great literature."
+            },
+            7: { // Calculus I
+                title: "Calculus I",
+                introduction: "Welcome to Calculus I! Calculus is the mathematical study of change. It helps us understand how things change over time, find maximum and minimum values, and calculate areas and volumes of complex shapes.",
+                concepts: [
+                    {
+                        heading: "What is Calculus?",
+                        explanation: "Calculus is divided into two main branches: differential calculus (studying rates of change) and integral calculus (studying accumulation). It was developed independently by Isaac Newton and Gottfried Leibniz in the 17th century.",
+                        example: "Calculus helps us understand how fast a car is accelerating, or how much water accumulates in a tank over time."
+                    },
+                    {
+                        heading: "Limits - The Foundation",
+                        explanation: "Limits are the foundation of calculus. A limit describes the value that a function approaches as the input approaches a certain value. Limits help us understand behavior at points where functions might not be defined.",
+                        example: "As x gets closer and closer to 2, the function (x² - 4)/(x - 2) approaches 4, even though it's undefined at x = 2."
+                    },
+                    {
+                        heading: "Derivatives - Rates of Change",
+                        explanation: "A derivative measures how a function changes as its input changes. It represents the slope of the tangent line at any point. If f(x) represents position, then f'(x) represents velocity (speed and direction).",
+                        example: "If position is given by x(t) = t², then velocity is v(t) = 2t (the derivative)."
+                    },
+                    {
+                        heading: "Rules of Differentiation",
+                        explanation: "Key rules include: Power Rule (d/dx[xⁿ] = nxⁿ⁻¹), Product Rule, Quotient Rule, and Chain Rule. These rules help us find derivatives of complex functions.",
+                        example: "Using the power rule: d/dx[x³] = 3x²"
+                    },
+                    {
+                        heading: "Applications of Derivatives",
+                        explanation: "Derivatives help us find maximum and minimum values (optimization), understand motion and acceleration, analyze graphs, and solve real-world problems involving rates of change.",
+                        example: "A business might use calculus to find the price that maximizes profit, or an engineer might use it to design the most efficient bridge."
+                    },
+                    {
+                        heading: "Integrals - Accumulation",
+                        explanation: "Integrals are the reverse of derivatives. While derivatives measure rates of change, integrals measure accumulation. The integral of a function gives us the area under its curve.",
+                        example: "If velocity is v(t) = 2t, then the integral gives us position: x(t) = t² + C (where C is a constant)."
+                    }
+                ],
+                practiceProblems: [
+                    {
+                        problem: "What is a derivative?",
+                        solution: "A derivative measures the rate of change of a function - it tells us how fast the function is changing at any given point."
+                    },
+                    {
+                        problem: "Find the derivative of f(x) = x⁴",
+                        solution: "f'(x) = 4x³ (using the power rule: bring down the exponent and subtract 1)"
+                    },
+                    {
+                        problem: "What is the relationship between derivatives and integrals?",
+                        solution: "Integrals are the reverse operation of derivatives. If a derivative tells us the rate of change, an integral tells us the total accumulation."
+                    }
+                ],
+                summary: "Calculus is the mathematics of change. Derivatives measure rates of change (like velocity), while integrals measure accumulation (like distance traveled). Calculus is essential for understanding motion, optimization, and many real-world applications in science, engineering, and economics."
+            },
+            8: { // Genetics
+                title: "Genetics",
+                introduction: "Welcome to Genetics! Genetics is the study of heredity - how traits are passed from parents to offspring. It helps us understand why you might have your mother's eyes or your father's height.",
+                concepts: [
+                    {
+                        heading: "What is Genetics?",
+                        explanation: "Genetics is the branch of biology that studies genes, heredity, and variation in living organisms. Genes are units of heredity that carry information from parents to offspring, determining traits like eye color, height, and many other characteristics.",
+                        example: "If both parents have brown eyes, their children are likely to have brown eyes too - this is genetics in action."
+                    },
+                    {
+                        heading: "DNA - The Genetic Code",
+                        explanation: "DNA (Deoxyribonucleic acid) is the molecule that carries genetic information. It's made up of four bases: Adenine (A), Thymine (T), Guanine (G), and Cytosine (C). The sequence of these bases forms the genetic code.",
+                        example: "DNA is like a recipe book - it contains all the instructions needed to build and maintain an organism."
+                    },
+                    {
+                        heading: "Genes and Chromosomes",
+                        explanation: "Genes are segments of DNA that code for specific proteins or traits. Chromosomes are structures made of DNA and proteins that contain many genes. Humans have 46 chromosomes (23 pairs) in most cells.",
+                        example: "A gene might code for the protein that determines your eye color, while the chromosome contains many such genes."
+                    },
+                    {
+                        heading: "Dominant and Recessive Traits",
+                        explanation: "Some traits are dominant (they show up even if only one parent contributes the gene) and some are recessive (they only show up if both parents contribute the gene). This explains why some traits skip generations.",
+                        example: "Brown eyes are dominant over blue eyes. If you have one brown-eye gene and one blue-eye gene, you'll have brown eyes."
+                    },
+                    {
+                        heading: "Mendelian Inheritance",
+                        explanation: "Gregor Mendel discovered the basic principles of inheritance by studying pea plants. He found that traits are inherited in predictable patterns and that some traits are dominant while others are recessive.",
+                        example: "Mendel's experiments showed that when you cross a tall pea plant with a short one, the offspring are all tall (tall is dominant)."
+                    },
+                    {
+                        heading: "Modern Genetics",
+                        explanation: "Today, genetics includes the study of DNA structure, gene expression, genetic engineering, and genomics. Scientists can now read entire genomes, modify genes, and understand how genes interact with the environment.",
+                        example: "Genetic testing can identify disease risks, and genetic engineering can create crops that are resistant to pests."
+                    }
+                ],
+                practiceProblems: [
+                    {
+                        problem: "What is DNA?",
+                        solution: "DNA (Deoxyribonucleic acid) is the molecule that carries genetic information in all living organisms. It contains the instructions for building and maintaining life."
+                    },
+                    {
+                        problem: "How many chromosomes do humans have?",
+                        solution: "Humans have 46 chromosomes (23 pairs) in most cells - 23 from each parent."
+                    },
+                    {
+                        problem: "What is the difference between dominant and recessive traits?",
+                        solution: "Dominant traits show up even if only one parent contributes the gene, while recessive traits only show up if both parents contribute the gene."
+                    }
+                ],
+                summary: "Genetics is the study of how traits are inherited. DNA carries genetic information in genes, which are organized on chromosomes. Understanding dominant and recessive traits helps explain why we inherit certain characteristics from our parents. Modern genetics has opened up incredible possibilities for medicine, agriculture, and understanding life itself."
+            }
+        };
+        
+        let currentLessonId = null;
+        let currentLessonTitle = null;
+        let currentLessonSubject = null;
+        let currentLessonSubjectId = null;
+        
+        // Generate lesson content based on title, subject, and grade
+        function getLessonContent(lessonTitle, subjectId, grade) {
+            // This function generates appropriate lesson content based on the lesson title
+            // For now, we'll use a simplified approach that creates content for common lessons
+            // In a full implementation, you'd have comprehensive content for each lesson
             
-            completeBtn.onclick = () => {
-                if (!isCompleted) {
-                    completeLesson(lesson.id, lesson.id.split('_')[0]);
-                    showLessonModal(lesson); // Refresh modal
-                    loadLessons(); // Refresh lesson grid
-                }
+            const baseContent = {
+                title: lessonTitle,
+                introduction: `Welcome to ${lessonTitle}! This lesson will help you understand key concepts and build your knowledge.`,
+                concepts: [
+                    {
+                        heading: "Introduction",
+                        explanation: `This lesson covers important concepts related to ${lessonTitle}. Let's explore the fundamentals and build a strong foundation.`,
+                        example: "Understanding these concepts will help you succeed in this subject."
+                    },
+                    {
+                        heading: "Key Concepts",
+                        explanation: "We'll explore the main ideas and principles that are essential for mastering this topic.",
+                        example: "Practice and application are key to understanding."
+                    },
+                    {
+                        heading: "Applications",
+                        explanation: "Learn how these concepts apply in real-world situations and problem-solving.",
+                        example: "These skills are useful in many areas of study and life."
+                    }
+                ],
+                practiceProblems: [
+                    {
+                        problem: "Think about what you've learned so far. What questions do you have?",
+                        solution: "Review the concepts and try to apply them to solve problems."
+                    },
+                    {
+                        problem: "How can you use this knowledge?",
+                        solution: "Practice applying these concepts in different situations."
+                    }
+                ],
+                summary: `You've completed ${lessonTitle}! Remember to review the key concepts and practice regularly. Keep up the great work!`
             };
             
-            restartBtn.onclick = () => {
-                resetLesson(lesson.id);
-                showLessonModal(lesson); // Refresh modal
-                loadLessons(); // Refresh lesson grid
-            };
+            // Return base content for now
+            // In a production system, you'd have detailed content for each specific lesson
+            return baseContent;
+        }
+        
+        function openLessonModal(lessonId, lessonTitle, lessonSubject, lessonSubjectId) {
+            currentLessonId = lessonId;
+            currentLessonTitle = lessonTitle;
+            currentLessonSubject = lessonSubject;
+            currentLessonSubjectId = lessonSubjectId || getSubjectId(lessonSubject);
+            
+            // Check if lesson is completed
+            const prefs = JSON.parse(localStorage.getItem('astrolearn_preferences') || '{}');
+            const grade = prefs.grade || 9;
+            const subjectId = currentLessonSubjectId;
+            const lessonKey = `${subjectId}_${grade}_${lessonTitle}`;
+            const completedLessons = JSON.parse(localStorage.getItem('astrolearn_completed_lessons') || '[]');
+            const isAlreadyCompleted = completedLessons.includes(lessonKey);
+            
+            // Get grade-specific lesson content
+            const content = getLessonContent(lessonTitle, subjectId, grade);
+            
+            if (!content) {
+                // Default content if specific content not found
+                const defaultContent = {
+                    title: lessonTitle,
+                    introduction: `Welcome to ${lessonTitle}! This lesson will help you understand key concepts in ${lessonSubject}.`,
+                    concepts: [
+                        {
+                            heading: "Introduction",
+                            explanation: `This lesson covers important concepts in ${lessonSubject}. Take your time to read through the material carefully.`,
+                            example: "Practice the examples to reinforce your learning."
+                        }
+                    ],
+                    practiceProblems: [
+                        {
+                            problem: "Practice Problem 1",
+                            solution: "Solution will be provided after you work through the problem."
+                        }
+                    ],
+                    summary: `This lesson provides an introduction to ${lessonTitle}. Continue practicing to master these concepts!`
+                };
+                displayLessonContent(defaultContent, isAlreadyCompleted);
+            } else {
+                displayLessonContent(content, isAlreadyCompleted);
+            }
             
             document.getElementById('lessonModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
         
-        function createLessonModal() {
-            const modalHTML = `
-                <div id="lessonModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div class="fixed inset-0 bg-black/70" onclick="closeLessonModal()"></div>
-                    <div class="relative glass-card p-8 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-                        <button onclick="closeLessonModal()" class="absolute top-4 right-4 text-3xl text-[#F5F7FA]/70 hover:text-[#F5F7FA] z-10">×</button>
-                        <h2 id="lessonTitle" class="text-3xl font-bold mb-4 pr-8"></h2>
-                        <p class="text-sm text-[#F5F7FA]/60 mb-6" id="lessonGrade"></p>
-                        <div class="mb-6">
-                            <h3 class="text-xl font-bold mb-3 text-[#4FC3F7]">Lesson Content</h3>
-                            <div id="lessonContent" class="text-base text-[#F5F7FA]/90 leading-relaxed space-y-4 whitespace-pre-line"></div>
-                        </div>
-                        <div class="mb-6">
-                            <h3 class="text-xl font-bold mb-3 text-[#4FC3F7]">Key Examples</h3>
-                            <ul id="lessonExamples" class="list-disc list-inside space-y-2 text-[#F5F7FA]/90 ml-4"></ul>
-                        </div>
-                        <div class="flex gap-4 mt-6 pt-4 border-t border-[#F5F7FA]/20">
-                            <button id="completeLessonBtn" class="btn-primary flex-1">Complete Lesson</button>
-                            <button id="restartLessonBtn" class="btn-secondary" style="display: none;">Restart Lesson</button>
-                        </div>
+        function displayLessonContent(content, isAlreadyCompleted = false) {
+            const lessonContentDiv = document.getElementById('lessonContent');
+            
+            // Build concepts HTML
+            const conceptsHTML = content.concepts ? `
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold mb-4 text-[#4FC3F7]">📚 Key Concepts</h3>
+                    <div class="space-y-4">
+                        ${content.concepts.map(concept => `
+                            <div class="glass-card p-5 mb-4">
+                                <h4 class="text-xl font-bold mb-2 text-[#FF6EC7]">${concept.heading}</h4>
+                                <p class="text-[#F5F7FA]/90 mb-3 leading-relaxed">${concept.explanation}</p>
+                                ${concept.example ? `
+                                    <div class="bg-[#482880]/20 border-l-4 border-[#4FC3F7] p-3 rounded">
+                                        <p class="text-sm font-semibold text-[#4FC3F7] mb-1">Example:</p>
+                                        <p class="text-[#F5F7FA]/80">${concept.example}</p>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `).join('')}
                     </div>
                 </div>
+            ` : '';
+            
+            // Build practice problems HTML
+            const practiceHTML = content.practiceProblems ? `
+                <div class="mb-6">
+                    <h3 class="text-2xl font-bold mb-4 text-[#4FC3F7]">✏️ Practice Problems</h3>
+                    <div class="space-y-4">
+                        ${content.practiceProblems.map((problem, index) => `
+                            <div class="glass-card p-5">
+                                <div class="mb-3">
+                                    <p class="font-semibold text-[#FF6EC7] mb-2">Problem ${index + 1}:</p>
+                                    <p class="text-[#F5F7FA]/90">${problem.problem}</p>
+                                </div>
+                                <details class="mt-2">
+                                    <summary class="cursor-pointer text-[#4FC3F7] hover:text-[#FF6EC7] font-semibold">Show Solution</summary>
+                                    <div class="mt-2 p-3 bg-[#482880]/20 rounded border-l-4 border-[#4FC3F7]">
+                                        <p class="text-[#F5F7FA]/90">${problem.solution}</p>
+                                    </div>
+                                </details>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : '';
+            
+            // Set title in header (always visible)
+            const lessonTitleDiv = document.getElementById('lessonTitle');
+            if (lessonTitleDiv) {
+                lessonTitleDiv.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-2xl md:text-3xl font-bold">
+                            <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                                ${content.title}
+                            </span>
+                        </h2>
+                        ${isAlreadyCompleted ? '<span class="text-xl md:text-2xl" title="Lesson Completed">✅</span>' : ''}
+                    </div>
+                `;
+            }
+            
+            // Set content in scrollable area
+            lessonContentDiv.innerHTML = `
+                ${content.introduction ? `
+                    <div class="glass-card p-4 bg-[#482880]/10 border border-[#482880]/30 mb-4">
+                        <p class="text-[#F5F7FA]/90 leading-relaxed">${content.introduction}</p>
+                    </div>
+                ` : ''}
+                ${isAlreadyCompleted ? '<p class="text-sm text-green-400 mb-4">✓ You\'ve completed this lesson! Review the content below.</p>' : ''}
+                
+                ${conceptsHTML}
+                
+                ${practiceHTML}
+                
+                ${content.summary ? `
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold mb-3 text-[#4FC3F7]">📋 Lesson Summary</h3>
+                        <div class="glass-card p-5 bg-[#482880]/20 border-2 border-[#482880]/50">
+                            <p class="text-[#F5F7FA]/90 leading-relaxed">${content.summary}</p>
+                        </div>
+                    </div>
+                ` : ''}
             `;
-            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            
+            // Update button text based on completion status
+            const completeBtn = document.getElementById('completeLessonBtn');
+            if (completeBtn) {
+                if (isAlreadyCompleted) {
+                    completeBtn.textContent = 'Already Completed';
+                    completeBtn.disabled = true;
+                    completeBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    completeBtn.textContent = 'Mark as Complete';
+                    completeBtn.disabled = false;
+                    completeBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }
         }
         
         function closeLessonModal() {
             document.getElementById('lessonModal').classList.add('hidden');
             document.body.style.overflow = '';
+        }
+        
+        function completeCurrentLesson() {
+            if (currentLessonId && currentLessonTitle && currentLessonSubject) {
+                // Get grade level
+                const prefs = JSON.parse(localStorage.getItem('astrolearn_preferences') || '{}');
+                const grade = prefs.grade || 9;
+                
+                // Create lesson key (matching format used in subject pages)
+                const subjectId = currentLessonSubjectId || getSubjectId(currentLessonSubject);
+                const lessonKey = `${subjectId}_${grade}_${currentLessonTitle}`;
+                
+                // Get completed lessons
+                const completed = JSON.parse(localStorage.getItem('astrolearn_completed_lessons') || '[]');
+                
+                // Check if already completed
+                if (!completed.includes(lessonKey)) {
+                    completed.push(lessonKey);
+                    localStorage.setItem('astrolearn_completed_lessons', JSON.stringify(completed));
+                    alert(`Great job! You've completed "${currentLessonTitle}"!`);
+                    
+                    // Reload lessons to update UI
+                    loadLessons();
+                    
+                    // Update modal to show completion status
+                    const prefs = JSON.parse(localStorage.getItem('astrolearn_preferences') || '{}');
+                    const grade = prefs.grade || 9;
+                    const content = getLessonContent(currentLessonTitle, currentLessonSubjectId, grade);
+                    if (content) {
+                        displayLessonContent(content, true);
+                    }
+                } else {
+                    alert('You\'ve already completed this lesson!');
+                }
+            }
+        }
+
+        function loadVideos() {
+            const grid = document.getElementById('videosGrid');
+            grid.innerHTML = videos.map(video => `
+                <div class="video-card glass-card p-6 hover:scale-105 transition-transform cursor-pointer" style="animation-delay: ${Math.random() * 2}s" onclick="playVideo('${video.title}')">
+                    <div class="relative mb-4">
+                        <div class="w-full h-40 rounded-lg flex items-center justify-center relative overflow-hidden" style="background: linear-gradient(135deg, ${video.color}33, ${video.color}11);">
+                            <div class="text-6xl">${video.thumbnail}</div>
+                            <div class="absolute bottom-2 right-2 px-2 py-1 bg-black/70 rounded text-xs font-bold">${video.duration}</div>
+                            <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/20">
+                                <div class="text-5xl text-white">▶️</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">${video.title}</h3>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-[#F5F7FA]/70">${video.subject}</span>
+                        <span class="text-sm text-[#F5F7FA]/70">🎥 Video</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function playVideo(title) {
+            // Store video data and navigate to video player
+            sessionStorage.setItem('selectedVideoTitle', title);
+            window.location.href = `video-player.html?title=${encodeURIComponent(title)}`;
+        }
+
+        // Load downloadable materials
+        function loadDownloadableMaterials() {
+            const grid = document.getElementById('downloadableMaterialsGrid');
+            if (!grid) return;
+            
+            const prefs = JSON.parse(localStorage.getItem('astrolearn_preferences') || '{}');
+            const selectedSubjects = prefs.subjects || ['math', 'science', 'reading', 'language'];
+            
+            // Filter materials based on selected subjects or show all if no preference
+            const subjectMapping = {
+                'math': 'Math',
+                'science': 'Science',
+                'reading': 'Reading',
+                'language': 'Language'
+            };
+            
+            const filteredMaterials = downloadableMaterials.filter(material => 
+                material.subject === 'General' || 
+                selectedSubjects.includes(material.subject.toLowerCase()) ||
+                selectedSubjects.length === 0
+            );
+            
+            grid.innerHTML = filteredMaterials.map(material => `
+                <div class="glass-card p-6 hover:scale-105 transition-transform" style="animation-delay: ${Math.random() * 2}s; border: 2px solid ${material.color}33;">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="text-5xl mb-2">${material.icon}</div>
+                        <span class="px-2 py-1 rounded text-xs font-bold" style="background: ${material.color}33; color: ${material.color}">
+                            ${material.type}
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">${material.title}</h3>
+                    <p class="text-sm text-[#F5F7FA]/70 mb-4">${material.description}</p>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-sm text-[#F5F7FA]/70">${material.subject}</span>
+                        <span class="text-xs text-[#F5F7FA]/50">Download</span>
+                    </div>
+                    <button onclick="downloadMaterial('${material.filename}', '${material.title}')" 
+                            class="w-full btn-primary py-2 px-4 text-sm flex items-center justify-center gap-2">
+                        <span>📥</span>
+                        <span>Download</span>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Download material function
+        function downloadMaterial(filename, title) {
+            // Create a link to the file
+            const filePath = `assets/pdfs/${filename}`;
+            const link = document.createElement('a');
+            link.href = filePath;
+            link.download = filename;
+            link.target = '_blank'; // Open in new tab as fallback
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Show success message
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-20 right-4 glass-card p-4 z-50 animate-slide-in';
+            notification.innerHTML = `
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">✅</span>
+                    <span>Downloaded: ${title}</span>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
         }
 
         // Get assignments from localStorage or use default
@@ -595,9 +1605,15 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium mb-2">Subject</label>
-                            <input type="text" id="assignmentSubject" required 
+                            <select id="assignmentSubject" required
                                    class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-[#F5F7FA]"
-                                   placeholder="e.g., Math, Science, Reading">
+                                    style="color: #F5F7FA;">
+                                <option value="" style="color: #F5F7FA; background: #0B0F2F;">Select Subject</option>
+                                <option value="Math" style="color: #F5F7FA; background: #0B0F2F;">Math</option>
+                                <option value="Science" style="color: #F5F7FA; background: #0B0F2F;">Science</option>
+                                <option value="Reading" style="color: #F5F7FA; background: #0B0F2F;">Reading</option>
+                                <option value="Language" style="color: #F5F7FA; background: #0B0F2F;">Language</option>
+                            </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium mb-2">Due Date</label>
@@ -607,10 +1623,11 @@
                         <div>
                             <label class="block text-sm font-medium mb-2">Priority</label>
                             <select id="assignmentPriority" required
-                                    class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-[#F5F7FA]">
-                                <option value="High">High</option>
-                                <option value="Medium" selected>Medium</option>
-                                <option value="Low">Low</option>
+                                    class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-[#F5F7FA]"
+                                    style="color: #F5F7FA;">
+                                <option value="High" style="color: #F5F7FA; background: #0B0F2F;">High</option>
+                                <option value="Medium" selected style="color: #F5F7FA; background: #0B0F2F;">Medium</option>
+                                <option value="Low" style="color: #F5F7FA; background: #0B0F2F;">Low</option>
                             </select>
                         </div>
                         <div>
@@ -627,8 +1644,8 @@
                 </div>
             `;
             
-            const roadmapContent = document.getElementById('roadmapContent');
-            roadmapContent.innerHTML = formHTML;
+            const launchpadContent = document.getElementById('launchpadContent');
+            launchpadContent.innerHTML = formHTML;
             
             // Set minimum date to today
             const today = new Date().toISOString().split('T')[0];
@@ -638,6 +1655,10 @@
                 e.preventDefault();
                 addAssignment();
             });
+        }
+        
+        function closeAddForm() {
+            loadAssignments();
         }
 
         function addAssignment() {
@@ -659,19 +1680,15 @@
             
             assignments.push(newAssignment);
             saveAssignments(assignments);
-            generateRoadmap();
+            loadAssignments();
         }
 
         function removeAssignment(id) {
             if (confirm('Are you sure you want to remove this assignment?')) {
                 assignments = assignments.filter(a => a.id !== id);
                 saveAssignments(assignments);
-                generateRoadmap();
+                loadAssignments();
             }
-        }
-
-        function closeAddForm() {
-            generateRoadmap();
         }
 
         function setupDragAndDrop() {
@@ -804,636 +1821,98 @@
             }, { offset: Number.NEGATIVE_INFINITY }).element;
         }
 
-        function openStarMap() {
-            const modal = document.getElementById('starMapModal');
+        function openLaunchpad() {
+            const modal = document.getElementById('launchpadModal');
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
-            generateRoadmap();
+            loadAssignments();
         }
 
-        function closeStarMap() {
-            const modal = document.getElementById('starMapModal');
+        function closeLaunchpad() {
+            const modal = document.getElementById('launchpadModal');
             modal.classList.add('hidden');
             document.body.style.overflow = '';
         }
 
-        function downloadRoadmap() {
-            alert('Roadmap download feature coming soon! For now, you can take a screenshot of your roadmap.');
-        }
-
-        // Educational Videos Data
-        const educationalVideos = [
-            { id: 1, title: "Introduction to Algebra", subject: "Math", duration: "15:30", thumbnail: "📐", description: "Learn the basics of algebraic expressions" },
-            { id: 2, title: "Cell Biology Explained", subject: "Science", duration: "22:45", thumbnail: "🧬", description: "Understanding cell structure and function" },
-            { id: 3, title: "World War II Overview", subject: "History", duration: "28:20", thumbnail: "🌍", description: "Comprehensive guide to WWII events" },
-            { id: 4, title: "Periodic Table Mastery", subject: "Chemistry", duration: "18:15", thumbnail: "⚗️", description: "Master the elements and their properties" },
-            { id: 5, title: "Shakespeare's Sonnets", subject: "Literature", duration: "25:10", thumbnail: "📚", description: "Analyze and appreciate classic poetry" },
-            { id: 6, title: "Calculus Fundamentals", subject: "Math", duration: "35:00", thumbnail: "🔭", description: "Introduction to derivatives and integrals" }
-        ];
-
-        function loadVideos() {
-            const grid = document.getElementById('videosGrid');
-            if (!grid) return;
-            grid.innerHTML = educationalVideos.map(video => `
-                <a href="video-player.html?id=${video.id}" class="glass-card p-6 hover:scale-105 transition-transform cursor-pointer block">
-                    <div class="relative mb-4 bg-gradient-to-br from-[#0B0F2F] to-[#482880] rounded-lg p-8 text-center">
-                        <div class="text-6xl mb-2">${video.thumbnail}</div>
-                        <div class="absolute bottom-2 right-2 bg-black/70 px-2 py-1 rounded text-xs">${video.duration}</div>
-                        <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                            <div class="bg-black/50 rounded-full p-4">
-                                <span class="text-4xl">▶</span>
-                            </div>
-                        </div>
+        function loadAssignments() {
+            const content = document.getElementById('launchpadContent');
+            const assignments = getAssignments();
+            
+            if (assignments.length === 0) {
+                content.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="text-6xl mb-4">🚀</div>
+                        <h3 class="text-2xl font-bold mb-2">No Assignments Yet</h3>
+                        <p class="text-[#F5F7FA]/70 mb-6">Click "Add Assignment" to get started!</p>
+                        <button class="btn-primary" onclick="showAddAssignmentForm()">Add Your First Assignment</button>
                     </div>
-                    <h3 class="text-lg font-bold mb-2">${video.title}</h3>
-                    <p class="text-sm text-[#F5F7FA]/70 mb-3">${video.description}</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-[#F5F7FA]/60">${video.subject}</span>
-                        <span class="btn-primary text-sm py-1 px-4 inline-block">Watch Video</span>
-                    </div>
-                </a>
-            `).join('');
-        }
-
-        // Downloadable Materials Data
-        const downloadableMaterials = [
-            { id: 1, title: "Algebra Study Guide", type: "PDF", size: "2.4 MB", subject: "Math", icon: "📄", filename: "Algebra_Study_Guide.pdf" },
-            { id: 2, title: "Business Fundamentals", type: "PDF", size: "1.8 MB", subject: "Business", icon: "📋", filename: "Business_Fundamentals.pdf" },
-            { id: 3, title: "History Timeline Chart", type: "PDF", size: "3.1 MB", subject: "History", icon: "📊", filename: "History_Timeline_Chart.pdf" },
-            { id: 4, title: "Chemistry Formula Sheet", type: "PDF", size: "1.2 MB", subject: "Chemistry", icon: "🧪", filename: "Chemistry_Formula_Sheet.pdf" },
-            { id: 5, title: "Practice Quiz", type: "PDF", size: "0.9 MB", subject: "General", icon: "📝", filename: "Practice_Quiz.pdf" },
-            { id: 6, title: "Math Practice Problems", type: "PDF", size: "4.2 MB", subject: "Math", icon: "📐", filename: "Math_Practice_Problems.pdf" },
-            { id: 7, title: "Science Experiment Guide", type: "PDF", size: "2.7 MB", subject: "Science", icon: "🔬", filename: "Science_Experiment_Guide.pdf" },
-            { id: 8, title: "Vocabulary Flashcard Set", type: "PDF", size: "1.5 MB", subject: "Language", icon: "📚", filename: "Vocabulary_Flashcard_Set.pdf" }
-        ];
-
-        function loadDownloads() {
-            const grid = document.getElementById('downloadsGrid');
-            if (!grid) return;
-            grid.innerHTML = downloadableMaterials.map(material => `
-                <div class="glass-card p-6 hover:scale-105 transition-transform">
-                    <div class="text-5xl mb-4 text-center">${material.icon}</div>
-                    <h3 class="text-lg font-bold mb-2">${material.title}</h3>
-                    <div class="flex justify-between items-center mb-3 text-sm text-[#F5F7FA]/70">
-                        <span>${material.type}</span>
-                        <span>${material.size}</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-[#F5F7FA]/60">${material.subject}</span>
-                        <button onclick="generateAndDownloadPDF('${material.id}')" class="btn-secondary text-sm py-1 px-4">
-                            Download
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function generateAndDownloadPDF(materialId) {
-            const material = downloadableMaterials.find(m => m.id == materialId);
-            if (!material) return;
-
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-
-            // Generate PDF based on material type
-            switch(material.id) {
-                case 1: // Algebra Study Guide
-                    generateAlgebraPDF(doc);
-                    break;
-                case 2: // Business Fundamentals
-                    generateBusinessPDF(doc);
-                    break;
-                case 3: // History Timeline Chart
-                    generateHistoryPDF(doc);
-                    break;
-                case 4: // Chemistry Formula Sheet
-                    generateChemistryPDF(doc);
-                    break;
-                case 5: // Practice Quiz
-                    generateQuizPDF(doc);
-                    break;
-                case 6: // Math Practice Problems
-                    generateMathProblemsPDF(doc);
-                    break;
-                case 7: // Science Experiment Guide
-                    generateSciencePDF(doc);
-                    break;
-                case 8: // Vocabulary Flashcard Set
-                    generateVocabularyPDF(doc);
-                    break;
+                `;
+                return;
             }
-
-            doc.save(material.filename);
-        }
-
-        function generateAlgebraPDF(doc) {
-            doc.setFontSize(20);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Algebra Study Guide', 105, 20, { align: 'center' });
             
-            let y = 35;
-            doc.setFontSize(12);
-            doc.setTextColor(0, 0, 0);
-            doc.text('This study guide covers fundamental algebra concepts, formulas, and practice problems.', 20, y);
-            y += 15;
-            
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Basic Formulas', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            const formulas = [
-                'Linear Equation: y = mx + b',
-                'Slope Formula: m = (y₂ - y₁) / (x₂ - x₁)',
-                'Quadratic Formula: x = (-b ± √(b² - 4ac)) / 2a',
-                'Distance Formula: d = √((x₂ - x₁)² + (y₂ - y₁)²)',
-                'Midpoint Formula: M = ((x₁ + x₂)/2, (y₁ + y₂)/2)'
-            ];
-            
-            formulas.forEach(formula => {
-                doc.text('• ' + formula, 25, y);
-                y += 7;
-            });
-            
-            y += 5;
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Worked Examples', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            doc.text('Example 1: Solve for x in 2x + 5 = 13', 25, y);
-            y += 7;
-            doc.text('Solution: 2x = 13 - 5 = 8, therefore x = 4', 30, y);
-            y += 10;
-            
-            doc.text('Example 2: Factor x² + 5x + 6', 25, y);
-            y += 7;
-            doc.text('Solution: (x + 2)(x + 3) = x² + 5x + 6', 30, y);
-            y += 10;
-            
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Practice Problems', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            const problems = [
-                '1. Solve: 3x - 7 = 14',
-                '2. Simplify: 2x + 3x - 5x',
-                '3. Solve: x² - 9 = 0',
-                '4. Find the slope: (2, 3) and (5, 9)',
-                '5. Solve the system: x + y = 5, 2x - y = 1'
-            ];
-            
-            problems.forEach(problem => {
-                doc.text(problem, 25, y);
-                y += 7;
-            });
-            
-            y += 5;
-            doc.text('Answer Key: 1) x = 7, 2) 0, 3) x = 3 or -3, 4) m = 2, 5) x = 2, y = 3', 25, y);
-            
-            doc.setFontSize(10);
-            doc.setTextColor(128, 128, 128);
-            doc.text('AstroLearn - Algebra Study Guide', 105, 280, { align: 'center' });
-        }
-
-        function generateBusinessPDF(doc) {
-            doc.setFontSize(20);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Business Fundamentals', 105, 20, { align: 'center' });
-            
-            let y = 35;
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Key Business Terms', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            const terms = [
-                'Revenue: Total income from sales',
-                'Profit: Revenue minus expenses',
-                'Market: Group of potential customers',
-                'Marketing: Promoting products or services',
-                'Supply Chain: Process from production to consumer',
-                'ROI: Return on Investment'
-            ];
-            
-            terms.forEach(term => {
-                doc.text('• ' + term, 25, y);
-                y += 7;
-            });
-            
-            y += 5;
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Real-World Examples', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            doc.text('Example 1: A company sells 100 products at $10 each.', 25, y);
-            y += 7;
-            doc.text('Revenue = 100 × $10 = $1,000', 30, y);
-            y += 10;
-            
-            doc.text('Example 2: If expenses are $700, profit = $1,000 - $700 = $300', 25, y);
-            y += 10;
-            
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Important Concepts', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            doc.text('• Supply and Demand: Prices adjust based on availability', 25, y);
-            y += 7;
-            doc.text('• Competition: Multiple businesses offering similar products', 25, y);
-            y += 7;
-            doc.text('• Customer Service: Supporting customers before and after purchase', 25, y);
-            
-            doc.setFontSize(10);
-            doc.setTextColor(128, 128, 128);
-            doc.text('AstroLearn - Business Fundamentals', 105, 280, { align: 'center' });
-        }
-
-        function generateHistoryPDF(doc) {
-            doc.setFontSize(20);
-            doc.setTextColor(79, 195, 247);
-            doc.text('History Timeline Chart', 105, 20, { align: 'center' });
-            
-            let y = 35;
-            doc.setFontSize(12);
-            doc.setTextColor(0, 0, 0);
-            
-            const events = [
-                { year: '1776', event: 'American Declaration of Independence' },
-                { year: '1789', event: 'French Revolution begins' },
-                { year: '1861-1865', event: 'American Civil War' },
-                { year: '1914-1918', event: 'World War I' },
-                { year: '1929', event: 'Great Depression begins' },
-                { year: '1939-1945', event: 'World War II' },
-                { year: '1969', event: 'Moon Landing' },
-                { year: '1989', event: 'Fall of Berlin Wall' }
-            ];
-            
-            events.forEach(item => {
-                doc.setFontSize(14);
-                doc.setTextColor(79, 195, 247);
-                doc.text(item.year, 20, y);
-                doc.setFontSize(11);
-                doc.setTextColor(0, 0, 0);
-                doc.text(item.event, 50, y);
-                y += 10;
-            });
-            
-            y += 10;
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Key Historical Concepts', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            const concepts = [
-                '• Causes and effects of major wars',
-                '• Impact of revolutions on society',
-                '• Economic factors in historical events',
-                '• Social and cultural changes over time'
-            ];
-            
-            concepts.forEach(concept => {
-                doc.text(concept, 25, y);
-                y += 7;
-            });
-            
-            doc.setFontSize(10);
-            doc.setTextColor(128, 128, 128);
-            doc.text('AstroLearn - History Timeline Chart', 105, 280, { align: 'center' });
-        }
-
-        function generateChemistryPDF(doc) {
-            doc.setFontSize(20);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Chemistry Formula Sheet', 105, 20, { align: 'center' });
-            
-            let y = 35;
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Basic Chemical Formulas', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            const formulas = [
-                'Density: ρ = m/V (mass/volume)',
-                'Molarity: M = n/V (moles/liter)',
-                'Percent Composition: % = (mass element / mass compound) × 100',
-                'Ideal Gas Law: PV = nRT',
-                'pH: pH = -log[H⁺]',
-                'Energy: E = hν (Planck constant × frequency)'
-            ];
-            
-            formulas.forEach(formula => {
-                doc.text('• ' + formula, 25, y);
-                y += 7;
-            });
-            
-            y += 5;
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Common Elements', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            const elements = [
-                'H - Hydrogen (Atomic #1)',
-                'C - Carbon (Atomic #6)',
-                'N - Nitrogen (Atomic #7)',
-                'O - Oxygen (Atomic #8)',
-                'Na - Sodium (Atomic #11)',
-                'Cl - Chlorine (Atomic #17)'
-            ];
-            
-            elements.forEach(element => {
-                doc.text('• ' + element, 25, y);
-                y += 7;
-            });
-            
-            y += 5;
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Common Compounds', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            doc.text('• H₂O - Water', 25, y);
-            y += 7;
-            doc.text('• CO₂ - Carbon Dioxide', 25, y);
-            y += 7;
-            doc.text('• NaCl - Sodium Chloride (Salt)', 25, y);
-            y += 7;
-            doc.text('• C₆H₁₂O₆ - Glucose', 25, y);
-            
-            doc.setFontSize(10);
-            doc.setTextColor(128, 128, 128);
-            doc.text('AstroLearn - Chemistry Formula Sheet', 105, 280, { align: 'center' });
-        }
-
-        function generateQuizPDF(doc) {
-            doc.setFontSize(20);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Practice Quiz', 105, 20, { align: 'center' });
-            
-            let y = 35;
-            doc.setFontSize(12);
-            doc.setTextColor(0, 0, 0);
-            doc.text('Multiple Choice Questions - Answer all questions', 20, y);
-            y += 15;
-            
-            const questions = [
-                { q: '1. What is the solution to 2x + 5 = 13?', options: ['A) x = 3', 'B) x = 4', 'C) x = 5', 'D) x = 6'], answer: 'B' },
-                { q: '2. What is the capital of France?', options: ['A) London', 'B) Berlin', 'C) Paris', 'D) Madrid'], answer: 'C' },
-                { q: '3. What is H₂O?', options: ['A) Carbon Dioxide', 'B) Water', 'C) Oxygen', 'D) Hydrogen'], answer: 'B' },
-                { q: '4. Who wrote "Romeo and Juliet"?', options: ['A) Charles Dickens', 'B) William Shakespeare', 'C) Mark Twain', 'D) Jane Austen'], answer: 'B' },
-                { q: '5. What is the square root of 64?', options: ['A) 6', 'B) 7', 'C) 8', 'D) 9'], answer: 'C' }
-            ];
-            
-            questions.forEach(item => {
-                doc.setFontSize(11);
-                doc.setTextColor(0, 0, 0);
-                doc.text(item.q, 20, y);
-                y += 7;
-                item.options.forEach(opt => {
-                    doc.text(opt, 25, y);
-                    y += 6;
-                });
-                y += 5;
-            });
-            
-            y += 5;
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Answer Key', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            questions.forEach((item, index) => {
-                doc.text(`${index + 1}. ${item.answer}`, 25, y);
-                y += 7;
-            });
-            
-            doc.setFontSize(10);
-            doc.setTextColor(128, 128, 128);
-            doc.text('AstroLearn - Practice Quiz', 105, 280, { align: 'center' });
-        }
-
-        function generateMathProblemsPDF(doc) {
-            doc.setFontSize(20);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Math Practice Problems', 105, 20, { align: 'center' });
-            
-            let y = 35;
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Algebra Problems', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            const algProblems = [
-                '1. Solve for x: 5x + 3 = 23',
-                '2. Simplify: (2x + 3)(x - 4)',
-                '3. Solve: x² - 5x + 6 = 0',
-                '4. Find x: 3x/2 = 9',
-                '5. Solve: 2x + 3y = 12, x - y = 1'
-            ];
-            
-            algProblems.forEach(prob => {
-                doc.text(prob, 25, y);
-                y += 7;
-            });
-            
-            y += 10;
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Geometry Problems', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            const geoProblems = [
-                '6. Find the area of a rectangle: length = 8, width = 5',
-                '7. Calculate the perimeter of a square with side = 6',
-                '8. Find the area of a circle with radius = 4 (use π = 3.14)',
-                '9. Calculate the volume of a cube with side = 3',
-                '10. Find the area of a triangle: base = 10, height = 6'
-            ];
-            
-            geoProblems.forEach(prob => {
-                doc.text(prob, 25, y);
-                y += 7;
-            });
-            
-            y += 10;
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Answer Key', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            doc.text('1) x = 4, 2) 2x² - 5x - 12, 3) x = 2 or 3, 4) x = 6, 5) x = 3, y = 2', 25, y);
-            y += 7;
-            doc.text('6) 40, 7) 24, 8) 50.24, 9) 27, 10) 30', 25, y);
-            
-            doc.setFontSize(10);
-            doc.setTextColor(128, 128, 128);
-            doc.text('AstroLearn - Math Practice Problems', 105, 280, { align: 'center' });
-        }
-
-        function generateSciencePDF(doc) {
-            doc.setFontSize(20);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Science Experiment Guide', 105, 20, { align: 'center' });
-            
-            let y = 35;
-            doc.setFontSize(12);
-            doc.setTextColor(0, 0, 0);
-            doc.text('This guide provides step-by-step instructions for common science experiments.', 20, y);
-            y += 15;
-            
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Experiment 1: Photosynthesis in Plants', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            doc.text('Materials:', 25, y);
-            y += 7;
-            doc.text('• Plant leaves, iodine solution, beaker, water', 30, y);
-            y += 10;
-            
-            doc.text('Procedure:', 25, y);
-            y += 7;
-            doc.text('1. Place leaf in boiling water for 2 minutes', 30, y);
-            y += 7;
-            doc.text('2. Remove and place in alcohol to remove chlorophyll', 30, y);
-            y += 7;
-            doc.text('3. Add iodine solution and observe color change', 30, y);
-            y += 10;
-            
-            doc.text('Observation: Blue-black color indicates presence of starch', 25, y);
-            y += 15;
-            
-            doc.setFontSize(16);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Experiment 2: Density of Liquids', 20, y);
-            y += 10;
-            
-            doc.setFontSize(11);
-            doc.setTextColor(0, 0, 0);
-            doc.text('Materials: Water, oil, graduated cylinder, scale', 25, y);
-            y += 10;
-            
-            doc.text('Procedure:', 25, y);
-            y += 7;
-            doc.text('1. Measure 50ml of water and record mass', 30, y);
-            y += 7;
-            doc.text('2. Calculate density: ρ = mass/volume', 30, y);
-            y += 7;
-            doc.text('3. Repeat with oil and compare results', 30, y);
-            
-            doc.setFontSize(10);
-            doc.setTextColor(128, 128, 128);
-            doc.text('AstroLearn - Science Experiment Guide', 105, 280, { align: 'center' });
-        }
-
-        function generateVocabularyPDF(doc) {
-            doc.setFontSize(20);
-            doc.setTextColor(79, 195, 247);
-            doc.text('Vocabulary Flashcard Set', 105, 20, { align: 'center' });
-            
-            let y = 35;
-            doc.setFontSize(12);
-            doc.setTextColor(0, 0, 0);
-            
-            const vocab = [
-                { word: 'Analyze', def: 'To examine in detail' },
-                { word: 'Synthesize', def: 'To combine parts into a whole' },
-                { word: 'Evaluate', def: 'To judge or assess' },
-                { word: 'Hypothesis', def: 'A proposed explanation' },
-                { word: 'Variable', def: 'A factor that can change' },
-                { word: 'Constant', def: 'A value that does not change' },
-                { word: 'Evidence', def: 'Information supporting a claim' },
-                { word: 'Conclusion', def: 'Final decision or judgment' }
-            ];
-            
-            vocab.forEach(item => {
-                doc.setFontSize(13);
-                doc.setTextColor(79, 195, 247);
-                doc.text(item.word, 20, y);
-                doc.setFontSize(11);
-                doc.setTextColor(0, 0, 0);
-                doc.text('→ ' + item.def, 60, y);
-                y += 10;
-            });
-            
-            doc.setFontSize(10);
-            doc.setTextColor(128, 128, 128);
-            doc.text('AstroLearn - Vocabulary Flashcard Set', 105, 280, { align: 'center' });
+            content.innerHTML = `
+                <div class="space-y-4">
+                    ${assignments.map(assignment => {
+                        const dueDate = new Date(assignment.dueDate);
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+                        dueDate.setHours(0, 0, 0, 0);
+                        const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+                        const isOverdue = daysUntilDue < 0;
+                        const isDueSoon = daysUntilDue <= 3 && daysUntilDue >= 0;
+                        
+                        return `
+                            <div class="glass-card p-6 ${isOverdue ? 'border-2 border-red-500' : isDueSoon ? 'border-2 border-yellow-500' : ''}">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div class="flex-1">
+                                        <h3 class="text-xl font-bold mb-2">${assignment.title}</h3>
+                                        <p class="text-[#F5F7FA]/70 mb-2">Subject: ${assignment.subject}</p>
+                                        <p class="text-sm ${isOverdue ? 'text-red-400' : isDueSoon ? 'text-yellow-400' : 'text-[#F5F7FA]/70'}">
+                                            Due: ${dueDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                                            ${isOverdue ? ' (Overdue!)' : isDueSoon ? ' (Due Soon!)' : ` (${daysUntilDue} days remaining)`}
+                                        </p>
+                                        <p class="text-sm text-[#F5F7FA]/70 mt-2">Estimated: ${assignment.estimatedHours} hours</p>
+                                    </div>
+                                    <button class="text-red-400 hover:text-red-300 text-xl" onclick="removeAssignment(${assignment.id})" title="Delete assignment">🗑️</button>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold" style="background: ${assignment.priority === 'High' ? '#FF6EC7' : assignment.priority === 'Medium' ? '#4FC3F7' : '#482880'}33; color: ${assignment.priority === 'High' ? '#FF6EC7' : assignment.priority === 'Medium' ? '#4FC3F7' : '#482880'}">
+                                        ${assignment.priority} Priority
+                                    </span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold" style="background: ${assignment.status === 'completed' ? '#4FC3F7' : assignment.status === 'in-progress' ? '#FF6EC7' : '#482880'}33; color: ${assignment.status === 'completed' ? '#4FC3F7' : assignment.status === 'in-progress' ? '#FF6EC7' : '#482880'}">
+                                        ${assignment.status === 'completed' ? '✅ Completed' : assignment.status === 'in-progress' ? '🚀 In Progress' : '⏳ Pending'}
+                                    </span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             if (isLoggedIn()) {
                 loadLessons();
-                loadVideos();
-                loadDownloads();
+                loadDownloadableMaterials();
                 initFloatingStars();
                 
-                // Star Map button functionality
-                const starMapBtn = document.getElementById('starMapBtn');
-                const closeBtn = document.getElementById('closeStarMap');
-                const closeBtn2 = document.getElementById('closeStarMapBtn');
-                const overlay = document.getElementById('starMapOverlay');
+                // Launchpad button functionality
+                const launchpadBtn = document.getElementById('launchpadBtn');
+                const closeBtn = document.getElementById('closeLaunchpad');
+                const closeBtn2 = document.getElementById('closeLaunchpadBtn');
+                const overlay = document.getElementById('launchpadOverlay');
                 
-                if (starMapBtn) {
-                    starMapBtn.addEventListener('click', openStarMap);
+                if (launchpadBtn) {
+                    launchpadBtn.addEventListener('click', openLaunchpad);
                 }
                 if (closeBtn) {
-                    closeBtn.addEventListener('click', closeStarMap);
+                    closeBtn.addEventListener('click', closeLaunchpad);
                 }
                 if (closeBtn2) {
-                    closeBtn2.addEventListener('click', closeStarMap);
+                    closeBtn2.addEventListener('click', closeLaunchpad);
                 }
                 if (overlay) {
-                    overlay.addEventListener('click', closeStarMap);
-                }
-                
-                // Check for lesson parameter in URL
-                const urlParams = new URLSearchParams(window.location.search);
-                const lessonId = urlParams.get('lesson');
-                const subject = urlParams.get('subject');
-                
-                if (lessonId && subject) {
-                    // Wait a bit for lessons to load, then open the lesson
-                    setTimeout(() => {
-                        openLesson(lessonId, subject);
-                        // Clean up URL
-                        const newUrl = window.location.pathname;
-                        window.history.replaceState({}, document.title, newUrl);
-                    }, 500);
+                    overlay.addEventListener('click', closeLaunchpad);
                 }
             }
         });

@@ -15,7 +15,7 @@
     <nav class="navbar">
         <div class="container mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <img src="sticker.webp" alt="AstroLearn Logo" class="h-8 w-8 object-contain">
+                <img src="sticker.webp" alt="AstroLearn Logo" class="h-12 w-12 object-contain">
                 <h1 class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
                     AstroLearn
                 </h1>
@@ -25,7 +25,7 @@
                 <a href="dashboard.html" class="nav-link active protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
-                <a href="game.html" class="nav-link protected-link">Space Quest</a>
+                <a href="game.html" class="nav-link protected-link">Games</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
             </div>
             <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
@@ -36,7 +36,7 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
-                <a href="game.html" class="nav-link protected-link">Space Quest</a>
+                <a href="game.html" class="nav-link protected-link">Games</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-center block" id="authBtnMobile">Sign In</a>
             </div>
         </div>
@@ -334,58 +334,263 @@
             }
         }
 
-        // Calculate progress for a subject based on completed lessons
+        // Get lessons for a subject and grade (matches structure from subject pages)
+        function getLessonsForSubject(subjectId, grade) {
+            // Define lessons exactly as they appear on subject pages
+            const lessonsBySubject = {
+                math: {
+                    6: [
+                        { id: 1, title: "Introduction to Fractions", difficulty: "Easy", completed: false },
+                        { id: 2, title: "Decimal Operations", difficulty: "Easy", completed: false },
+                        { id: 3, title: "Basic Geometry Shapes", difficulty: "Easy", completed: false },
+                        { id: 4, title: "Ratios and Proportions", difficulty: "Medium", completed: false },
+                        { id: 5, title: "Percentages", difficulty: "Medium", completed: false },
+                        { id: 6, title: "Area and Perimeter", difficulty: "Medium", completed: false }
+                    ],
+                    7: [
+                        { id: 1, title: "Integers and Operations", difficulty: "Easy", completed: false },
+                        { id: 2, title: "Expressions and Equations", difficulty: "Medium", completed: false },
+                        { id: 3, title: "Proportional Relationships", difficulty: "Medium", completed: false },
+                        { id: 4, title: "Angle Relationships", difficulty: "Medium", completed: false },
+                        { id: 5, title: "Statistics and Probability", difficulty: "Medium", completed: false },
+                        { id: 6, title: "Surface Area and Volume", difficulty: "Hard", completed: false }
+                    ],
+                    8: [
+                        { id: 1, title: "Linear Equations", difficulty: "Medium", completed: false },
+                        { id: 2, title: "Systems of Equations", difficulty: "Medium", completed: false },
+                        { id: 3, title: "Functions", difficulty: "Medium", completed: false },
+                        { id: 4, title: "Pythagorean Theorem", difficulty: "Medium", completed: false },
+                        { id: 5, title: "Transformations", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Scientific Notation", difficulty: "Hard", completed: false }
+                    ],
+                    9: [
+                        { id: 1, title: "Algebra Basics", difficulty: "Easy", completed: false },
+                        { id: 2, title: "Linear Equations and Inequalities", difficulty: "Medium", completed: false },
+                        { id: 3, title: "Quadratic Equations", difficulty: "Medium", completed: false },
+                        { id: 4, title: "Polynomials", difficulty: "Medium", completed: false },
+                        { id: 5, title: "Exponential Functions", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Radical Expressions", difficulty: "Hard", completed: false }
+                    ],
+                    10: [
+                        { id: 1, title: "Advanced Algebra", difficulty: "Medium", completed: false },
+                        { id: 2, title: "Quadratic Functions", difficulty: "Medium", completed: false },
+                        { id: 3, title: "Polynomial Functions", difficulty: "Hard", completed: false },
+                        { id: 4, title: "Rational Expressions", difficulty: "Hard", completed: false },
+                        { id: 5, title: "Logarithmic Functions", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Sequences and Series", difficulty: "Hard", completed: false }
+                    ],
+                    11: [
+                        { id: 1, title: "Trigonometry Basics", difficulty: "Medium", completed: false },
+                        { id: 2, title: "Trigonometric Functions", difficulty: "Hard", completed: false },
+                        { id: 3, title: "Trigonometric Identities", difficulty: "Hard", completed: false },
+                        { id: 4, title: "Analytic Geometry", difficulty: "Hard", completed: false },
+                        { id: 5, title: "Complex Numbers", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Conic Sections", difficulty: "Hard", completed: false }
+                    ],
+                    12: [
+                        { id: 1, title: "Calculus: Limits", difficulty: "Hard", completed: false },
+                        { id: 2, title: "Derivatives", difficulty: "Hard", completed: false },
+                        { id: 3, title: "Integration", difficulty: "Hard", completed: false },
+                        { id: 4, title: "Applications of Calculus", difficulty: "Hard", completed: false },
+                        { id: 5, title: "Advanced Trigonometry", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Probability and Statistics", difficulty: "Hard", completed: false }
+                    ]
+                },
+                science: {
+                    6: [
+                        { id: 1, title: "Introduction to Matter", difficulty: "Easy", completed: false },
+                        { id: 2, title: "Earth's Layers", difficulty: "Easy", completed: false },
+                        { id: 3, title: "Weather and Climate", difficulty: "Easy", completed: false },
+                        { id: 4, title: "Plant Life Cycles", difficulty: "Medium", completed: false },
+                        { id: 5, title: "Simple Machines", difficulty: "Medium", completed: false },
+                        { id: 6, title: "Solar System Basics", difficulty: "Medium", completed: false }
+                    ],
+                    7: [
+                        { id: 1, title: "Cell Structure", difficulty: "Easy", completed: false },
+                        { id: 2, title: "Ecosystems", difficulty: "Medium", completed: false },
+                        { id: 3, title: "Chemical Reactions", difficulty: "Medium", completed: false },
+                        { id: 4, title: "Forces and Motion", difficulty: "Medium", completed: false },
+                        { id: 5, title: "Energy Transfer", difficulty: "Medium", completed: false },
+                        { id: 6, title: "Earth's Resources", difficulty: "Hard", completed: false }
+                    ],
+                    8: [
+                        { id: 1, title: "Genetics and Heredity", difficulty: "Medium", completed: false },
+                        { id: 2, title: "Evolution", difficulty: "Medium", completed: false },
+                        { id: 3, title: "Atomic Structure", difficulty: "Medium", completed: false },
+                        { id: 4, title: "Periodic Table", difficulty: "Medium", completed: false },
+                        { id: 5, title: "Waves and Sound", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Light and Optics", difficulty: "Hard", completed: false }
+                    ],
+                    9: [
+                        { id: 1, title: "Cell Biology", difficulty: "Easy", completed: false },
+                        { id: 2, title: "Photosynthesis", difficulty: "Medium", completed: false },
+                        { id: 3, title: "Genetics", difficulty: "Medium", completed: false },
+                        { id: 4, title: "Chemistry Basics", difficulty: "Easy", completed: false },
+                        { id: 5, title: "Physics Fundamentals", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Astronomy", difficulty: "Medium", completed: false }
+                    ],
+                    10: [
+                        { id: 1, title: "Advanced Biology", difficulty: "Medium", completed: false },
+                        { id: 2, title: "Organic Chemistry", difficulty: "Hard", completed: false },
+                        { id: 3, title: "Thermodynamics", difficulty: "Hard", completed: false },
+                        { id: 4, title: "Electromagnetism", difficulty: "Hard", completed: false },
+                        { id: 5, title: "Environmental Science", difficulty: "Medium", completed: false },
+                        { id: 6, title: "Molecular Biology", difficulty: "Hard", completed: false }
+                    ],
+                    11: [
+                        { id: 1, title: "Advanced Chemistry", difficulty: "Hard", completed: false },
+                        { id: 2, title: "Physics: Mechanics", difficulty: "Hard", completed: false },
+                        { id: 3, title: "Physics: Electricity", difficulty: "Hard", completed: false },
+                        { id: 4, title: "Human Anatomy", difficulty: "Hard", completed: false },
+                        { id: 5, title: "Biochemistry", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Quantum Physics", difficulty: "Hard", completed: false }
+                    ],
+                    12: [
+                        { id: 1, title: "Advanced Chemistry", difficulty: "Hard", completed: false },
+                        { id: 2, title: "Physics: Mechanics", difficulty: "Hard", completed: false },
+                        { id: 3, title: "Physics: Electricity", difficulty: "Hard", completed: false },
+                        { id: 4, title: "Human Anatomy", difficulty: "Hard", completed: false },
+                        { id: 5, title: "Biochemistry", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Quantum Physics", difficulty: "Hard", completed: false }
+                    ]
+                },
+                reading: {
+                    6: [
+                        { id: 1, title: "Basic Reading Comprehension", difficulty: "Easy", completed: false },
+                        { id: 2, title: "Story Elements", difficulty: "Easy", completed: false },
+                        { id: 3, title: "Vocabulary Building", difficulty: "Easy", completed: false },
+                        { id: 4, title: "Main Idea and Details", difficulty: "Medium", completed: false },
+                        { id: 5, title: "Character Analysis", difficulty: "Medium", completed: false },
+                        { id: 6, title: "Reading Strategies", difficulty: "Medium", completed: false }
+                    ],
+                    7: [
+                        { id: 1, title: "Advanced Comprehension", difficulty: "Easy", completed: false },
+                        { id: 2, title: "Literary Devices", difficulty: "Medium", completed: false },
+                        { id: 3, title: "Theme and Symbolism", difficulty: "Medium", completed: false },
+                        { id: 4, title: "Point of View", difficulty: "Medium", completed: false },
+                        { id: 5, title: "Text Structure", difficulty: "Medium", completed: false },
+                        { id: 6, title: "Inference Skills", difficulty: "Hard", completed: false }
+                    ],
+                    8: [
+                        { id: 1, title: "Literary Analysis", difficulty: "Medium", completed: false },
+                        { id: 2, title: "Poetry Analysis", difficulty: "Medium", completed: false },
+                        { id: 3, title: "Author's Purpose", difficulty: "Medium", completed: false },
+                        { id: 4, title: "Textual Evidence", difficulty: "Medium", completed: false },
+                        { id: 5, title: "Comparative Reading", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Critical Thinking", difficulty: "Hard", completed: false }
+                    ],
+                    9: [
+                        { id: 1, title: "Reading Comprehension", difficulty: "Easy", completed: false },
+                        { id: 2, title: "Literary Analysis", difficulty: "Medium", completed: false },
+                        { id: 3, title: "Poetry Analysis", difficulty: "Medium", completed: false },
+                        { id: 4, title: "Shakespeare Studies", difficulty: "Hard", completed: false },
+                        { id: 5, title: "Modern Literature", difficulty: "Medium", completed: false },
+                        { id: 6, title: "Critical Reading", difficulty: "Hard", completed: false }
+                    ],
+                    10: [
+                        { id: 1, title: "Advanced Literary Analysis", difficulty: "Medium", completed: false },
+                        { id: 2, title: "Rhetorical Analysis", difficulty: "Hard", completed: false },
+                        { id: 3, title: "Classical Literature", difficulty: "Hard", completed: false },
+                        { id: 4, title: "American Literature", difficulty: "Medium", completed: false },
+                        { id: 5, title: "World Literature", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Literary Criticism", difficulty: "Hard", completed: false }
+                    ],
+                    11: [
+                        { id: 1, title: "AP Literature Analysis", difficulty: "Hard", completed: false },
+                        { id: 2, title: "British Literature", difficulty: "Hard", completed: false },
+                        { id: 3, title: "Advanced Poetry", difficulty: "Hard", completed: false },
+                        { id: 4, title: "Drama Analysis", difficulty: "Hard", completed: false },
+                        { id: 5, title: "Literary Theory", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Research and Writing", difficulty: "Hard", completed: false }
+                    ],
+                    12: [
+                        { id: 1, title: "Advanced Literary Theory", difficulty: "Hard", completed: false },
+                        { id: 2, title: "Contemporary Literature", difficulty: "Hard", completed: false },
+                        { id: 3, title: "Postmodern Analysis", difficulty: "Hard", completed: false },
+                        { id: 4, title: "Comparative Literature", difficulty: "Hard", completed: false },
+                        { id: 5, title: "Literary Research Methods", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Thesis Development", difficulty: "Hard", completed: false }
+                    ]
+                },
+                language: {
+                    6: [
+                        { id: 1, title: "Basic Greetings", difficulty: "Easy", completed: false },
+                        { id: 2, title: "Numbers and Colors", difficulty: "Easy", completed: false },
+                        { id: 3, title: "Family and Friends", difficulty: "Easy", completed: false },
+                        { id: 4, title: "Daily Activities", difficulty: "Medium", completed: false },
+                        { id: 5, title: "Food and Drinks", difficulty: "Medium", completed: false },
+                        { id: 6, title: "Simple Conversations", difficulty: "Medium", completed: false }
+                    ],
+                    7: [
+                        { id: 1, title: "Present Tense Verbs", difficulty: "Easy", completed: false },
+                        { id: 2, title: "Common Phrases", difficulty: "Easy", completed: false },
+                        { id: 3, title: "Describing People", difficulty: "Medium", completed: false },
+                        { id: 4, title: "School and Hobbies", difficulty: "Medium", completed: false },
+                        { id: 5, title: "Weather and Seasons", difficulty: "Medium", completed: false },
+                        { id: 6, title: "Basic Grammar Rules", difficulty: "Hard", completed: false }
+                    ],
+                    8: [
+                        { id: 1, title: "Past Tense Introduction", difficulty: "Medium", completed: false },
+                        { id: 2, title: "Future Tense", difficulty: "Medium", completed: false },
+                        { id: 3, title: "Adjectives and Adverbs", difficulty: "Medium", completed: false },
+                        { id: 4, title: "Question Formation", difficulty: "Medium", completed: false },
+                        { id: 5, title: "Travel Vocabulary", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Cultural Context", difficulty: "Hard", completed: false }
+                    ],
+                    9: [
+                        { id: 1, title: "Spanish Basics", difficulty: "Easy", completed: false },
+                        { id: 2, title: "French Greetings", difficulty: "Easy", completed: false },
+                        { id: 3, title: "German Vocabulary", difficulty: "Medium", completed: false },
+                        { id: 4, title: "Spanish Grammar", difficulty: "Medium", completed: false },
+                        { id: 5, title: "French Conversation", difficulty: "Hard", completed: false },
+                        { id: 6, title: "German Grammar", difficulty: "Hard", completed: false }
+                    ],
+                    10: [
+                        { id: 1, title: "Advanced Verb Tenses", difficulty: "Medium", completed: false },
+                        { id: 2, title: "Subjunctive Mood", difficulty: "Hard", completed: false },
+                        { id: 3, title: "Complex Sentences", difficulty: "Hard", completed: false },
+                        { id: 4, title: "Idiomatic Expressions", difficulty: "Hard", completed: false },
+                        { id: 5, title: "Literary Analysis", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Advanced Conversation", difficulty: "Hard", completed: false }
+                    ],
+                    11: [
+                        { id: 1, title: "AP Language Preparation", difficulty: "Hard", completed: false },
+                        { id: 2, title: "Advanced Literature", difficulty: "Hard", completed: false },
+                        { id: 3, title: "Formal Writing", difficulty: "Hard", completed: false },
+                        { id: 4, title: "Cultural Studies", difficulty: "Hard", completed: false },
+                        { id: 5, title: "Translation Skills", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Linguistic Analysis", difficulty: "Hard", completed: false }
+                    ],
+                    12: [
+                        { id: 1, title: "Advanced Grammar", difficulty: "Hard", completed: false },
+                        { id: 2, title: "Literary Analysis", difficulty: "Hard", completed: false },
+                        { id: 3, title: "Formal Writing", difficulty: "Hard", completed: false },
+                        { id: 4, title: "Cultural Studies", difficulty: "Hard", completed: false },
+                        { id: 5, title: "Advanced Conversation", difficulty: "Hard", completed: false },
+                        { id: 6, title: "Translation Skills", difficulty: "Hard", completed: false }
+                    ]
+                }
+            };
+            
+            const subjectLessons = lessonsBySubject[subjectId];
+            if (!subjectLessons) return [];
+            
+            // Get lessons for the grade, or default to grade 9 if not available
+            return subjectLessons[grade] || subjectLessons[9] || [];
+        }
+
+        // Calculate progress for a subject based on completed lessons (matches subject page logic)
         function calculateSubjectProgress(subjectId) {
             const completedLessons = JSON.parse(localStorage.getItem('astrolearn_completed_lessons') || '[]');
             const preferences = JSON.parse(localStorage.getItem('astrolearn_preferences') || '{}');
             const grade = preferences.grade || 9;
             
-            // Define lessons for each subject by grade (must match exactly with subject pages)
-            const lessonsBySubject = {
-                math: {
-                    6: ["Introduction to Fractions", "Decimal Operations", "Basic Geometry Shapes", "Ratios and Proportions"],
-                    7: ["Integers and Operations", "Expressions and Equations"],
-                    8: ["Linear Equations", "Systems of Equations"],
-                    9: ["Algebra Basics", "Quadratic Equations"],
-                    10: ["Algebra Basics", "Quadratic Equations"],
-                    11: ["Algebra Basics", "Quadratic Equations"],
-                    12: ["Algebra Basics", "Quadratic Equations"]
-                },
-                science: {
-                    6: ["Introduction to Matter"],
-                    7: ["Introduction to Matter"],
-                    8: ["Introduction to Matter"],
-                    9: ["Cell Biology", "Genetics"],
-                    10: ["Cell Biology", "Genetics"],
-                    11: ["Cell Biology", "Genetics"],
-                    12: ["Cell Biology", "Genetics"]
-                },
-                reading: {
-                    6: ["Basic Reading Comprehension", "Story Elements", "Vocabulary Building", "Main Idea and Details", "Character Analysis", "Reading Strategies"],
-                    7: ["Advanced Comprehension", "Literary Devices", "Theme and Symbolism", "Point of View", "Text Structure", "Inference Skills"],
-                    8: ["Literary Analysis", "Poetry Analysis", "Author's Purpose", "Textual Evidence", "Comparative Reading", "Critical Thinking"],
-                    9: ["Reading Comprehension", "Literary Analysis"],
-                    10: ["Advanced Literary Analysis", "Rhetorical Analysis", "Classical Literature", "American Literature", "World Literature", "Literary Criticism"],
-                    11: ["AP Literature Analysis", "British Literature", "Advanced Poetry", "Drama Analysis", "Literary Theory", "Research and Writing"],
-                    12: ["Advanced Literary Theory", "Contemporary Literature", "Postmodern Analysis", "Comparative Literature", "Literary Research Methods", "Thesis Development"]
-                },
-                language: {
-                    6: ["Spanish Basics", "French Greetings"],
-                    7: ["Spanish Basics", "French Greetings"],
-                    8: ["Spanish Basics", "French Greetings"],
-                    9: ["Spanish Basics", "French Greetings"],
-                    10: ["Spanish Basics", "French Greetings"],
-                    11: ["Spanish Basics", "French Greetings"],
-                    12: ["Spanish Basics", "French Greetings"]
-                }
-            };
-            
-            const lessons = lessonsBySubject[subjectId]?.[grade] || lessonsBySubject[subjectId]?.[9] || [];
+            const lessons = getLessonsForSubject(subjectId, grade);
             if (lessons.length === 0) return 0;
             
             let completedCount = 0;
-            lessons.forEach(lessonTitle => {
-                const lessonKey = `${subjectId}_${grade}_${lessonTitle}`;
+            lessons.forEach(lesson => {
+                const lessonKey = `${subjectId}_${grade}_${lesson.title}`;
                 if (completedLessons.includes(lessonKey)) {
                     completedCount++;
                 }
@@ -455,7 +660,17 @@
                 const grade = preferences.grade || 9;
                 const lessons = getLessonsForSubject(subjectId, grade);
                 const completedLessons = JSON.parse(localStorage.getItem('astrolearn_completed_lessons') || '[]');
-                const completedCount = lessons.filter(l => completedLessons.includes(l.id)).length;
+                
+                // Count completed lessons using the same logic as subject pages
+                let completedCount = 0;
+                lessons.forEach(lesson => {
+                    const lessonKey = `${subjectId}_${grade}_${lesson.title}`;
+                    if (completedLessons.includes(lessonKey)) {
+                        completedCount++;
+                    }
+                });
+                
+                const totalLessons = lessons.length;
                 
                 return `
                     <div class="subject-mission-card" data-subject="${subjectId}">
@@ -466,7 +681,7 @@
                                 <div class="progress-bar" style="width: ${subject.progress}%; background: linear-gradient(90deg, ${subject.color}, ${subject.color}88);"></div>
                             </div>
                             <p class="text-sm text-[#F5F7FA]/70 mb-2">${subject.progress}% Complete</p>
-                            <p class="text-xs text-[#F5F7FA]/60 mb-4">${completedCount} of ${lessons.length} lessons completed</p>
+                            <p class="text-xs text-[#F5F7FA]/60 mb-4">${completedCount} of ${totalLessons} lessons completed</p>
                             <a href="${subject.link}" class="btn-primary py-2 px-6 inline-block">
                                 Begin
                             </a>
@@ -601,15 +816,21 @@
             `).join('');
         }
 
-        // Load progress overview
+        // Load progress overview (uses actual progress from completed lessons)
         function loadProgressOverview() {
             const container = document.getElementById('progressOverview');
-            const progress = [
-                { subject: "Math", progress: 72, color: "#4FC3F7" },
-                { subject: "Science", progress: 58, color: "#FF6EC7" },
-                { subject: "Reading", progress: 65, color: "#4FC3F7" },
-                { subject: "Language", progress: 45, color: "#FF6EC7" }
-            ];
+            const selectedSubjects = getSelectedSubjects();
+            
+            if (selectedSubjects.length === 0) {
+                container.innerHTML = '<p class="text-center text-[#F5F7FA]/70">No subjects selected. Choose your learning path to see progress.</p>';
+                return;
+            }
+            
+            const progress = selectedSubjects.map(subject => ({
+                subject: subject.name,
+                progress: calculateSubjectProgress(subject.id),
+                color: subject.color
+            }));
             
             container.innerHTML = progress.map(item => `
                 <div>

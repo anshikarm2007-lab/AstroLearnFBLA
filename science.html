@@ -15,7 +15,7 @@
     <nav class="navbar">
         <div class="container mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <img src="sticker.webp" alt="AstroLearn Logo" class="h-8 w-8 object-contain">
+                <img src="sticker.webp" alt="AstroLearn Logo" class="w-10 h-10">
                 <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
                     AstroLearn
                 </a>
@@ -25,7 +25,6 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
-                <a href="game.html" class="nav-link protected-link">Space Quest</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
             </div>
             <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
@@ -36,7 +35,6 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
-                <a href="game.html" class="nav-link protected-link">Space Quest</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
             </div>
         </div>
@@ -55,14 +53,14 @@
             <div class="mt-4 inline-flex items-center gap-3 glass-card px-4 py-2">
                 <p class="text-sm text-[#F5F7FA]/70">
                     <span class="font-semibold text-[#FF6EC7]">Grade Level:</span> 
-                    <select id="gradeSelector" class="bg-transparent border-none text-[#F5F7FA] font-bold cursor-pointer focus:outline-none ml-2">
-                        <option value="6">6th</option>
-                        <option value="7">7th</option>
-                        <option value="8">8th</option>
-                        <option value="9">9th</option>
-                        <option value="10">10th</option>
-                        <option value="11">11th</option>
-                        <option value="12">12th</option>
+                    <select id="gradeSelector" class="border-none text-[#F5F7FA] font-bold cursor-pointer focus:outline-none ml-2 rounded px-2 py-1" style="color: #F5F7FA !important; background: rgba(255, 110, 199, 0.3) !important; border: 1px solid rgba(255, 110, 199, 0.5) !important;">
+                        <option value="6" style="color: #F5F7FA !important; background: #0B0F2F !important;">6th</option>
+                        <option value="7" style="color: #F5F7FA !important; background: #0B0F2F !important;">7th</option>
+                        <option value="8" style="color: #F5F7FA !important; background: #0B0F2F !important;">8th</option>
+                        <option value="9" style="color: #F5F7FA !important; background: #0B0F2F !important;">9th</option>
+                        <option value="10" style="color: #F5F7FA !important; background: #0B0F2F !important;">10th</option>
+                        <option value="11" style="color: #F5F7FA !important; background: #0B0F2F !important;">11th</option>
+                        <option value="12" style="color: #F5F7FA !important; background: #0B0F2F !important;">12th</option>
                     </select>
                 </p>
             </div>
@@ -124,7 +122,10 @@
         <div class="container mx-auto px-6 py-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
-                    <p class="text-sm text-[#F5F7FA]/70 flex items-center gap-1"><img src="sticker.webp" alt="AstroLearn Logo" class="h-5 w-5 object-contain"> Powered by AstroLearn</p>
+                    <div class="flex items-center gap-2">
+                        <img src="sticker.webp" alt="AstroLearn Logo" class="w-6 h-6">
+                        <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn</p>
+                    </div>
                 </div>
                 <div class="flex space-x-6">
                     <a href="about.html" class="footer-link">About</a>
@@ -239,6 +240,51 @@
         let currentLessonKey = null;
         let currentLessonTitle = null;
         let currentSubject = null;
+        
+        // Generate default lesson content for lessons without specific content
+        function generateDefaultLessonContent(lessonTitle, subject, grade) {
+            return {
+                title: lessonTitle,
+                introduction: `Welcome to ${lessonTitle}! This lesson will help you understand key concepts and build your knowledge in ${subject}.`,
+                concepts: [
+                    {
+                        heading: "Introduction to " + lessonTitle,
+                        explanation: `This lesson covers important concepts related to ${lessonTitle}. We'll explore the fundamentals and build a strong foundation for understanding this topic.`,
+                        example: "Understanding these concepts will help you succeed in this subject and apply your knowledge to solve problems."
+                    },
+                    {
+                        heading: "Key Concepts and Principles",
+                        explanation: "We'll explore the main ideas and principles that are essential for mastering this topic. These concepts form the building blocks for more advanced learning.",
+                        example: "Practice and application are key to understanding and retaining these concepts."
+                    },
+                    {
+                        heading: "Real-World Applications",
+                        explanation: "Learn how these concepts apply in real-world situations and problem-solving. Understanding practical applications helps make the material more meaningful and easier to remember.",
+                        example: "These skills are useful in many areas of study and everyday life."
+                    },
+                    {
+                        heading: "Practice and Mastery",
+                        explanation: "Regular practice is essential for mastering this topic. Work through examples, solve problems, and review concepts regularly to build confidence and understanding.",
+                        example: "The more you practice, the more comfortable you'll become with these concepts."
+                    }
+                ],
+                practiceProblems: [
+                    {
+                        problem: `Think about what you've learned about ${lessonTitle}. What questions do you have?`,
+                        solution: "Review the concepts and try to apply them to solve problems. If you have questions, review the material or ask for help."
+                    },
+                    {
+                        problem: `How can you use your knowledge of ${lessonTitle} in real situations?`,
+                        solution: "Practice applying these concepts in different situations. Look for examples in your daily life where these concepts might apply."
+                    },
+                    {
+                        problem: "What are the most important points to remember from this lesson?",
+                        solution: "Focus on understanding the key concepts and how they connect to each other. Practice regularly to reinforce your learning."
+                    }
+                ],
+                summary: `You've completed ${lessonTitle}! Remember to review the key concepts regularly and practice applying them. Keep up the great work, and continue building your knowledge in ${subject}!`
+            };
+        }
 
         // Grade-level specific lesson content
         const lessonContentByGrade = {
@@ -284,6 +330,272 @@
                             }
                         ],
                         summary: "Matter is anything with mass and volume. It exists in three states: solid, liquid, and gas. States can change through heating or cooling. All matter is made of tiny particles called atoms. Understanding matter helps us understand the world around us!"
+                    },
+                    "Earth's Layers": {
+                        title: "Earth's Layers",
+                        introduction: "Earth is made up of several distinct layers, each with unique properties! Understanding these layers helps us understand earthquakes, volcanoes, and how our planet formed.",
+                        concepts: [
+                            {
+                                heading: "The Crust",
+                                explanation: "The crust is Earth's outermost layer - the surface we live on! It's the thinnest layer, ranging from 5-70 km thick. The crust is made of solid rock.",
+                                example: "The crust is like the skin of an apple - thin compared to the rest, but it's what we see and interact with every day!"
+                            },
+                            {
+                                heading: "The Mantle",
+                                explanation: "The mantle is the thickest layer, making up about 84% of Earth's volume. It's located between the crust and core, about 2,900 km thick. The mantle is mostly solid but can flow slowly.",
+                                example: "The mantle is like the white part of an apple - much thicker than the skin, and it makes up most of the fruit!"
+                            },
+                            {
+                                heading: "The Core",
+                                explanation: "The core is Earth's innermost layer, divided into outer core (liquid) and inner core (solid). The outer core creates Earth's magnetic field.",
+                                example: "The core is like the apple's seeds - at the very center, and it's the hottest part!"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What are the three main layers of Earth?",
+                                solution: "Crust, Mantle, and Core"
+                            },
+                            {
+                                problem: "Which layer is the thickest?",
+                                solution: "The Mantle - it makes up about 84% of Earth's volume"
+                            }
+                        ],
+                        summary: "Earth has three main layers: Crust (outermost), Mantle (thickest), and Core (innermost, hottest). The core creates Earth's magnetic field. Understanding these layers helps us understand our planet!"
+                    },
+                    "Weather and Climate": {
+                        title: "Weather and Climate",
+                        introduction: "Weather and climate describe atmospheric conditions, but they're different! Weather is what's happening right now, while climate is the long-term pattern.",
+                        concepts: [
+                            {
+                                heading: "Weather vs Climate",
+                                explanation: "Weather describes short-term atmospheric conditions (hours to days). Climate describes long-term average weather patterns (years to decades) in a region.",
+                                example: "Today's weather might be sunny and 75°F, but the climate of a region might be 'temperate with four distinct seasons'"
+                            },
+                            {
+                                heading: "Factors Affecting Weather",
+                                explanation: "Weather is influenced by: temperature, humidity, air pressure, wind, and precipitation. These factors interact to create different weather conditions.",
+                                example: "High pressure usually brings clear skies, while low pressure often brings clouds and precipitation"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is the difference between weather and climate?",
+                                solution: "Weather is short-term (hours to days), climate is long-term average (years to decades)"
+                            }
+                        ],
+                        summary: "Weather is short-term conditions, climate is long-term patterns. Understanding weather and climate helps us understand our environment!"
+                    },
+                    "Plant Life Cycles": {
+                        title: "Plant Life Cycles",
+                        introduction: "Plants go through amazing life cycles from seed to mature plant! Understanding plant life cycles helps us understand how plants grow, reproduce, and survive.",
+                        concepts: [
+                            {
+                                heading: "Stages of Plant Life Cycle",
+                                explanation: "Plants go through: Seed → Germination → Seedling → Mature Plant → Flowering/Fruiting → New Seeds. The cycle then repeats!",
+                                example: "A bean seed germinates, grows into a seedling, becomes a mature bean plant, produces flowers and beans!"
+                            },
+                            {
+                                heading: "Photosynthesis",
+                                explanation: "Photosynthesis is how plants make their own food! Plants use sunlight, water, and carbon dioxide to make glucose (sugar) and oxygen.",
+                                example: "Plants are like nature's factories - they take in sunlight, water, and air, and produce food and oxygen!"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What are the main stages of a plant's life cycle?",
+                                solution: "Seed → Germination → Seedling → Mature Plant → Flowering/Fruiting → New Seeds"
+                            }
+                        ],
+                        summary: "Plants go through life cycles: seed, germination, seedling, mature plant, flowering. Photosynthesis makes food using sunlight, water, and CO₂. Understanding plant life cycles helps us understand nature!"
+                    },
+                    "Simple Machines": {
+                        title: "Simple Machines",
+                        introduction: "Simple machines make work easier! They help us lift, move, and apply force with less effort. Understanding simple machines helps us understand how tools work!",
+                        concepts: [
+                            {
+                                heading: "Types of Simple Machines",
+                                explanation: "There are six types: lever, pulley, wheel and axle, inclined plane, wedge, and screw. They make work easier by changing the direction or magnitude of force.",
+                                example: "Using a lever to lift a heavy rock is easier than lifting it directly!"
+                            },
+                            {
+                                heading: "Lever",
+                                explanation: "A lever is a rigid bar that pivots on a fulcrum. Levers help lift heavy objects with less force.",
+                                example: "A seesaw is a lever - you can lift someone heavier by sitting farther from the fulcrum!"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What are the six types of simple machines?",
+                                solution: "Lever, pulley, wheel and axle, inclined plane, wedge, and screw"
+                            }
+                        ],
+                        summary: "Simple machines make work easier: lever, pulley, wheel and axle, inclined plane, wedge, and screw. They change direction or magnitude of force. Simple machines are everywhere in tools!"
+                    },
+                    "Solar System Basics": {
+                        title: "Solar System Basics",
+                        introduction: "Our solar system is amazing! It contains the Sun, planets, moons, asteroids, and comets. Understanding our solar system helps us understand our place in the universe!",
+                        concepts: [
+                            {
+                                heading: "The Sun",
+                                explanation: "The Sun is a star at the center of our solar system. It's a huge ball of hot gas that produces light and heat. The Sun's gravity holds all the planets in orbit.",
+                                example: "The Sun is so massive that it contains 99.8% of all the mass in our solar system!"
+                            },
+                            {
+                                heading: "The Planets",
+                                explanation: "There are eight planets: Inner planets (Mercury, Venus, Earth, Mars) are rocky and smaller. Outer planets (Jupiter, Saturn, Uranus, Neptune) are gas giants and larger.",
+                                example: "Earth is the third planet from the Sun and the only one known to support life."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "How many planets are in our solar system?",
+                                solution: "Eight planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune"
+                            }
+                        ],
+                        summary: "Our solar system has the Sun at the center, eight planets, moons, asteroids, and comets. Inner planets are rocky, outer planets are gas giants. Understanding our solar system helps us understand our place in space!"
+                    }
+                }
+            },
+            7: {
+                science: {
+                    "Cell Structure": {
+                        title: "Cell Structure",
+                        introduction: "Cells are the basic building blocks of all living things! Understanding cell structure helps us understand how living organisms function.",
+                        concepts: [
+                            {
+                                heading: "Cell Membrane",
+                                explanation: "The cell membrane surrounds and protects the cell. It's selectively permeable, controlling what enters and exits.",
+                                example: "Like a security gate, the cell membrane decides what can come in and go out."
+                            },
+                            {
+                                heading: "Nucleus",
+                                explanation: "The nucleus is the control center, containing DNA that holds genetic information. It directs cell activities.",
+                                example: "The nucleus is like the brain of the cell - it contains all the instructions."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is the function of the nucleus?",
+                                solution: "The nucleus contains DNA and controls cell activities, acting as the cell's control center."
+                            }
+                        ],
+                        summary: "Cells have a membrane, nucleus, cytoplasm, and organelles. Each structure has specific functions. Understanding cell structure helps us understand how living things work!"
+                    },
+                    "Ecosystems": {
+                        title: "Ecosystems",
+                        introduction: "Ecosystems are communities of living things interacting with their environment! Understanding ecosystems helps us understand how nature works!",
+                        concepts: [
+                            {
+                                heading: "What is an Ecosystem?",
+                                explanation: "An ecosystem includes all living things (biotic) and non-living things (abiotic) in an area, and how they interact.",
+                                example: "A pond ecosystem includes fish, plants, insects (living), plus water, sunlight, rocks (non-living)."
+                            },
+                            {
+                                heading: "Food Chains",
+                                explanation: "Food chains show who eats whom: Producers (plants) → Primary Consumers (herbivores) → Secondary Consumers (carnivores).",
+                                example: "Grass → Rabbit → Fox shows energy flow through an ecosystem."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is an ecosystem?",
+                                solution: "An ecosystem includes all living and non-living things in an area and how they interact."
+                            }
+                        ],
+                        summary: "Ecosystems include living and non-living components. Food chains show energy flow. Understanding ecosystems helps us understand nature!"
+                    },
+                    "Chemical Reactions": {
+                        title: "Chemical Reactions",
+                        introduction: "Chemical reactions are happening all around us! They change substances into new substances. Understanding chemical reactions helps us understand how matter changes!",
+                        concepts: [
+                            {
+                                heading: "What is a Chemical Reaction?",
+                                explanation: "A chemical reaction occurs when substances (reactants) change into new substances (products). Evidence includes: color change, temperature change, gas production.",
+                                example: "When you mix baking soda and vinegar, bubbles form - that's a chemical reaction!"
+                            },
+                            {
+                                heading: "Conservation of Mass",
+                                explanation: "The law of conservation of mass states matter can't be created or destroyed. Atoms are conserved in reactions.",
+                                example: "In a reaction, the number of atoms before equals the number after - they're just rearranged!"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What evidence indicates a chemical reaction?",
+                                solution: "Color change, temperature change, gas production, precipitate formation, or odor change"
+                            }
+                        ],
+                        summary: "Chemical reactions change reactants into products. Matter is conserved. Understanding reactions helps us understand chemistry!"
+                    },
+                    "Forces and Motion": {
+                        title: "Forces and Motion",
+                        introduction: "Forces and motion are everywhere! Understanding how forces affect motion helps us understand how things move and why objects fall.",
+                        concepts: [
+                            {
+                                heading: "What is Force?",
+                                explanation: "Force is a push or pull that causes objects to move, stop, or change direction. Forces have magnitude and direction.",
+                                example: "Pushing a door open applies a force. Gravity pulling you down is a force."
+                            },
+                            {
+                                heading: "Newton's Laws",
+                                explanation: "First Law: Objects at rest stay at rest unless acted upon. Second Law: F = ma. Third Law: For every action, there's an equal and opposite reaction.",
+                                example: "A ball rolling stops due to friction. Pushing a heavier object requires more force."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is Newton's First Law?",
+                                solution: "Objects at rest stay at rest, objects in motion stay in motion, unless acted upon by an unbalanced force"
+                            }
+                        ],
+                        summary: "Forces are pushes or pulls. Newton's laws describe motion. Understanding forces and motion helps us understand physics!"
+                    },
+                    "Energy Transfer": {
+                        title: "Energy Transfer",
+                        introduction: "Energy is constantly being transferred and transformed! Understanding energy transfer helps us understand how energy moves and changes forms!",
+                        concepts: [
+                            {
+                                heading: "Forms of Energy",
+                                explanation: "Energy comes in many forms: Kinetic (motion), Potential (stored), Thermal (heat), Chemical, Electrical, Light, Sound, and Nuclear.",
+                                example: "A battery has chemical energy that becomes electrical energy, which can become light energy."
+                            },
+                            {
+                                heading: "Energy Transfer",
+                                explanation: "Energy transfers through Conduction (direct contact), Convection (through fluids), and Radiation (through space).",
+                                example: "Touching a hot pan transfers heat by conduction. The Sun transfers energy by radiation."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What are three methods of energy transfer?",
+                                solution: "Conduction (direct contact), Convection (through fluids), and Radiation (through space)"
+                            }
+                        ],
+                        summary: "Energy has many forms and can transfer or transform. Transfer methods include conduction, convection, and radiation. Understanding energy transfer helps us understand how energy works!"
+                    },
+                    "Earth's Resources": {
+                        title: "Earth's Resources",
+                        introduction: "Earth provides us with many resources! Understanding Earth's resources helps us understand what we have and why conservation is important!",
+                        concepts: [
+                            {
+                                heading: "Types of Resources",
+                                explanation: "Resources are either Renewable (can be replenished, like solar, wind) or Non-renewable (limited supply, like fossil fuels, minerals).",
+                                example: "Sunlight and wind are renewable. Coal and oil are non-renewable - once used, they're gone."
+                            },
+                            {
+                                heading: "Conservation",
+                                explanation: "Conservation means using resources wisely. Reduce (use less), Reuse (use again), Recycle (make new products).",
+                                example: "Turning off lights saves energy. Using reusable water bottles reduces waste."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is the difference between renewable and non-renewable resources?",
+                                solution: "Renewable resources can be replenished (like solar, wind). Non-renewable resources are limited and will run out (like fossil fuels)."
+                            }
+                        ],
+                        summary: "Resources are renewable or non-renewable. Conservation (reduce, reuse, recycle) is important. Understanding resources helps us protect our planet!"
                     }
                 }
             },
@@ -390,6 +702,600 @@
                             }
                         ],
                         summary: "Genetics studies how traits are inherited. Genes are segments of DNA that code for traits. Humans have 46 chromosomes (23 pairs). Dominant traits mask recessive traits. Genotype is the genetic makeup, phenotype is the physical appearance. Punnett squares help predict inheritance patterns. Genetics explains why we inherit traits from our parents!"
+                    },
+                    "Photosynthesis": {
+                        title: "Photosynthesis",
+                        introduction: "Photosynthesis is how plants make their own food! It's one of the most important processes on Earth, producing oxygen and food for almost all living things. Let's explore this amazing process!",
+                        concepts: [
+                            {
+                                heading: "What is Photosynthesis?",
+                                explanation: "Photosynthesis is the process where plants use sunlight, water, and carbon dioxide to make glucose (sugar) and oxygen. The equation is: 6CO₂ + 6H₂O + sunlight → C₆H₁₂O₆ + 6O₂. This happens in chloroplasts, which contain chlorophyll (green pigment).",
+                                example: "Plants are like nature's factories - they take in CO₂, water, and sunlight, and produce glucose (food) and oxygen!"
+                            },
+                            {
+                                heading: "Chlorophyll",
+                                explanation: "Chlorophyll is the green pigment in plant leaves that captures sunlight. It absorbs red and blue light, reflecting green (why leaves look green). Chlorophyll is essential for photosynthesis.",
+                                example: "Chlorophyll is like a solar panel - it captures sunlight energy to power photosynthesis!"
+                            },
+                            {
+                                heading: "Why Photosynthesis Matters",
+                                explanation: "Photosynthesis produces oxygen that we breathe and glucose that feeds plants (and animals that eat plants). Almost all life depends on photosynthesis! It also removes CO₂ from the atmosphere.",
+                                example: "Without photosynthesis, there would be no oxygen to breathe and no food to eat - life as we know it wouldn't exist!"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What are the reactants (inputs) of photosynthesis?",
+                                solution: "Carbon dioxide (CO₂), water (H₂O), and sunlight"
+                            },
+                            {
+                                problem: "What are the products (outputs) of photosynthesis?",
+                                solution: "Glucose (C₆H₁₂O₆) and oxygen (O₂)"
+                            }
+                        ],
+                        summary: "Photosynthesis uses CO₂, water, and sunlight to make glucose and oxygen. Chlorophyll captures sunlight. Photosynthesis is essential for life on Earth - it produces oxygen and food!"
+                    },
+                    "Chemistry Basics": {
+                        title: "Chemistry Basics",
+                        introduction: "Chemistry is the study of matter and how it changes! Understanding chemistry basics helps us understand the world around us, from cooking to medicine to the environment!",
+                        concepts: [
+                            {
+                                heading: "Atoms and Elements",
+                                explanation: "Atoms are the basic building blocks of matter. Elements are pure substances made of only one type of atom. There are 118 known elements, each with unique properties. Elements are organized in the periodic table.",
+                                example: "Hydrogen, oxygen, carbon, and gold are all elements - each made of only one type of atom."
+                            },
+                            {
+                                heading: "Compounds and Molecules",
+                                explanation: "Compounds are substances made of two or more different elements chemically bonded. Molecules are groups of atoms bonded together. Water (H₂O) is a compound - two hydrogen atoms and one oxygen atom.",
+                                example: "Table salt (NaCl) is a compound of sodium and chlorine. Water (H₂O) is a compound of hydrogen and oxygen."
+                            },
+                            {
+                                heading: "Chemical Bonds",
+                                explanation: "Chemical bonds hold atoms together. Ionic bonds form when electrons are transferred. Covalent bonds form when electrons are shared. Bonds determine how atoms combine to form compounds.",
+                                example: "In water (H₂O), hydrogen and oxygen share electrons (covalent bond). In salt (NaCl), sodium gives an electron to chlorine (ionic bond)."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is the difference between an element and a compound?",
+                                solution: "An element is made of only one type of atom. A compound is made of two or more different elements chemically bonded."
+                            }
+                        ],
+                        summary: "Atoms are building blocks of matter. Elements are pure substances. Compounds are made of different elements. Chemical bonds hold atoms together. Understanding chemistry basics helps us understand matter!"
+                    },
+                    "Physics Fundamentals": {
+                        title: "Physics Fundamentals",
+                        introduction: "Physics is the study of matter, energy, and how they interact! Understanding physics fundamentals helps us understand motion, forces, energy, and how the universe works!",
+                        concepts: [
+                            {
+                                heading: "Motion and Speed",
+                                explanation: "Motion is change in position. Speed = distance/time. Velocity = speed with direction. Acceleration = change in velocity/time. Objects can have constant speed, changing speed, or no motion.",
+                                example: "A car going 60 mph north has velocity. If it speeds up to 70 mph, it's accelerating."
+                            },
+                            {
+                                heading: "Forces",
+                                explanation: "Force is a push or pull. Newton's laws describe motion: First Law (inertia), Second Law (F = ma), Third Law (action-reaction). Forces include gravity, friction, and applied forces.",
+                                example: "Gravity pulls you down. Friction opposes motion. Pushing a door applies a force."
+                            },
+                            {
+                                heading: "Energy",
+                                explanation: "Energy is the ability to do work. Forms include kinetic (motion), potential (stored), thermal (heat), and more. Energy is conserved - it can't be created or destroyed, only transferred or transformed.",
+                                example: "A ball at the top of a hill has potential energy. When it rolls down, potential energy becomes kinetic energy."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is the formula for force?",
+                                solution: "F = ma (force = mass × acceleration)"
+                            }
+                        ],
+                        summary: "Physics studies matter, energy, and motion. Forces affect motion. Energy can transfer or transform but is conserved. Understanding physics helps us understand how the universe works!"
+                    },
+                    "Astronomy": {
+                        title: "Astronomy",
+                        introduction: "Astronomy is the study of celestial objects and the universe! Understanding astronomy helps us understand our place in space and how the universe works!",
+                        concepts: [
+                            {
+                                heading: "The Solar System",
+                                explanation: "Our solar system has the Sun at the center, eight planets, moons, asteroids, and comets. Inner planets are rocky, outer planets are gas giants. Planets orbit the Sun in elliptical paths.",
+                                example: "Earth is the third planet from the Sun. Jupiter is the largest planet and is a gas giant."
+                            },
+                            {
+                                heading: "Stars and Galaxies",
+                                explanation: "Stars are huge balls of hot gas that produce light and heat. Our Sun is a star. Galaxies are collections of billions of stars. Our galaxy is the Milky Way. The universe contains billions of galaxies.",
+                                example: "The Sun is a medium-sized star. The Milky Way contains billions of stars, and there are billions of galaxies in the universe!"
+                            },
+                            {
+                                heading: "The Universe",
+                                explanation: "The universe is everything that exists - all matter, energy, space, and time. It's expanding and is about 13.8 billion years old. The universe is vast and mostly empty space.",
+                                example: "The universe is incredibly vast - light from distant stars takes billions of years to reach us!"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is at the center of our solar system?",
+                                solution: "The Sun - a star that provides light and heat"
+                            }
+                        ],
+                        summary: "Astronomy studies celestial objects and the universe. Our solar system has the Sun and eight planets. Stars form galaxies. The universe is vast and expanding. Understanding astronomy helps us understand our place in space!"
+                    }
+                }
+            },
+            8: {
+                science: {
+                    "Genetics and Heredity": {
+                        title: "Genetics and Heredity",
+                        introduction: "Genetics and heredity explain how traits are passed from parents to offspring! Understanding this helps us understand why we look like our parents and how characteristics are inherited!",
+                        concepts: [
+                            {
+                                heading: "Heredity",
+                                explanation: "Heredity is the passing of traits from parents to offspring. Traits are characteristics like eye color, hair color, and height. Children inherit traits from both parents.",
+                                example: "If both parents have brown eyes, their children are likely to have brown eyes too - that's heredity!"
+                            },
+                            {
+                                heading: "Genes and Alleles",
+                                explanation: "Genes are segments of DNA that code for traits. Alleles are different versions of a gene. You get one allele from each parent for each trait.",
+                                example: "The gene for eye color has alleles like B (brown) and b (blue). You might get B from one parent and b from the other."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is heredity?",
+                                solution: "Heredity is the passing of traits from parents to offspring"
+                            }
+                        ],
+                        summary: "Heredity passes traits from parents to offspring. Genes code for traits. Alleles are different versions of genes. Understanding genetics helps us understand inheritance!"
+                    },
+                    "Evolution": {
+                        title: "Evolution",
+                        introduction: "Evolution explains how species change over time! Understanding evolution helps us understand how life on Earth has developed and adapted!",
+                        concepts: [
+                            {
+                                heading: "What is Evolution?",
+                                explanation: "Evolution is the process by which species change over time. It explains how modern organisms developed from earlier forms. Natural selection is a key mechanism.",
+                                example: "Over millions of years, species adapt to their environments and change - that's evolution!"
+                            },
+                            {
+                                heading: "Natural Selection",
+                                explanation: "Natural selection is when organisms with helpful traits survive and reproduce more than those without. Over time, helpful traits become more common in the population.",
+                                example: "If a trait helps an animal survive, it's more likely to pass that trait to offspring, so the trait becomes more common."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is evolution?",
+                                solution: "Evolution is the process by which species change over time"
+                            }
+                        ],
+                        summary: "Evolution explains how species change over time. Natural selection favors helpful traits. Understanding evolution helps us understand how life has developed!"
+                    },
+                    "Atomic Structure": {
+                        title: "Atomic Structure",
+                        introduction: "Atoms are the building blocks of matter! Understanding atomic structure helps us understand how matter is organized and how chemical reactions work!",
+                        concepts: [
+                            {
+                                heading: "Parts of an Atom",
+                                explanation: "Atoms have three main parts: Protons (positive charge, in nucleus), Neutrons (no charge, in nucleus), and Electrons (negative charge, orbit nucleus). The nucleus contains protons and neutrons.",
+                                example: "Think of an atom like a tiny solar system - the nucleus (protons + neutrons) is the sun, and electrons orbit like planets!"
+                            },
+                            {
+                                heading: "Elements and Atomic Number",
+                                explanation: "Each element has a unique number of protons (atomic number). The number of protons determines what element it is. Hydrogen has 1 proton, carbon has 6, oxygen has 8.",
+                                example: "All carbon atoms have 6 protons. If an atom has 6 protons, it's carbon, no matter how many neutrons or electrons it has."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What are the three main parts of an atom?",
+                                solution: "Protons (positive, in nucleus), Neutrons (no charge, in nucleus), and Electrons (negative, orbit nucleus)"
+                            }
+                        ],
+                        summary: "Atoms have protons, neutrons, and electrons. The nucleus contains protons and neutrons. Electrons orbit the nucleus. Atomic number = number of protons. Understanding atomic structure helps us understand matter!"
+                    },
+                    "Periodic Table": {
+                        title: "Periodic Table",
+                        introduction: "The periodic table organizes all elements! Understanding the periodic table helps us understand how elements are related and predict their properties!",
+                        concepts: [
+                            {
+                                heading: "Organization",
+                                explanation: "Elements are arranged by atomic number (number of protons). Rows are periods, columns are groups. Elements in the same group have similar properties.",
+                                example: "All elements in Group 1 (like sodium, potassium) are very reactive metals. All elements in Group 18 (noble gases) are unreactive."
+                            },
+                            {
+                                heading: "Element Information",
+                                explanation: "Each element shows: Symbol (like H for hydrogen), Atomic number (number of protons), and Atomic mass (average mass of atoms).",
+                                example: "Hydrogen: H, atomic number 1, atomic mass 1.008. Carbon: C, atomic number 6, atomic mass 12.01."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "How are elements organized in the periodic table?",
+                                solution: "By atomic number (number of protons). Rows are periods, columns are groups with similar properties."
+                            }
+                        ],
+                        summary: "The periodic table organizes elements by atomic number. Elements in the same group have similar properties. Understanding the periodic table helps us understand elements!"
+                    },
+                    "Waves and Sound": {
+                        title: "Waves and Sound",
+                        introduction: "Waves and sound are all around us! Understanding waves helps us understand sound, light, and how energy travels!",
+                        concepts: [
+                            {
+                                heading: "What are Waves?",
+                                explanation: "Waves transfer energy without transferring matter. They have wavelength (distance between peaks), frequency (waves per second), and amplitude (height).",
+                                example: "When you drop a stone in water, ripples spread out - that's a wave transferring energy!"
+                            },
+                            {
+                                heading: "Sound Waves",
+                                explanation: "Sound is a wave that travels through matter (air, water, solids). Sound needs a medium to travel. Higher frequency = higher pitch. Greater amplitude = louder sound.",
+                                example: "When you speak, your vocal cords vibrate, creating sound waves that travel through air to someone's ears."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What do waves transfer?",
+                                solution: "Waves transfer energy without transferring matter"
+                            }
+                        ],
+                        summary: "Waves transfer energy. Sound is a wave that needs a medium. Frequency affects pitch, amplitude affects volume. Understanding waves helps us understand sound and energy!"
+                    },
+                    "Light and Optics": {
+                        title: "Light and Optics",
+                        introduction: "Light and optics help us see and understand how light behaves! Understanding light helps us understand vision, colors, and how light interacts with matter!",
+                        concepts: [
+                            {
+                                heading: "What is Light?",
+                                explanation: "Light is a form of energy that travels in waves. It's part of the electromagnetic spectrum. Light can travel through space (unlike sound). Light travels very fast (about 186,000 miles per second).",
+                                example: "Light from the Sun takes about 8 minutes to reach Earth, traveling 93 million miles!"
+                            },
+                            {
+                                heading: "Reflection and Refraction",
+                                explanation: "Reflection is when light bounces off a surface (like a mirror). Refraction is when light bends as it passes through different materials (like water or glass).",
+                                example: "A mirror reflects light so you can see yourself. A straw looks bent in water because light refracts."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is the difference between reflection and refraction?",
+                                solution: "Reflection is when light bounces off a surface. Refraction is when light bends as it passes through different materials."
+                            }
+                        ],
+                        summary: "Light is energy that travels in waves. Reflection bounces light, refraction bends light. Understanding light helps us understand vision and optics!"
+                    }
+                }
+            },
+            10: {
+                science: {
+                    "Advanced Biology": {
+                        title: "Advanced Biology",
+                        introduction: "Advanced biology explores complex biological systems and processes! Understanding advanced biology helps us understand how life works at deeper levels!",
+                        concepts: [
+                            {
+                                heading: "Cellular Processes",
+                                explanation: "Advanced biology studies complex cellular processes like protein synthesis, cell division, and cellular respiration in detail.",
+                                example: "Understanding how cells make proteins helps us understand how organisms function."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does advanced biology study?",
+                                solution: "Complex biological systems and processes at deeper levels"
+                            }
+                        ],
+                        summary: "Advanced biology explores complex biological systems. Understanding advanced biology helps us understand life at deeper levels!"
+                    },
+                    "Organic Chemistry": {
+                        title: "Organic Chemistry",
+                        introduction: "Organic chemistry studies carbon-based compounds! Understanding organic chemistry helps us understand life, medicine, and many materials!",
+                        concepts: [
+                            {
+                                heading: "Carbon Compounds",
+                                explanation: "Organic chemistry focuses on compounds containing carbon. Carbon can form four bonds, allowing for complex molecules. Many biological molecules are organic.",
+                                example: "Proteins, DNA, and carbohydrates are all organic compounds - they contain carbon."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does organic chemistry study?",
+                                solution: "Carbon-based compounds and their reactions"
+                            }
+                        ],
+                        summary: "Organic chemistry studies carbon compounds. Understanding organic chemistry helps us understand life and many materials!"
+                    },
+                    "Thermodynamics": {
+                        title: "Thermodynamics",
+                        introduction: "Thermodynamics studies heat, energy, and how they relate! Understanding thermodynamics helps us understand energy transfer and how systems work!",
+                        concepts: [
+                            {
+                                heading: "Laws of Thermodynamics",
+                                explanation: "First Law: Energy is conserved. Second Law: Entropy (disorder) increases. These laws govern energy transfer and transformation.",
+                                example: "Energy can't be created or destroyed, only transferred or transformed."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does the first law of thermodynamics state?",
+                                solution: "Energy is conserved - it can't be created or destroyed, only transferred or transformed"
+                            }
+                        ],
+                        summary: "Thermodynamics studies heat and energy. Energy is conserved. Understanding thermodynamics helps us understand energy systems!"
+                    },
+                    "Electromagnetism": {
+                        title: "Electromagnetism",
+                        introduction: "Electromagnetism studies the relationship between electricity and magnetism! Understanding electromagnetism helps us understand how many devices work!",
+                        concepts: [
+                            {
+                                heading: "Electricity and Magnetism",
+                                explanation: "Electricity and magnetism are related. Moving electric charges create magnetic fields. Changing magnetic fields create electric currents. This relationship is electromagnetism.",
+                                example: "An electric motor uses electromagnetism - electric current creates a magnetic field that causes motion."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "How are electricity and magnetism related?",
+                                solution: "Moving electric charges create magnetic fields, and changing magnetic fields create electric currents"
+                            }
+                        ],
+                        summary: "Electromagnetism studies the relationship between electricity and magnetism. Understanding electromagnetism helps us understand many devices!"
+                    },
+                    "Environmental Science": {
+                        title: "Environmental Science",
+                        introduction: "Environmental science studies how humans interact with the environment! Understanding environmental science helps us protect our planet!",
+                        concepts: [
+                            {
+                                heading: "Human Impact",
+                                explanation: "Human activities affect the environment through pollution, resource use, and climate change. Understanding these impacts helps us make better choices.",
+                                example: "Burning fossil fuels releases CO₂, contributing to climate change. Understanding this helps us find solutions."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does environmental science study?",
+                                solution: "How humans interact with the environment and the impacts of human activities"
+                            }
+                        ],
+                        summary: "Environmental science studies human-environment interactions. Understanding environmental science helps us protect our planet!"
+                    },
+                    "Molecular Biology": {
+                        title: "Molecular Biology",
+                        introduction: "Molecular biology studies biological processes at the molecular level! Understanding molecular biology helps us understand how life works at the smallest scale!",
+                        concepts: [
+                            {
+                                heading: "DNA and Proteins",
+                                explanation: "Molecular biology focuses on DNA, RNA, and proteins - the molecules that control life. It studies how genes work and how proteins are made.",
+                                example: "Understanding how DNA codes for proteins helps us understand how traits are expressed."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does molecular biology study?",
+                                solution: "Biological processes at the molecular level, including DNA, RNA, and proteins"
+                            }
+                        ],
+                        summary: "Molecular biology studies life at the molecular level. Understanding molecular biology helps us understand how life works!"
+                    }
+                }
+            },
+            11: {
+                science: {
+                    "Advanced Chemistry": {
+                        title: "Advanced Chemistry",
+                        introduction: "Advanced chemistry explores complex chemical reactions and systems! Understanding advanced chemistry helps us understand matter at deeper levels!",
+                        concepts: [
+                            {
+                                heading: "Complex Reactions",
+                                explanation: "Advanced chemistry studies complex reactions, equilibrium, kinetics, and thermodynamics in detail.",
+                                example: "Understanding reaction rates helps us control chemical processes."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does advanced chemistry study?",
+                                solution: "Complex chemical reactions, equilibrium, kinetics, and thermodynamics"
+                            }
+                        ],
+                        summary: "Advanced chemistry explores complex chemical systems. Understanding advanced chemistry helps us understand matter at deeper levels!"
+                    },
+                    "Physics: Mechanics": {
+                        title: "Physics: Mechanics",
+                        introduction: "Mechanics studies motion and forces! Understanding mechanics helps us understand how objects move and interact!",
+                        concepts: [
+                            {
+                                heading: "Motion and Forces",
+                                explanation: "Mechanics studies how forces affect motion, including kinematics (motion) and dynamics (forces). Newton's laws are fundamental.",
+                                example: "Understanding mechanics helps engineers design bridges, cars, and machines."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does mechanics study?",
+                                solution: "Motion and forces, including how forces affect the motion of objects"
+                            }
+                        ],
+                        summary: "Mechanics studies motion and forces. Understanding mechanics helps us understand how objects move and interact!"
+                    },
+                    "Physics: Electricity": {
+                        title: "Physics: Electricity",
+                        introduction: "Electricity powers our modern world! Understanding electricity helps us understand circuits, power, and how electrical devices work!",
+                        concepts: [
+                            {
+                                heading: "Electric Circuits",
+                                explanation: "Electricity flows through circuits. Voltage (pressure), Current (flow), and Resistance (opposition) are related by Ohm's Law: V = IR.",
+                                example: "A battery provides voltage, current flows through wires, and resistance in devices controls the flow."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is Ohm's Law?",
+                                solution: "V = IR, where V is voltage, I is current, and R is resistance"
+                            }
+                        ],
+                        summary: "Electricity flows through circuits. Voltage, current, and resistance are related by Ohm's Law. Understanding electricity helps us understand electrical devices!"
+                    },
+                    "Human Anatomy": {
+                        title: "Human Anatomy",
+                        introduction: "Human anatomy studies the structure of the human body! Understanding anatomy helps us understand how our bodies work!",
+                        concepts: [
+                            {
+                                heading: "Body Systems",
+                                explanation: "The human body has many systems: skeletal, muscular, circulatory, respiratory, digestive, nervous, and more. Each system has specific organs and functions.",
+                                example: "The circulatory system includes the heart, blood vessels, and blood, which transport nutrients and oxygen."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does human anatomy study?",
+                                solution: "The structure of the human body and its systems"
+                            }
+                        ],
+                        summary: "Human anatomy studies body structure and systems. Understanding anatomy helps us understand how our bodies work!"
+                    },
+                    "Biochemistry": {
+                        title: "Biochemistry",
+                        introduction: "Biochemistry studies chemical processes in living things! Understanding biochemistry helps us understand how life works at the chemical level!",
+                        concepts: [
+                            {
+                                heading: "Biological Molecules",
+                                explanation: "Biochemistry studies proteins, carbohydrates, lipids, and nucleic acids - the molecules that make up life. It studies how these molecules interact and function.",
+                                example: "Understanding how enzymes (proteins) catalyze reactions helps us understand how cells function."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does biochemistry study?",
+                                solution: "Chemical processes in living things and biological molecules"
+                            }
+                        ],
+                        summary: "Biochemistry studies chemical processes in living things. Understanding biochemistry helps us understand life at the chemical level!"
+                    },
+                    "Quantum Physics": {
+                        title: "Quantum Physics",
+                        introduction: "Quantum physics studies matter and energy at the smallest scales! Understanding quantum physics helps us understand the fundamental nature of reality!",
+                        concepts: [
+                            {
+                                heading: "Quantum Mechanics",
+                                explanation: "Quantum physics describes how particles behave at atomic and subatomic scales. It reveals that particles can exist in multiple states and behave as both particles and waves.",
+                                example: "Quantum physics explains how electrons orbit atoms and how light behaves as both particles and waves."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does quantum physics study?",
+                                solution: "Matter and energy at atomic and subatomic scales"
+                            }
+                        ],
+                        summary: "Quantum physics studies matter and energy at the smallest scales. Understanding quantum physics helps us understand the fundamental nature of reality!"
+                    }
+                }
+            },
+            12: {
+                science: {
+                    "AP Biology": {
+                        title: "AP Biology",
+                        introduction: "AP Biology covers advanced biological concepts! Understanding AP Biology prepares you for college-level biology and helps you understand life at advanced levels!",
+                        concepts: [
+                            {
+                                heading: "Advanced Concepts",
+                                explanation: "AP Biology covers evolution, cellular processes, genetics, ecology, and more at an advanced level. It prepares students for college biology courses.",
+                                example: "AP Biology explores complex topics like gene expression, evolution, and ecological relationships in depth."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does AP Biology cover?",
+                                solution: "Advanced biological concepts including evolution, cellular processes, genetics, and ecology"
+                            }
+                        ],
+                        summary: "AP Biology covers advanced biological concepts. Understanding AP Biology prepares you for college-level biology!"
+                    },
+                    "AP Chemistry": {
+                        title: "AP Chemistry",
+                        introduction: "AP Chemistry covers advanced chemical concepts! Understanding AP Chemistry prepares you for college-level chemistry!",
+                        concepts: [
+                            {
+                                heading: "Advanced Topics",
+                                explanation: "AP Chemistry covers atomic structure, bonding, reactions, thermodynamics, kinetics, and equilibrium at an advanced level.",
+                                example: "AP Chemistry explores complex reactions, equilibrium systems, and thermodynamics in detail."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does AP Chemistry cover?",
+                                solution: "Advanced chemical concepts including atomic structure, bonding, reactions, and thermodynamics"
+                            }
+                        ],
+                        summary: "AP Chemistry covers advanced chemical concepts. Understanding AP Chemistry prepares you for college-level chemistry!"
+                    },
+                    "AP Physics": {
+                        title: "AP Physics",
+                        introduction: "AP Physics covers advanced physics concepts! Understanding AP Physics prepares you for college-level physics!",
+                        concepts: [
+                            {
+                                heading: "Advanced Topics",
+                                explanation: "AP Physics covers mechanics, electricity, magnetism, waves, and thermodynamics at an advanced level.",
+                                example: "AP Physics explores complex topics like rotational motion, electromagnetic fields, and wave behavior in depth."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does AP Physics cover?",
+                                solution: "Advanced physics concepts including mechanics, electricity, magnetism, and waves"
+                            }
+                        ],
+                        summary: "AP Physics covers advanced physics concepts. Understanding AP Physics prepares you for college-level physics!"
+                    },
+                    "Advanced Genetics": {
+                        title: "Advanced Genetics",
+                        introduction: "Advanced genetics explores complex genetic concepts! Understanding advanced genetics helps us understand inheritance, gene expression, and genetic engineering!",
+                        concepts: [
+                            {
+                                heading: "Complex Inheritance",
+                                explanation: "Advanced genetics studies complex inheritance patterns, gene expression, genetic engineering, and biotechnology applications.",
+                                example: "Understanding how genes are expressed helps us understand genetic diseases and develop treatments."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does advanced genetics study?",
+                                solution: "Complex inheritance patterns, gene expression, and genetic engineering"
+                            }
+                        ],
+                        summary: "Advanced genetics explores complex genetic concepts. Understanding advanced genetics helps us understand inheritance and biotechnology!"
+                    },
+                    "Organic Synthesis": {
+                        title: "Organic Synthesis",
+                        introduction: "Organic synthesis creates complex organic molecules! Understanding organic synthesis helps us understand how to make medicines, materials, and other important compounds!",
+                        concepts: [
+                            {
+                                heading: "Synthetic Methods",
+                                explanation: "Organic synthesis uses chemical reactions to build complex molecules from simpler ones. It's essential for creating medicines, materials, and other compounds.",
+                                example: "Pharmaceutical companies use organic synthesis to create new medicines from simpler starting materials."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What is organic synthesis?",
+                                solution: "The process of creating complex organic molecules from simpler ones using chemical reactions"
+                            }
+                        ],
+                        summary: "Organic synthesis creates complex organic molecules. Understanding organic synthesis helps us create medicines and materials!"
+                    },
+                    "Astrophysics": {
+                        title: "Astrophysics",
+                        introduction: "Astrophysics studies the physics of celestial objects! Understanding astrophysics helps us understand stars, galaxies, and the universe!",
+                        concepts: [
+                            {
+                                heading: "Celestial Physics",
+                                explanation: "Astrophysics applies physics to understand stars, planets, galaxies, and the universe. It studies gravity, nuclear fusion, black holes, and cosmology.",
+                                example: "Understanding how stars produce energy through nuclear fusion helps us understand stellar evolution."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "What does astrophysics study?",
+                                solution: "The physics of celestial objects including stars, planets, galaxies, and the universe"
+                            }
+                        ],
+                        summary: "Astrophysics studies the physics of celestial objects. Understanding astrophysics helps us understand the universe!"
                     }
                 }
             }
@@ -404,20 +1310,7 @@
             const content = lessonContentByGrade[grade]?.[subject]?.[lessonTitle];
             
             if (!content) {
-                const defaultContent = {
-                    title: lessonTitle,
-                    notes: [
-                        `Welcome to ${lessonTitle}!`,
-                        "This lesson will help you understand key concepts.",
-                        "Take your time to read through the notes carefully.",
-                        "Practice the examples to reinforce your learning.",
-                        "Complete this lesson to unlock practice quizzes!"
-                    ],
-                    examples: [
-                        "Example 1: Practice problem",
-                        "Example 2: Another practice problem"
-                    ]
-                };
+                const defaultContent = generateDefaultLessonContent(lessonTitle, subject, grade);
                 displayLessonContent(defaultContent, isAlreadyCompleted);
             } else {
                 displayLessonContent(content, isAlreadyCompleted);
@@ -546,6 +1439,11 @@
                 completed.push(lessonKey);
                 localStorage.setItem('astrolearn_completed_lessons', JSON.stringify(completed));
                 updateProgress();
+                
+                // Dispatch event for dashboard to update
+                window.dispatchEvent(new CustomEvent('progressUpdated', { 
+                    detail: { subject: 'science', lessonKey: lessonKey, lessonTitle: lessonTitle }
+                }));
             }
         }
 

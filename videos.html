@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Videos - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <img src="sticker.webp" alt="AstroLearn Logo" class="h-12 w-12 object-contain">
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Videos Header -->
+    <section class="container mx-auto px-6 py-12">
+        <div class="text-center mb-8">
+            <div class="text-6xl mb-4">🎥</div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    Educational Videos
+                </span>
+            </h1>
+            <p class="text-xl text-[#F5F7FA]/80">Learn through engaging video lessons</p>
+        </div>
+
+        <!-- Subject Selection -->
+        <div class="glass-card p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-center">Select Subject</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="subjectSelector">
+                <!-- Subjects will be populated by JS -->
+            </div>
+        </div>
+
+        <!-- Videos Grid -->
+        <div id="videosContainer" class="hidden">
+            <div class="glass-card p-6 mb-6">
+                <h2 class="text-2xl font-bold mb-4" id="currentSubjectTitle">Select a subject to view videos</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="videosGrid">
+                    <!-- Videos will be populated by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center gap-2">
+                        <img src="sticker.webp" alt="AstroLearn Logo" class="w-6 h-6">
+                        <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn</p>
+                    </div>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!checkAuth()) {
+                return;
+            }
+            updateNavigation();
+            initFloatingStars();
+            setupMobileMenu();
+            loadSubjects();
+        });
+
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        }
+
+        function getGradeLevel() {
+            const prefs = localStorage.getItem('astrolearn_preferences');
+            if (prefs) {
+                try {
+                    const preferences = JSON.parse(prefs);
+                    return preferences.grade || 9;
+                } catch (e) {
+                    console.error('Error parsing preferences:', e);
+                }
+            }
+            return 9;
+        }
+
+        function getSelectedSubjects() {
+            const prefs = localStorage.getItem('astrolearn_preferences');
+            if (prefs) {
+                try {
+                    const preferences = JSON.parse(prefs);
+                    return preferences.subjects || ['math', 'science', 'reading', 'language'];
+                } catch (e) {
+                    console.error('Error parsing preferences:', e);
+                }
+            }
+            return ['math', 'science', 'reading', 'language'];
+        }
+
+        const subjects = [
+            { id: 'math', name: 'Math', icon: '🔭', color: '#4FC3F7' },
+            { id: 'science', name: 'Science', icon: '🧬', color: '#FF6EC7' },
+            { id: 'reading', name: 'Reading', icon: '📚', color: '#482880' },
+            { id: 'language', name: 'Language', icon: '🌍', color: '#4FC3F7' }
+        ];
+
+        const videosBySubject = {
+            math: [
+                { id: 1, title: "Introduction to Algebra", duration: "12:30", description: "Learn the basics of algebraic expressions and equations", thumbnail: "🔭" },
+                { id: 2, title: "Solving Linear Equations", duration: "15:45", description: "Master techniques for solving one-step and two-step equations", thumbnail: "📐" },
+                { id: 3, title: "Quadratic Equations Explained", duration: "18:20", description: "Understanding quadratic equations and their solutions", thumbnail: "📊" },
+                { id: 4, title: "Graphing Functions", duration: "14:50", description: "Learn how to graph linear and quadratic functions", thumbnail: "📈" },
+                { id: 5, title: "Polynomial Operations", duration: "16:15", description: "Adding, subtracting, and multiplying polynomials", thumbnail: "🔢" },
+                { id: 6, title: "Systems of Equations", duration: "17:30", description: "Solving systems using substitution and elimination", thumbnail: "⚖️" }
+            ],
+            science: [
+                { id: 1, title: "Cell Structure and Function", duration: "15:45", description: "Explore the organelles and their functions in cells", thumbnail: "🧬" },
+                { id: 2, title: "Photosynthesis Process", duration: "13:25", description: "Understanding how plants convert light into energy", thumbnail: "🌿" },
+                { id: 3, title: "Genetics and Heredity", duration: "16:40", description: "Learn about genes, DNA, and inheritance patterns", thumbnail: "🧪" },
+                { id: 4, title: "Chemical Reactions", duration: "14:20", description: "Types of reactions and balancing chemical equations", thumbnail: "⚗️" },
+                { id: 5, title: "Forces and Motion", duration: "15:10", description: "Newton's laws and motion principles", thumbnail: "🌌" },
+                { id: 6, title: "Ecosystems and Food Webs", duration: "17:55", description: "Understanding ecological relationships", thumbnail: "🌍" }
+            ],
+            reading: [
+                { id: 1, title: "Reading Comprehension Strategies", duration: "12:30", description: "Techniques for understanding and analyzing texts", thumbnail: "📚" },
+                { id: 2, title: "Literary Analysis Basics", duration: "14:45", description: "How to analyze theme, symbolism, and literary devices", thumbnail: "📖" },
+                { id: 3, title: "Identifying Main Ideas", duration: "11:20", description: "Finding the central message in various texts", thumbnail: "💡" },
+                { id: 4, title: "Character Development", duration: "13:15", description: "Analyzing character traits and motivations", thumbnail: "👤" },
+                { id: 5, title: "Text Structure and Organization", duration: "12:50", description: "Understanding how texts are organized", thumbnail: "📋" },
+                { id: 6, title: "Making Inferences", duration: "14:30", description: "Drawing conclusions from textual evidence", thumbnail: "🔍" }
+            ],
+            language: [
+                { id: 1, title: "Spanish Greetings and Basics", duration: "10:20", description: "Essential Spanish phrases and greetings", thumbnail: "🇪🇸" },
+                { id: 2, title: "French Pronunciation Guide", duration: "11:45", description: "Master French pronunciation and sounds", thumbnail: "🇫🇷" },
+                { id: 3, title: "Verb Conjugation Made Easy", duration: "15:30", description: "Understanding verb tenses and conjugation", thumbnail: "📝" },
+                { id: 4, title: "Building Vocabulary", duration: "12:15", description: "Effective strategies for learning new words", thumbnail: "📚" },
+                { id: 5, title: "Common Phrases and Expressions", duration: "13:40", description: "Everyday phrases in Spanish and French", thumbnail: "💬" },
+                { id: 6, title: "Grammar Fundamentals", duration: "14:25", description: "Essential grammar rules and structures", thumbnail: "✏️" }
+            ]
+        };
+
+        let currentSubject = null;
+
+        function loadSubjects() {
+            const selector = document.getElementById('subjectSelector');
+            const selectedSubjects = getSelectedSubjects();
+            const availableSubjects = subjects.filter(s => selectedSubjects.includes(s.id));
+            
+            selector.innerHTML = availableSubjects.map(subject => `
+                <button class="glass-card p-4 text-center hover:scale-105 transition-transform subject-btn" 
+                        data-subject="${subject.id}"
+                        style="border: 2px solid ${subject.color}33;">
+                    <div class="text-4xl mb-2">${subject.icon}</div>
+                    <div class="font-bold">${subject.name}</div>
+                </button>
+            `).join('');
+
+            document.querySelectorAll('.subject-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    loadVideos(btn.dataset.subject);
+                });
+            });
+        }
+
+        function loadVideos(subjectId) {
+            currentSubject = subjectId;
+            const videos = videosBySubject[subjectId] || [];
+            const subject = subjects.find(s => s.id === subjectId);
+            
+            document.getElementById('videosContainer').classList.remove('hidden');
+            document.getElementById('currentSubjectTitle').textContent = `${subject.name} Videos`;
+            
+            const grid = document.getElementById('videosGrid');
+            grid.innerHTML = videos.map(video => `
+                <div class="video-card glass-card p-6 hover:scale-105 transition-transform cursor-pointer" onclick="playVideo('${video.title.replace(/'/g, "\\'")}', '${video.description.replace(/'/g, "\\'")}', '${subjectId}')">
+                    <div class="relative mb-4">
+                        <div class="w-full h-48 rounded-lg flex items-center justify-center relative overflow-hidden" style="background: linear-gradient(135deg, ${subject.color}33, ${subject.color}11);">
+                            <div class="text-7xl">${video.thumbnail}</div>
+                            <div class="absolute bottom-2 right-2 px-2 py-1 bg-black/70 rounded text-xs font-bold">${video.duration}</div>
+                            <div class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity bg-black/20">
+                                <div class="text-6xl text-white">▶️</div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">${video.title}</h3>
+                    <p class="text-sm text-[#F5F7FA]/70">${video.description}</p>
+                    <button class="btn-primary w-full mt-4">Watch Video</button>
+                </div>
+            `).join('');
+        }
+
+        function playVideo(title, description, subjectId) {
+            // Store video data and navigate to video player
+            sessionStorage.setItem('selectedVideoTitle', title);
+            sessionStorage.setItem('selectedVideoSubject', subjectId);
+            sessionStorage.setItem('selectedVideoDescription', description);
+            window.location.href = `video-player.html?title=${encodeURIComponent(title)}`;
+        }
+    </script>
+</body>
+</html>

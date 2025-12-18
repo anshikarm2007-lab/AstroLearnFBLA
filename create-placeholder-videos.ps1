@@ -35,3 +35,7 @@ if ($ffmpegPath) {
     Write-Host "For now, the video player will show a placeholder message when videos are clicked."
 }
 
+
+
+
+

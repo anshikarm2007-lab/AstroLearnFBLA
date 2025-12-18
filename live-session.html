@@ -3,1068 +3,417 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Session - AstroLearn</title>
+    <title>Join Live Session - AstroLearn</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            overflow: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-        .meeting-container {
-            display: flex;
-            height: 100vh;
-            background: linear-gradient(135deg, #0B0F2F 0%, #1a1a3e 30%, #482880 60%, #0B0F2F 100%);
-            position: relative;
-        }
-        .meeting-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(79, 195, 247, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 50%, rgba(255, 110, 199, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        .video-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
-        }
-        .main-content-area {
-            flex: 1;
-            position: relative;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow-y: auto;
-            padding-bottom: 200px; /* Space for participants and controls */
-        }
-        .video-content-panel {
-            width: 100%;
-            max-width: 1200px;
-            min-height: 500px;
-            background: linear-gradient(135deg, rgba(11, 15, 47, 0.8) 0%, rgba(72, 40, 128, 0.6) 100%);
-            border-radius: 24px;
-            border: 3px solid rgba(79, 195, 247, 0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
-            margin-bottom: 2rem;
-        }
-        .subject-icon-container {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .subject-icon {
-            font-size: 6rem;
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 0 20px rgba(255, 110, 199, 0.5));
-        }
-        .subject-label {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #4FC3F7, #FF6EC7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .video-placeholder-text {
-            text-align: center;
-            color: rgba(245, 247, 250, 0.8);
-            font-size: 1rem;
-            padding: 0 2rem;
-            max-width: 600px;
-        }
-        .participants-panel {
-            width: 100%;
-            max-width: 1200px;
-            background: linear-gradient(135deg, rgba(11, 15, 47, 0.95) 0%, rgba(72, 40, 128, 0.85) 100%);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            border: 2px solid rgba(79, 195, 247, 0.3);
-            padding: 1.5rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            margin-top: 2rem;
-        }
-        .participants-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-weight: 700;
-            font-size: 1.125rem;
-            margin-bottom: 1rem;
-            color: #F5F7FA;
-        }
-        .participants-icon {
-            font-size: 1.5rem;
-        }
-        .participants-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-        .participant-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem;
-            background: rgba(79, 195, 247, 0.1);
-            border-radius: 12px;
-            border: 1px solid rgba(79, 195, 247, 0.2);
-        }
-        .participant-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #FF6EC7, #4FC3F7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: white;
-            font-size: 1.125rem;
-        }
-        .participant-info {
-            flex: 1;
-        }
-        .participant-name {
-            font-weight: 600;
-            color: #F5F7FA;
-            font-size: 0.9375rem;
-        }
-        .participant-role {
-            font-size: 0.75rem;
-            color: rgba(245, 247, 250, 0.6);
-        }
-        .content-controls {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            margin-top: 2rem;
-            padding: 1rem 0;
-        }
-        .content-control-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 1.5rem;
-            border-radius: 16px;
-            border: 2px solid transparent;
-            background: linear-gradient(135deg, rgba(79, 195, 247, 0.15) 0%, rgba(79, 195, 247, 0.08) 100%);
-            color: #F5F7FA;
-            cursor: pointer;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
-        }
-        .content-control-btn.active {
-            background: linear-gradient(135deg, rgba(79, 195, 247, 0.25) 0%, rgba(79, 195, 247, 0.15) 100%);
-            border-color: rgba(79, 195, 247, 0.4);
-        }
-        .content-control-btn.inactive {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-        .content-control-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(79, 195, 247, 0.3);
-        }
-        .control-icon {
-            font-size: 1.75rem;
-        }
-        .control-label {
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-        .leave-room-header-btn {
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: white;
-            border: 2px solid rgba(239, 68, 68, 0.4);
-            border-radius: 16px;
-            font-weight: 700;
-            font-size: 0.9375rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
-        }
-        .leave-room-header-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
-        }
-        .header-bar {
-            background: linear-gradient(135deg, rgba(11, 15, 47, 0.95) 0%, rgba(72, 40, 128, 0.85) 100%);
-            backdrop-filter: blur(20px);
-            padding: 1.5rem 2.5rem;
-            border-bottom: 2px solid rgba(79, 195, 247, 0.2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 50;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(79, 195, 247, 0.1);
-        }
-        .session-info h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-            background: linear-gradient(135deg, #4FC3F7, #FF6EC7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .session-info p {
-            font-size: 0.875rem;
-            color: rgba(245, 247, 250, 0.7);
-        }
-        .header-stats {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1.25rem;
-            background: linear-gradient(135deg, rgba(79, 195, 247, 0.15) 0%, rgba(79, 195, 247, 0.08) 100%);
-            border-radius: 24px;
-            border: 2px solid rgba(79, 195, 247, 0.3);
-            font-size: 0.875rem;
-            color: #4FC3F7;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 12px rgba(79, 195, 247, 0.2);
-        }
-        .demo-badge {
-            padding: 0.75rem 1.25rem;
-            background: linear-gradient(135deg, rgba(255, 110, 199, 0.2) 0%, rgba(255, 110, 199, 0.1) 100%);
-            border-radius: 24px;
-            border: 2px solid rgba(255, 110, 199, 0.4);
-            font-size: 0.8125rem;
-            color: #FF6EC7;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 12px rgba(255, 110, 199, 0.2);
-        }
-        .video-grid-container {
-            flex: 1;
-            padding: 2.5rem;
-            overflow-y: auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            align-content: start;
-            position: relative;
-            z-index: 1;
-        }
-        .video-card {
-            position: relative;
-            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(11, 15, 47, 0.8) 100%);
-            border-radius: 24px;
-            overflow: hidden;
-            aspect-ratio: 16/9;
-            border: 3px solid rgba(79, 195, 247, 0.25);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(79, 195, 247, 0.1);
-        }
-        .video-card:hover {
-            transform: translateY(-10px) scale(1.03);
-            border-color: rgba(79, 195, 247, 0.6);
-            box-shadow: 0 24px 72px rgba(79, 195, 247, 0.4), 0 0 0 1px rgba(79, 195, 247, 0.3);
-        }
-        .video-card.active {
-            border-color: #4FC3F7;
-            box-shadow: 0 0 60px rgba(79, 195, 247, 0.8), 0 24px 72px rgba(79, 195, 247, 0.3), inset 0 0 40px rgba(79, 195, 247, 0.1);
-            animation: pulseGlow 2s ease-in-out infinite;
-        }
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 60px rgba(79, 195, 247, 0.8), 0 24px 72px rgba(79, 195, 247, 0.3), inset 0 0 40px rgba(79, 195, 247, 0.1); }
-            50% { box-shadow: 0 0 80px rgba(79, 195, 247, 1), 0 24px 72px rgba(79, 195, 247, 0.4), inset 0 0 50px rgba(79, 195, 247, 0.15); }
-        }
-        .video-content {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, rgba(11, 15, 47, 0.95) 0%, rgba(72, 40, 128, 0.85) 50%, rgba(11, 15, 47, 0.95) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        .video-content::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(79, 195, 247, 0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .video-overlay-info {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            backdrop-filter: blur(10px);
-        }
-        .participant-name-group {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        .participant-name {
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-        }
-        .you-badge {
-            background: linear-gradient(135deg, rgba(79, 195, 247, 0.4) 0%, rgba(79, 195, 247, 0.2) 100%);
-            padding: 0.375rem 0.875rem;
-            border-radius: 14px;
-            font-size: 0.75rem;
-            color: #4FC3F7;
-            border: 1px solid rgba(79, 195, 247, 0.5);
-            font-weight: 700;
-            box-shadow: 0 2px 8px rgba(79, 195, 247, 0.3);
-        }
-        .status-badges {
-            display: flex;
-            gap: 0.5rem;
-        }
-        .status-badge {
-            padding: 0.5rem 0.875rem;
-            border-radius: 14px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            border: 1.5px solid;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-        .status-badge.muted {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.3) 0%, rgba(239, 68, 68, 0.15) 100%);
-            color: #ef4444;
-            border-color: rgba(239, 68, 68, 0.5);
-        }
-        .status-badge.tutor {
-            background: linear-gradient(135deg, rgba(79, 195, 247, 0.3) 0%, rgba(79, 195, 247, 0.15) 100%);
-            color: #4FC3F7;
-            border-color: rgba(79, 195, 247, 0.5);
-        }
-        .chat-sidebar {
-            width: 420px;
-            background: linear-gradient(135deg, rgba(11, 15, 47, 0.95) 0%, rgba(72, 40, 128, 0.85) 100%);
-            backdrop-filter: blur(20px);
-            border-left: 2px solid rgba(79, 195, 247, 0.25);
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            box-shadow: -12px 0 48px rgba(0, 0, 0, 0.5), inset 1px 0 0 rgba(79, 195, 247, 0.1);
-            position: relative;
-        }
-        .chat-sidebar::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(180deg, rgba(79, 195, 247, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        .chat-header {
-            padding: 1.75rem;
-            border-bottom: 2px solid rgba(79, 195, 247, 0.2);
-            background: linear-gradient(135deg, rgba(79, 195, 247, 0.1) 0%, rgba(255, 110, 199, 0.05) 100%);
-            position: relative;
-            z-index: 10;
-            flex-shrink: 0;
-        }
-        .chat-header h2 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-            background: linear-gradient(135deg, #4FC3F7, #FF6EC7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .chat-header p {
-            font-size: 0.8125rem;
-            color: rgba(245, 247, 250, 0.6);
-        }
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-            min-height: 0;
-        }
-        .chat-message {
-            display: flex;
-            gap: 0.875rem;
-            animation: messageSlideIn 0.4s ease;
-        }
-        @keyframes messageSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .chat-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4FC3F7 0%, #FF6EC7 50%, #4FC3F7 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.625rem;
-            flex-shrink: 0;
-            box-shadow: 0 6px 20px rgba(79, 195, 247, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(79, 195, 247, 0.3);
-        }
-        .chat-bubble {
-            flex: 1;
-        }
-        .chat-sender {
-            font-weight: 600;
-            font-size: 0.875rem;
-            color: #4FC3F7;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .chat-time {
-            font-weight: 400;
-            font-size: 0.75rem;
-            color: rgba(245, 247, 250, 0.5);
-        }
-        .chat-text {
-            background: linear-gradient(135deg, rgba(79, 195, 247, 0.15) 0%, rgba(79, 195, 247, 0.08) 100%);
-            padding: 1rem 1.25rem;
-            border-radius: 18px;
-            color: #F5F7FA;
-            font-size: 0.9375rem;
-            line-height: 1.6;
-            border: 1px solid rgba(79, 195, 247, 0.3);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(79, 195, 247, 0.2);
-            backdrop-filter: blur(10px);
-        }
-        .chat-text.own {
-            background: linear-gradient(135deg, rgba(255, 110, 199, 0.15) 0%, rgba(255, 110, 199, 0.08) 100%);
-            border-color: rgba(255, 110, 199, 0.3);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 110, 199, 0.2);
-        }
-        .chat-input-area {
-            padding: 1.75rem;
-            border-top: 2px solid rgba(79, 195, 247, 0.2);
-            background: linear-gradient(135deg, rgba(79, 195, 247, 0.1) 0%, rgba(255, 110, 199, 0.05) 100%);
-            position: relative;
-            z-index: 10;
-            flex-shrink: 0;
-        }
-        .chat-input-wrapper {
-            display: flex;
-            gap: 0.75rem;
-            align-items: center;
-        }
-        .chat-input {
-            flex: 1;
-            background: linear-gradient(135deg, rgba(79, 195, 247, 0.12) 0%, rgba(79, 195, 247, 0.06) 100%);
-            border: 2px solid rgba(79, 195, 247, 0.3);
-            border-radius: 18px;
-            padding: 1rem 1.5rem;
-            color: #F5F7FA;
-            font-size: 0.9375rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(10px);
-        }
-        .chat-input:focus {
-            outline: none;
-            border-color: #4FC3F7;
-            background: linear-gradient(135deg, rgba(79, 195, 247, 0.2) 0%, rgba(79, 195, 247, 0.1) 100%);
-            box-shadow: 0 0 30px rgba(79, 195, 247, 0.4), inset 0 0 20px rgba(79, 195, 247, 0.1);
-            transform: scale(1.02);
-        }
-        .chat-send-btn {
-            padding: 1rem 2rem;
-            border-radius: 18px;
-            background: linear-gradient(135deg, #FF6EC7 0%, #4FC3F7 100%);
-            border: 2px solid rgba(255, 110, 199, 0.4);
-            color: white;
-            font-size: 0.9375rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 6px 20px rgba(255, 110, 199, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        .chat-send-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-        .chat-send-btn:hover::before {
-            left: 100%;
-        }
-        .chat-send-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 28px rgba(255, 110, 199, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-        .chat-send-btn:active {
-            transform: scale(0.96);
-        }
-        .controls-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, rgba(11, 15, 47, 0.95) 0%, rgba(72, 40, 128, 0.85) 100%);
-            backdrop-filter: blur(20px);
-            padding: 2rem 2.5rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2.5rem;
-            border-top: 2px solid rgba(79, 195, 247, 0.25);
-            z-index: 100;
-            box-shadow: 0 -12px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(79, 195, 247, 0.1);
-        }
-        .control-btn {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.875rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            backdrop-filter: blur(10px);
-        }
-        .control-btn.active {
-            background: linear-gradient(135deg, #4FC3F7 0%, #3db8e0 50%, #4FC3F7 100%);
-            border-color: rgba(79, 195, 247, 0.5);
-            color: white;
-            box-shadow: 0 8px 32px rgba(79, 195, 247, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            animation: pulseActive 2s ease-in-out infinite;
-        }
-        @keyframes pulseActive {
-            0%, 100% { box-shadow: 0 8px 32px rgba(79, 195, 247, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
-            50% { box-shadow: 0 8px 40px rgba(79, 195, 247, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.3); }
-        }
-        .control-btn.inactive {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
-            border-color: rgba(255, 255, 255, 0.2);
-            color: #F5F7FA;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        }
-        .control-btn.muted {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #ef4444 100%);
-            border-color: rgba(239, 68, 68, 0.5);
-            color: white;
-            box-shadow: 0 8px 32px rgba(239, 68, 68, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-        .control-btn:hover {
-            transform: scale(1.2) translateY(-4px);
-        }
-        .control-btn:active {
-            transform: scale(0.95);
-        }
-        .leave-btn {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #ef4444 100%);
-            color: white;
-            padding: 1.25rem 3.5rem;
-            border-radius: 36px;
-            border: 2px solid rgba(239, 68, 68, 0.4);
-            font-weight: 700;
-            font-size: 1.125rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 32px rgba(239, 68, 68, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        .leave-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-        .leave-btn:hover::before {
-            left: 100%;
-        }
-        .leave-btn:hover {
-            transform: scale(1.1) translateY(-2px);
-            box-shadow: 0 12px 40px rgba(239, 68, 68, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        }
-        .leave-btn:active {
-            transform: scale(0.96);
-        }
-        .screen-share-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.97);
-            z-index: 200;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 2rem;
-            backdrop-filter: blur(10px);
-        }
-        .screen-share-overlay.active {
-            display: flex;
-        }
-        .screen-share-content {
-            background: linear-gradient(135deg, #1a1a2e, #2a2a4e);
-            border-radius: 24px;
-            padding: 3rem;
-            max-width: 90%;
-            max-height: 90%;
-            border: 2px solid rgba(79, 195, 247, 0.3);
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
-        }
-        .screen-share-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-        .screen-share-header h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #4FC3F7, #FF6EC7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .screen-share-close {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        .screen-share-close:hover {
-            background: rgba(239, 68, 68, 0.3);
-            transform: scale(1.1);
-        }
-        .screen-preview {
-            background: #0B0F2F;
-            border-radius: 16px;
-            padding: 3rem;
-            border: 2px solid rgba(79, 195, 247, 0.2);
-            min-height: 450px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        .video-notice {
-            padding: 1.25rem 1.75rem;
-            background: linear-gradient(135deg, rgba(79, 195, 247, 0.15) 0%, rgba(255, 110, 199, 0.1) 100%);
-            border-radius: 16px;
-            border: 2px solid rgba(79, 195, 247, 0.3);
-            margin: 1rem 2rem;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-        }
-        .video-notice p {
-            font-size: 0.8125rem;
-            color: rgba(245, 247, 250, 0.9);
-            text-align: center;
-            line-height: 1.6;
-        }
-        .video-notice strong {
-            color: #4FC3F7;
-        }
-        .chat-messages::-webkit-scrollbar,
-        .video-grid-container::-webkit-scrollbar {
-            width: 8px;
-        }
-        .chat-messages::-webkit-scrollbar-track,
-        .video-grid-container::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-        }
-        .chat-messages::-webkit-scrollbar-thumb,
-        .video-grid-container::-webkit-scrollbar-thumb {
-            background: rgba(79, 195, 247, 0.5);
-            border-radius: 4px;
-        }
-        .chat-messages::-webkit-scrollbar-thumb:hover,
-        .video-grid-container::-webkit-scrollbar-thumb:hover {
-            background: rgba(79, 195, 247, 0.7);
-        }
-    </style>
 </head>
-<body class="bg-[#0a0e2a] text-[#F5F7FA]">
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
     <!-- Floating Stars Background -->
     <div id="floatingStars"></div>
 
-    <!-- Meeting Container -->
-    <div class="meeting-container">
-        <!-- Main Content Area -->
-        <div class="video-section">
-            <!-- Header Bar -->
-            <div class="header-bar">
-                <div class="session-info">
-                    <h1 id="sessionTitle">Biology Study Room</h1>
-                    <p>
-                        Live Tutoring - <span id="tutorName">Leo R.</span>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <img src="sticker.webp" alt="AstroLearn Logo" class="h-12 w-12 object-contain">
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="game.html" class="nav-link protected-link">Games</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="game.html" class="nav-link protected-link">Games</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center block" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Session Details Section -->
+    <section class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="glass-card p-8 mb-6">
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4" id="sessionIcon">🔭</div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4" id="sessionTitle">
+                        <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                            Loading Session...
+                        </span>
+                    </h1>
+                    <div class="flex justify-center gap-4 mb-4">
+                        <span class="px-4 py-2 rounded-full text-sm font-bold" id="sessionTypeBadge">
+                            Live Tutoring
+                        </span>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <span>👨‍🏫</span>
+                            <span id="tutorName">Tutor Name</span>
+                        </h3>
+                        <p class="text-[#F5F7FA]/70" id="sessionDescription">
+                            Session description will appear here.
+                        </p>
+                    </div>
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <span>📅</span>
+                            Session Details
+                        </h3>
+                        <p class="text-[#F5F7FA]/70 mb-2">
+                            <strong>Date:</strong> <span id="sessionDate">Date</span>
+                        </p>
+                        <p class="text-[#F5F7FA]/70 mb-2">
+                            <strong>Time:</strong> <span id="sessionTime">Time</span>
+                        </p>
+                        <p class="text-[#F5F7FA]/70" id="participantsInfo" style="display: none;">
+                            <strong>Participants:</strong> <span id="participantsCount">0</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 mb-6 bg-[#4FC3F7]/10 border-2 border-[#4FC3F7]/30">
+                    <p class="text-center text-lg mb-4">
+                        <strong>This is a demo live session for the student learning hub.</strong>
+                    </p>
+                    <p class="text-center text-[#F5F7FA]/70 text-sm">
+                        In a production version, this would integrate with video conferencing services like Zoom or Google Meet for real-time interaction.
                     </p>
                 </div>
-                <button id="leaveRoomBtn" class="leave-room-header-btn">Leave Room</button>
-            </div>
 
-            <!-- Main Video/Content Area -->
-            <div class="main-content-area">
-                <div class="video-content-panel">
-                    <div class="subject-icon-container">
-                        <div class="subject-icon">🧬</div>
-                        <div class="subject-label" id="subjectLabel">Biology</div>
-                    </div>
-                    <div class="video-placeholder-text">
-                        In a production version, this would display live video from Zoom, Google Meet, or similar service.
-                    </div>
-                </div>
-                
-                <!-- Control Buttons -->
-                <div class="content-controls">
-                    <button id="micBtn" class="content-control-btn active">
-                        <span class="control-icon" id="micIcon">🎤</span>
-                        <span class="control-label">Mute</span>
+                <div class="text-center">
+                    <button id="joinNowBtn" class="btn-primary text-xl px-8 py-4 mb-4">
+                        🚀 Join Now
                     </button>
-                    <button id="cameraBtn" class="content-control-btn active">
-                        <span class="control-icon" id="cameraIcon">📹</span>
-                        <span class="control-label">Video</span>
-                    </button>
-                    <button id="shareBtn" class="content-control-btn inactive">
-                        <span class="control-icon">🖥️</span>
-                        <span class="control-label">Share Screen</span>
-                    </button>
-                </div>
-
-                <!-- Participants Panel (Scrollable at Bottom) -->
-                <div class="participants-panel">
-                    <div class="participants-header">
-                        <span class="participants-icon">👥</span>
-                        <span>Participants</span>
-                    </div>
-                    <div class="participants-list" id="participantsList">
-                        <!-- Participants will be added here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Right Sidebar -->
-        <div class="chat-sidebar">
-            <div class="chat-header">
-                <h2>💬 Group Chat</h2>
-            </div>
-            <div class="chat-messages" id="chatMessages">
-                <!-- Chat messages will be added here -->
-            </div>
-            <div class="chat-input-area">
-                <div class="chat-input-wrapper">
-                    <input 
-                        type="text" 
-                        id="chatInput" 
-                        placeholder="Type a message..." 
-                        class="chat-input"
-                    >
-                    <button id="sendChatBtn" class="chat-send-btn">Send</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Screen Share Overlay -->
-    <div class="screen-share-overlay" id="screenShareOverlay">
-        <div class="screen-share-content">
-            <div class="screen-share-header">
-                <h2>🖥️ Screen Sharing</h2>
-                <button class="screen-share-close" id="closeScreenShare">×</button>
-            </div>
-            <div class="screen-preview">
-                <div class="text-7xl mb-4">🖥️</div>
-                <p class="text-2xl text-[#F5F7FA]/90 mb-3 font-semibold">Screen Share Preview</p>
-                <p class="text-sm text-[#F5F7FA]/70 text-center max-w-md leading-relaxed">
-                    In a production version, this would display the shared screen content. 
-                    Participants would see your screen in real-time with full interactivity.
-                </p>
-                <div class="mt-6 p-4 bg-[#4FC3F7]/10 rounded-lg border border-[#4FC3F7]/30 max-w-md">
-                    <p class="text-sm text-[#F5F7FA]/90 leading-relaxed">
-                        <strong class="text-[#4FC3F7]">Demo Mode:</strong> Screen sharing functionality would be integrated 
-                        using WebRTC or a video conferencing API (Zoom SDK, Google Meet API, etc.) in production.
+                    <p class="text-sm text-[#F5F7FA]/70">
+                        Click to enter the study room
                     </p>
                 </div>
             </div>
-        </div>
-    </div>
 
+            <div class="text-center">
+                <a href="schedule.html" class="btn-secondary">
+                    ← Back to Schedule
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center gap-2">
+                        <img src="sticker.webp" alt="AstroLearn Logo" class="w-6 h-6">
+                        <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn</p>
+                    </div>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
     <script>
-        // Get session parameters from URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const subject = urlParams.get('subject') || 'Biology';
-        const tutor = urlParams.get('tutor') || 'Leo R.';
-        const time = urlParams.get('time') || 'Monday 5 PM';
-
-        // Subject icons mapping
-        const subjectIcons = {
-            'Biology': '🧬',
-            'Math': '🔭',
-            'Science': '⚗️',
-            'Chemistry': '⚗️',
-            'Physics': '🌌',
-            'Reading': '📚',
-            'Language': '🌍'
-        };
-
-        // Update page content
-        document.getElementById('sessionTitle').textContent = `${subject} Study Room`;
-        document.getElementById('tutorName').textContent = tutor;
-        const subjectIcon = subjectIcons[subject] || '📚';
-        document.querySelector('.subject-icon').textContent = subjectIcon;
-        document.getElementById('subjectLabel').textContent = subject;
-
-        // Mock participants
-        const participants = [
-            { id: 1, name: tutor, role: 'Tutor', avatar: '👨‍🏫', muted: false, cameraOn: true, isYou: false },
-            { id: 2, name: 'Alex M.', role: 'Student', avatar: '👤', muted: false, cameraOn: true, isYou: false },
-            { id: 3, name: 'Jordan K.', role: 'Student', avatar: '👩', muted: false, cameraOn: true, isYou: false },
-            { id: 4, name: 'Sam R.', role: 'Student', avatar: '🧑', muted: false, cameraOn: true, isYou: false },
-            { id: 5, name: 'You', role: 'Host', avatar: 'Y', muted: false, cameraOn: true, isYou: true }
-        ];
-
-        // State
-        let userMuted = false;
-        let userCameraOn = true;
-        let isScreenSharing = false;
-
-        // Load participants list
-        function loadParticipants() {
-            const participantsList = document.getElementById('participantsList');
-            participantsList.innerHTML = '';
-            
-            participants.forEach((participant) => {
-                const participantItem = document.createElement('div');
-                participantItem.className = 'participant-item';
-                
-                const avatarText = participant.isYou ? 'Y' : participant.avatar;
-                const nameText = participant.isYou ? 'You (You)' : participant.name;
-                
-                participantItem.innerHTML = `
-                    <div class="participant-avatar">${avatarText}</div>
-                    <div class="participant-info">
-                        <div class="participant-name">${nameText}</div>
-                        <div class="participant-role">${participant.role}</div>
-                    </div>
-                `;
-                
-                participantsList.appendChild(participantItem);
-            });
-        }
-
-        // Control buttons
-        const micBtn = document.getElementById('micBtn');
-        const cameraBtn = document.getElementById('cameraBtn');
-        const shareBtn = document.getElementById('shareBtn');
-        const leaveRoomBtn = document.getElementById('leaveRoomBtn');
-        const micIcon = document.getElementById('micIcon');
-        const cameraIcon = document.getElementById('cameraIcon');
-        const screenShareOverlay = document.getElementById('screenShareOverlay');
-        const closeScreenShare = document.getElementById('closeScreenShare');
-        
-
-        // Mic toggle
-        micBtn.addEventListener('click', () => {
-            userMuted = !userMuted;
-            if (userMuted) {
-                micBtn.classList.remove('active');
-                micBtn.classList.add('inactive');
-                micIcon.textContent = '🔇';
-            } else {
-                micBtn.classList.remove('inactive');
-                micBtn.classList.add('active');
-                micIcon.textContent = '🎤';
-            }
-        });
-
-        // Camera toggle
-        cameraBtn.addEventListener('click', () => {
-            userCameraOn = !userCameraOn;
-            if (userCameraOn) {
-                cameraBtn.classList.add('active');
-                cameraBtn.classList.remove('inactive');
-                cameraIcon.textContent = '📹';
-            } else {
-                cameraBtn.classList.remove('active');
-                cameraBtn.classList.add('inactive');
-                cameraIcon.textContent = '📷';
-            }
-        });
-
-        // Screen share toggle
-        shareBtn.addEventListener('click', () => {
-            isScreenSharing = !isScreenSharing;
-            if (isScreenSharing) {
-                screenShareOverlay.classList.add('active');
-                shareBtn.classList.add('active');
-                shareBtn.classList.remove('inactive');
-            } else {
-                screenShareOverlay.classList.remove('active');
-                shareBtn.classList.remove('active');
-                shareBtn.classList.add('inactive');
-            }
-        });
-
-        closeScreenShare.addEventListener('click', () => {
-            isScreenSharing = false;
-            screenShareOverlay.classList.remove('active');
-            shareBtn.classList.remove('active');
-            shareBtn.classList.add('inactive');
-        });
-
-        // Leave button
-        leaveRoomBtn.addEventListener('click', () => {
-            if (confirm('Are you sure you want to leave the session?')) {
-                window.location.href = 'schedule.html';
-            }
-        });
-
-        // Chat functionality
-        const chatInput = document.getElementById('chatInput');
-        const sendChatBtn = document.getElementById('sendChatBtn');
-        const chatMessages = document.getElementById('chatMessages');
-
-        function addChatMessage(sender, message, avatar = '👤', isOwn = false) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'chat-message';
-            
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-            
-            messageDiv.innerHTML = `
-                <div class="chat-avatar">${avatar}</div>
-                <div class="chat-bubble">
-                    <div class="chat-sender">${sender} <span class="chat-time">${timeString}</span></div>
-                    <div class="chat-text ${isOwn ? 'own' : ''}">${message}</div>
-                </div>
-            `;
-            
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function sendChatMessage() {
-            const message = chatInput.value.trim();
-            if (message) {
-                addChatMessage('You', message, '👤', true);
-                chatInput.value = '';
-                
-                // Simulate responses
-                setTimeout(() => {
-                    const responses = [
-                        { sender: tutor, message: 'Great question! Let me explain that concept.', avatar: '👨‍🏫' },
-                        { sender: 'Alex M.', message: 'I was wondering about that too!', avatar: '👤' },
-                        { sender: tutor, message: 'Let\'s work through it together step by step.', avatar: '👨‍🏫' },
-                        { sender: 'Jordan K.', message: 'Thanks for the clarification!', avatar: '👩' },
-                        { sender: 'Sam R.', message: 'That makes sense now!', avatar: '🧑' }
-                    ];
-                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                    addChatMessage(randomResponse.sender, randomResponse.message, randomResponse.avatar, false);
-                }, 1000 + Math.random() * 2000);
-            }
-        }
-
-        sendChatBtn.addEventListener('click', sendChatMessage);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendChatMessage();
-            }
-        });
-
-        // Add initial chat messages
-        setTimeout(() => {
-            addChatMessage('Alex M.', 'Hello everyone! Ready to learn?', '👤', false);
-        }, 500);
-        setTimeout(() => {
-            addChatMessage('Jordan K.', 'Yes! Excited for this session.', '👩', false);
-        }, 1500);
-        setTimeout(() => {
-            addChatMessage('Sam R.', 'Can we start with the first topic?', '🧑', false);
-        }, 2500);
-
-        // Initialize
+        // Check authentication
         document.addEventListener('DOMContentLoaded', () => {
+            if (!checkAuth()) {
+                return;
+            }
+            updateNavigation();
             initFloatingStars();
-            loadParticipants();
+            setupMobileMenu();
+            loadSessionDetails();
+        });
+
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        }
+
+        function loadSessionDetails() {
+            // Get session data from sessionStorage
+            const sessionData = sessionStorage.getItem('selectedSession');
+            
+            if (!sessionData) {
+                // If no session data, redirect to schedule
+                window.location.href = 'schedule.html';
+                return;
+            }
+
+            const session = JSON.parse(sessionData);
+            
+            // Populate session details
+            document.getElementById('sessionTitle').innerHTML = `
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    ${session.subject}
+                </span>
+            `;
+            document.getElementById('sessionIcon').textContent = session.icon;
+            document.getElementById('tutorName').textContent = session.tutor;
+            document.getElementById('sessionDate').textContent = session.date || 'TBD';
+            document.getElementById('sessionTime').textContent = session.time;
+            document.getElementById('sessionDescription').textContent = session.description || 'Join this session to learn and collaborate with peers.';
+            
+            // Update session type badge
+            const badge = document.getElementById('sessionTypeBadge');
+            if (session.type === 'group') {
+                badge.textContent = '👥 Group Study';
+                badge.className = 'px-4 py-2 rounded-full text-sm font-bold bg-[#FF6EC7]/20 text-[#FF6EC7]';
+                if (session.participants) {
+                    document.getElementById('participantsInfo').style.display = 'block';
+                    document.getElementById('participantsCount').textContent = session.participants;
+                }
+            } else {
+                badge.textContent = '👨‍🏫 Live Tutoring';
+                badge.className = 'px-4 py-2 rounded-full text-sm font-bold bg-[#4FC3F7]/20 text-[#4FC3F7]';
+            }
+
+            // Store session in sessionStorage for study room
+            sessionStorage.setItem('currentSession', JSON.stringify(session));
+        }
+
+        // Join Now button
+        document.getElementById('joinNowBtn').addEventListener('click', () => {
+            window.location.href = 'study-room.html';
         });
     </script>
 </body>
 </html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Live Session - AstroLearn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-[#0B0F2F] via-[#482880] to-[#0B0F2F] min-h-screen text-[#F5F7FA] overflow-x-hidden">
+    <!-- Floating Stars Background -->
+    <div id="floatingStars"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <img src="sticker.webp" alt="AstroLearn Logo" class="h-12 w-12 object-contain">
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    AstroLearn
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="game.html" class="nav-link protected-link">Games</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
+            </div>
+            <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
+        </div>
+        <div class="md:hidden hidden" id="mobileMenu">
+            <div class="flex flex-col space-y-2 p-4">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
+                <a href="schedule.html" class="nav-link protected-link">Schedule</a>
+                <a href="resources.html" class="nav-link protected-link">Resources</a>
+                <a href="game.html" class="nav-link protected-link">Games</a>
+                <a href="login.html" class="btn-secondary py-2 px-4 text-center block" id="authBtnMobile">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Session Details Section -->
+    <section class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="glass-card p-8 mb-6">
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4" id="sessionIcon">🔭</div>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4" id="sessionTitle">
+                        <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                            Loading Session...
+                        </span>
+                    </h1>
+                    <div class="flex justify-center gap-4 mb-4">
+                        <span class="px-4 py-2 rounded-full text-sm font-bold" id="sessionTypeBadge">
+                            Live Tutoring
+                        </span>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <span>👨‍🏫</span>
+                            <span id="tutorName">Tutor Name</span>
+                        </h3>
+                        <p class="text-[#F5F7FA]/70" id="sessionDescription">
+                            Session description will appear here.
+                        </p>
+                    </div>
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <span>📅</span>
+                            Session Details
+                        </h3>
+                        <p class="text-[#F5F7FA]/70 mb-2">
+                            <strong>Date:</strong> <span id="sessionDate">Date</span>
+                        </p>
+                        <p class="text-[#F5F7FA]/70 mb-2">
+                            <strong>Time:</strong> <span id="sessionTime">Time</span>
+                        </p>
+                        <p class="text-[#F5F7FA]/70" id="participantsInfo" style="display: none;">
+                            <strong>Participants:</strong> <span id="participantsCount">0</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 mb-6 bg-[#4FC3F7]/10 border-2 border-[#4FC3F7]/30">
+                    <p class="text-center text-lg mb-4">
+                        <strong>This is a demo live session for the student learning hub.</strong>
+                    </p>
+                    <p class="text-center text-[#F5F7FA]/70 text-sm">
+                        In a production version, this would integrate with video conferencing services like Zoom or Google Meet for real-time interaction.
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <button id="joinNowBtn" class="btn-primary text-xl px-8 py-4 mb-4">
+                        🚀 Join Now
+                    </button>
+                    <p class="text-sm text-[#F5F7FA]/70">
+                        Click to enter the study room
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a href="schedule.html" class="btn-secondary">
+                    ← Back to Schedule
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center gap-2">
+                        <img src="sticker.webp" alt="AstroLearn Logo" class="w-6 h-6">
+                        <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn</p>
+                    </div>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="about.html" class="footer-link">About</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="privacy.html" class="footer-link">Privacy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!checkAuth()) {
+                return;
+            }
+            updateNavigation();
+            initFloatingStars();
+            setupMobileMenu();
+            loadSessionDetails();
+        });
+
+        function setupMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        }
+
+        function loadSessionDetails() {
+            // Get session data from sessionStorage
+            const sessionData = sessionStorage.getItem('selectedSession');
+            
+            if (!sessionData) {
+                // If no session data, redirect to schedule
+                window.location.href = 'schedule.html';
+                return;
+            }
+
+            const session = JSON.parse(sessionData);
+            
+            // Populate session details
+            document.getElementById('sessionTitle').innerHTML = `
+                <span class="bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
+                    ${session.subject}
+                </span>
+            `;
+            document.getElementById('sessionIcon').textContent = session.icon;
+            document.getElementById('tutorName').textContent = session.tutor;
+            document.getElementById('sessionDate').textContent = session.date || 'TBD';
+            document.getElementById('sessionTime').textContent = session.time;
+            document.getElementById('sessionDescription').textContent = session.description || 'Join this session to learn and collaborate with peers.';
+            
+            // Update session type badge
+            const badge = document.getElementById('sessionTypeBadge');
+            if (session.type === 'group') {
+                badge.textContent = '👥 Group Study';
+                badge.className = 'px-4 py-2 rounded-full text-sm font-bold bg-[#FF6EC7]/20 text-[#FF6EC7]';
+                if (session.participants) {
+                    document.getElementById('participantsInfo').style.display = 'block';
+                    document.getElementById('participantsCount').textContent = session.participants;
+                }
+            } else {
+                badge.textContent = '👨‍🏫 Live Tutoring';
+                badge.className = 'px-4 py-2 rounded-full text-sm font-bold bg-[#4FC3F7]/20 text-[#4FC3F7]';
+            }
+
+            // Store session in sessionStorage for study room
+            sessionStorage.setItem('currentSession', JSON.stringify(session));
+        }
+
+        // Join Now button
+        document.getElementById('joinNowBtn').addEventListener('click', () => {
+            window.location.href = 'study-room.html';
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+

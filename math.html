@@ -15,7 +15,7 @@
     <nav class="navbar">
         <div class="container mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <img src="sticker.webp" alt="AstroLearn Logo" class="h-8 w-8 object-contain">
+                <img src="sticker.webp" alt="AstroLearn Logo" class="w-10 h-10">
                 <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
                     AstroLearn
                 </a>
@@ -25,7 +25,6 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
-                <a href="game.html" class="nav-link protected-link">Space Quest</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
             </div>
             <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
@@ -36,7 +35,6 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
-                <a href="game.html" class="nav-link protected-link">Space Quest</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
             </div>
         </div>
@@ -55,14 +53,14 @@
             <div class="mt-4 inline-flex items-center gap-3 glass-card px-4 py-2">
                 <p class="text-sm text-[#F5F7FA]/70">
                     <span class="font-semibold text-[#4FC3F7]">Grade Level:</span> 
-                    <select id="gradeSelector" class="bg-transparent border-none text-[#F5F7FA] font-bold cursor-pointer focus:outline-none ml-2">
-                        <option value="6">6th</option>
-                        <option value="7">7th</option>
-                        <option value="8">8th</option>
-                        <option value="9">9th</option>
-                        <option value="10">10th</option>
-                        <option value="11">11th</option>
-                        <option value="12">12th</option>
+                    <select id="gradeSelector" class="border-none text-[#F5F7FA] font-bold cursor-pointer focus:outline-none ml-2 rounded px-2 py-1" style="color: #F5F7FA !important; background: rgba(255, 110, 199, 0.3) !important; border: 1px solid rgba(255, 110, 199, 0.5) !important;">
+                        <option value="6" style="color: #F5F7FA !important; background: #0B0F2F !important;">6th</option>
+                        <option value="7" style="color: #F5F7FA !important; background: #0B0F2F !important;">7th</option>
+                        <option value="8" style="color: #F5F7FA !important; background: #0B0F2F !important;">8th</option>
+                        <option value="9" style="color: #F5F7FA !important; background: #0B0F2F !important;">9th</option>
+                        <option value="10" style="color: #F5F7FA !important; background: #0B0F2F !important;">10th</option>
+                        <option value="11" style="color: #F5F7FA !important; background: #0B0F2F !important;">11th</option>
+                        <option value="12" style="color: #F5F7FA !important; background: #0B0F2F !important;">12th</option>
                     </select>
                 </p>
             </div>
@@ -139,7 +137,10 @@
         <div class="container mx-auto px-6 py-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
-                    <p class="text-sm text-[#F5F7FA]/70 flex items-center gap-1"><img src="sticker.webp" alt="AstroLearn Logo" class="h-5 w-5 object-contain"> Powered by AstroLearn</p>
+                    <div class="flex items-center gap-2">
+                        <img src="sticker.webp" alt="AstroLearn Logo" class="w-6 h-6">
+                        <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn</p>
+                    </div>
                 </div>
                 <div class="flex space-x-6">
                     <a href="about.html" class="footer-link">About</a>
@@ -254,6 +255,51 @@
         let currentLessonKey = null;
         let currentLessonTitle = null;
         let currentSubject = null;
+        
+        // Generate default lesson content for lessons without specific content
+        function generateDefaultLessonContent(lessonTitle, subject, grade) {
+            return {
+                title: lessonTitle,
+                introduction: `Welcome to ${lessonTitle}! This lesson will help you understand key concepts and build your knowledge in ${subject}.`,
+                concepts: [
+                    {
+                        heading: "Introduction to " + lessonTitle,
+                        explanation: `This lesson covers important concepts related to ${lessonTitle}. We'll explore the fundamentals and build a strong foundation for understanding this topic.`,
+                        example: "Understanding these concepts will help you succeed in this subject and apply your knowledge to solve problems."
+                    },
+                    {
+                        heading: "Key Concepts and Principles",
+                        explanation: "We'll explore the main ideas and principles that are essential for mastering this topic. These concepts form the building blocks for more advanced learning.",
+                        example: "Practice and application are key to understanding and retaining these concepts."
+                    },
+                    {
+                        heading: "Real-World Applications",
+                        explanation: "Learn how these concepts apply in real-world situations and problem-solving. Understanding practical applications helps make the material more meaningful and easier to remember.",
+                        example: "These skills are useful in many areas of study and everyday life."
+                    },
+                    {
+                        heading: "Practice and Mastery",
+                        explanation: "Regular practice is essential for mastering this topic. Work through examples, solve problems, and review concepts regularly to build confidence and understanding.",
+                        example: "The more you practice, the more comfortable you'll become with these concepts."
+                    }
+                ],
+                practiceProblems: [
+                    {
+                        problem: `Think about what you've learned about ${lessonTitle}. What questions do you have?`,
+                        solution: "Review the concepts and try to apply them to solve problems. If you have questions, review the material or ask for help."
+                    },
+                    {
+                        problem: `How can you use your knowledge of ${lessonTitle} in real situations?`,
+                        solution: "Practice applying these concepts in different situations. Look for examples in your daily life where these concepts might apply."
+                    },
+                    {
+                        problem: "What are the most important points to remember from this lesson?",
+                        solution: "Focus on understanding the key concepts and how they connect to each other. Practice regularly to reinforce your learning."
+                    }
+                ],
+                summary: `You've completed ${lessonTitle}! Remember to review the key concepts regularly and practice applying them. Keep up the great work, and continue building your knowledge in ${subject}!`
+            };
+        }
 
         // Grade-level specific lesson content
         const lessonContentByGrade = {
@@ -422,6 +468,98 @@
                             }
                         ],
                         summary: "Ratios compare two quantities and can be simplified. Proportions are equations showing two equal ratios. Use cross multiplication to solve proportions. Ratios and proportions are essential for scaling, conversions, and solving real-world problems!"
+                    },
+                    "Percentages": {
+                        title: "Percentages",
+                        introduction: "Percentages are everywhere! They help us understand discounts, test scores, statistics, and so much more. A percentage is just a special way of writing a fraction out of 100.",
+                        concepts: [
+                            {
+                                heading: "What is a Percentage?",
+                                explanation: "A percentage is a fraction with a denominator of 100. The word 'percent' means 'per hundred' or 'out of 100'. The % symbol represents percent. For example, 50% means 50 out of 100, or 50/100, which equals 1/2 or 0.5.",
+                                example: "25% means 25 out of 100, which is 25/100 = 1/4 = 0.25"
+                            },
+                            {
+                                heading: "Converting Between Percent, Decimal, and Fraction",
+                                explanation: "To convert percent to decimal: divide by 100 (move decimal point 2 places left). To convert decimal to percent: multiply by 100 (move decimal point 2 places right). To convert percent to fraction: write percent over 100 and simplify.",
+                                example: "75% = 0.75 (decimal) = 75/100 = 3/4 (fraction). 0.6 = 60% = 60/100 = 3/5"
+                            },
+                            {
+                                heading: "Finding a Percentage of a Number",
+                                explanation: "To find a percentage of a number, convert the percentage to a decimal and multiply. Or use the formula: (percentage/100) × number. For example, to find 20% of 50: 0.20 × 50 = 10, or (20/100) × 50 = 10.",
+                                example: "What is 15% of 200? 0.15 × 200 = 30, or (15/100) × 200 = 30"
+                            },
+                            {
+                                heading: "Finding What Percent One Number Is of Another",
+                                explanation: "To find what percent one number is of another, divide the part by the whole, then multiply by 100. Formula: (part/whole) × 100 = percent.",
+                                example: "What percent is 8 out of 40? (8/40) × 100 = 0.2 × 100 = 20%"
+                            },
+                            {
+                                heading: "Percentage Increase and Decrease",
+                                explanation: "To find percent increase: ((new - old)/old) × 100. To find percent decrease: ((old - new)/old) × 100. Positive result means increase, negative means decrease.",
+                                example: "If price goes from $50 to $60: ((60-50)/50) × 100 = (10/50) × 100 = 20% increase"
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "Convert 40% to a decimal and fraction",
+                                solution: "0.4 (decimal) and 40/100 = 2/5 (fraction)"
+                            },
+                            {
+                                problem: "What is 25% of 80?",
+                                solution: "20 (0.25 × 80 = 20)"
+                            },
+                            {
+                                problem: "What percent is 15 out of 60?",
+                                solution: "25% ((15/60) × 100 = 0.25 × 100 = 25%)"
+                            }
+                        ],
+                        summary: "Percentages represent parts out of 100. Convert between percent, decimal, and fraction. To find a percentage of a number, multiply by the decimal form. To find what percent one number is of another, divide and multiply by 100. Percentages are used everywhere in real life!"
+                    },
+                    "Area and Perimeter": {
+                        title: "Area and Perimeter",
+                        introduction: "Area and perimeter are two important measurements for shapes. Perimeter is the distance around a shape (like a fence), while area is the space inside a shape (like a floor).",
+                        concepts: [
+                            {
+                                heading: "What is Perimeter?",
+                                explanation: "Perimeter is the total distance around the outside of a shape. To find perimeter, add up all the side lengths. For rectangles, perimeter = 2 × (length + width). For squares, perimeter = 4 × side length.",
+                                example: "A rectangle with length 5 and width 3 has perimeter = 2 × (5 + 3) = 2 × 8 = 16 units"
+                            },
+                            {
+                                heading: "What is Area?",
+                                explanation: "Area is the amount of space inside a shape, measured in square units. For rectangles, area = length × width. For squares, area = side × side = side². Area tells us how much surface is covered.",
+                                example: "A rectangle with length 5 and width 3 has area = 5 × 3 = 15 square units"
+                            },
+                            {
+                                heading: "Area of Triangles",
+                                explanation: "The area of a triangle is (1/2) × base × height. The base is any side, and the height is the perpendicular distance from the base to the opposite vertex. Make sure the height is perpendicular (at a right angle) to the base!",
+                                example: "A triangle with base 6 and height 4 has area = (1/2) × 6 × 4 = 12 square units"
+                            },
+                            {
+                                heading: "Area of Circles",
+                                explanation: "The area of a circle is π × radius² (A = πr²). The radius is the distance from the center to the edge. π (pi) is approximately 3.14. The diameter is twice the radius (d = 2r).",
+                                example: "A circle with radius 5 has area = π × 5² = π × 25 ≈ 3.14 × 25 ≈ 78.5 square units"
+                            },
+                            {
+                                heading: "Real-World Applications",
+                                explanation: "Perimeter is used for fencing, borders, and measuring around objects. Area is used for flooring, painting walls, covering surfaces, and calculating space. Both are essential for construction, design, and everyday measurements!",
+                                example: "To fence a yard, you need perimeter. To buy carpet, you need area."
+                            }
+                        ],
+                        practiceProblems: [
+                            {
+                                problem: "Find the perimeter and area of a rectangle with length 8 and width 5",
+                                solution: "Perimeter = 2 × (8 + 5) = 26 units. Area = 8 × 5 = 40 square units"
+                            },
+                            {
+                                problem: "What is the area of a triangle with base 10 and height 6?",
+                                solution: "(1/2) × 10 × 6 = 30 square units"
+                            },
+                            {
+                                problem: "A square has side length 7. Find its perimeter and area.",
+                                solution: "Perimeter = 4 × 7 = 28 units. Area = 7 × 7 = 49 square units"
+                            }
+                        ],
+                        summary: "Perimeter is the distance around a shape. Area is the space inside a shape. Rectangle: P = 2(l+w), A = l×w. Triangle: A = (1/2)×base×height. Circle: A = πr². These measurements are essential for real-world applications like construction and design!"
                     }
                 }
             },
@@ -719,21 +857,8 @@
             const content = lessonContentByGrade[grade]?.[subject]?.[lessonTitle];
             
             if (!content) {
-                // Default content if specific content not found
-                const defaultContent = {
-                    title: lessonTitle,
-                    notes: [
-                        `Welcome to ${lessonTitle}!`,
-                        "This lesson will help you understand key concepts.",
-                        "Take your time to read through the notes carefully.",
-                        "Practice the examples to reinforce your learning.",
-                        "Complete this lesson to unlock practice quizzes!"
-                    ],
-                    examples: [
-                        "Example 1: Practice problem",
-                        "Example 2: Another practice problem"
-                    ]
-                };
+                // Generate comprehensive default content based on lesson title
+                const defaultContent = generateDefaultLessonContent(lessonTitle, subject, grade);
                 displayLessonContent(defaultContent, isAlreadyCompleted);
             } else {
                 displayLessonContent(content, isAlreadyCompleted);
@@ -863,6 +988,11 @@
                 completed.push(lessonKey);
                 localStorage.setItem('astrolearn_completed_lessons', JSON.stringify(completed));
                 updateProgress();
+                
+                // Dispatch event for dashboard to update
+                window.dispatchEvent(new CustomEvent('progressUpdated', { 
+                    detail: { subject: 'math', lessonKey: lessonKey, lessonTitle: lessonTitle }
+                }));
             }
         }
 

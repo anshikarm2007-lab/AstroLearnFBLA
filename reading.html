@@ -15,7 +15,7 @@
     <nav class="navbar">
         <div class="container mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center space-x-2">
-                <img src="sticker.webp" alt="AstroLearn Logo" class="h-8 w-8 object-contain">
+                <img src="sticker.webp" alt="AstroLearn Logo" class="w-10 h-10">
                 <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-[#4FC3F7] to-[#FF6EC7] bg-clip-text text-transparent">
                     AstroLearn
                 </a>
@@ -25,7 +25,6 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
-                <a href="game.html" class="nav-link protected-link">Space Quest</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
             </div>
             <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
@@ -36,7 +35,6 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
-                <a href="game.html" class="nav-link protected-link">Space Quest</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-center" id="authBtnMobile">Sign In</a>
             </div>
         </div>
@@ -54,15 +52,15 @@
             <p class="text-xl text-[#F5F7FA]/80">Journey through literature and comprehension</p>
             <div class="mt-4 inline-flex items-center gap-3 glass-card px-4 py-2">
                 <p class="text-sm text-[#F5F7FA]/70">
-                    <span class="font-semibold text-[#482880]">Grade Level:</span> 
-                    <select id="gradeSelector" class="bg-transparent border-none text-[#F5F7FA] font-bold cursor-pointer focus:outline-none ml-2">
-                        <option value="6">6th</option>
-                        <option value="7">7th</option>
-                        <option value="8">8th</option>
-                        <option value="9">9th</option>
-                        <option value="10">10th</option>
-                        <option value="11">11th</option>
-                        <option value="12">12th</option>
+                    <span class="font-semibold text-[#FF6EC7]">Grade Level:</span> 
+                    <select id="gradeSelector" class="border-none text-[#F5F7FA] font-bold cursor-pointer focus:outline-none ml-2 rounded px-2 py-1" style="color: #F5F7FA !important; background: rgba(255, 110, 199, 0.3) !important; border: 1px solid rgba(255, 110, 199, 0.5) !important;">
+                        <option value="6" style="color: #F5F7FA !important; background: #0B0F2F !important;">6th</option>
+                        <option value="7" style="color: #F5F7FA !important; background: #0B0F2F !important;">7th</option>
+                        <option value="8" style="color: #F5F7FA !important; background: #0B0F2F !important;">8th</option>
+                        <option value="9" style="color: #F5F7FA !important; background: #0B0F2F !important;">9th</option>
+                        <option value="10" style="color: #F5F7FA !important; background: #0B0F2F !important;">10th</option>
+                        <option value="11" style="color: #F5F7FA !important; background: #0B0F2F !important;">11th</option>
+                        <option value="12" style="color: #F5F7FA !important; background: #0B0F2F !important;">12th</option>
                     </select>
                 </p>
             </div>
@@ -139,7 +137,10 @@
         <div class="container mx-auto px-6 py-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
-                    <p class="text-sm text-[#F5F7FA]/70 flex items-center gap-1"><img src="sticker.webp" alt="AstroLearn Logo" class="h-5 w-5 object-contain"> Powered by AstroLearn</p>
+                    <div class="flex items-center gap-2">
+                        <img src="sticker.webp" alt="AstroLearn Logo" class="w-6 h-6">
+                        <p class="text-sm text-[#F5F7FA]/70">Powered by AstroLearn</p>
+                    </div>
                 </div>
                 <div class="flex space-x-6">
                     <a href="about.html" class="footer-link">About</a>
@@ -254,6 +255,51 @@
         let currentLessonKey = null;
         let currentLessonTitle = null;
         let currentSubject = null;
+        
+        // Generate default lesson content for lessons without specific content
+        function generateDefaultLessonContent(lessonTitle, subject, grade) {
+            return {
+                title: lessonTitle,
+                introduction: `Welcome to ${lessonTitle}! This lesson will help you understand key concepts and build your knowledge in ${subject}.`,
+                concepts: [
+                    {
+                        heading: "Introduction to " + lessonTitle,
+                        explanation: `This lesson covers important concepts related to ${lessonTitle}. We'll explore the fundamentals and build a strong foundation for understanding this topic.`,
+                        example: "Understanding these concepts will help you succeed in this subject and apply your knowledge to solve problems."
+                    },
+                    {
+                        heading: "Key Concepts and Principles",
+                        explanation: "We'll explore the main ideas and principles that are essential for mastering this topic. These concepts form the building blocks for more advanced learning.",
+                        example: "Practice and application are key to understanding and retaining these concepts."
+                    },
+                    {
+                        heading: "Real-World Applications",
+                        explanation: "Learn how these concepts apply in real-world situations and problem-solving. Understanding practical applications helps make the material more meaningful and easier to remember.",
+                        example: "These skills are useful in many areas of study and everyday life."
+                    },
+                    {
+                        heading: "Practice and Mastery",
+                        explanation: "Regular practice is essential for mastering this topic. Work through examples, solve problems, and review concepts regularly to build confidence and understanding.",
+                        example: "The more you practice, the more comfortable you'll become with these concepts."
+                    }
+                ],
+                practiceProblems: [
+                    {
+                        problem: `Think about what you've learned about ${lessonTitle}. What questions do you have?`,
+                        solution: "Review the concepts and try to apply them to solve problems. If you have questions, review the material or ask for help."
+                    },
+                    {
+                        problem: `How can you use your knowledge of ${lessonTitle} in real situations?`,
+                        solution: "Practice applying these concepts in different situations. Look for examples in your daily life where these concepts might apply."
+                    },
+                    {
+                        problem: "What are the most important points to remember from this lesson?",
+                        solution: "Focus on understanding the key concepts and how they connect to each other. Practice regularly to reinforce your learning."
+                    }
+                ],
+                summary: `You've completed ${lessonTitle}! Remember to review the key concepts regularly and practice applying them. Keep up the great work, and continue building your knowledge in ${subject}!`
+            };
+        }
 
         const lessonContentByGrade = {
             9: {
@@ -378,20 +424,7 @@
             const content = lessonContentByGrade[grade]?.[subject]?.[lessonTitle];
             
             if (!content) {
-                const defaultContent = {
-                    title: lessonTitle,
-                    notes: [
-                        `Welcome to ${lessonTitle}!`,
-                        "This lesson will help you understand key concepts.",
-                        "Take your time to read through the notes carefully.",
-                        "Practice the examples to reinforce your learning.",
-                        "Complete this lesson to unlock practice quizzes!"
-                    ],
-                    examples: [
-                        "Example 1: Practice problem",
-                        "Example 2: Another practice problem"
-                    ]
-                };
+                const defaultContent = generateDefaultLessonContent(lessonTitle, subject, grade);
                 displayLessonContent(defaultContent, isAlreadyCompleted);
             } else {
                 displayLessonContent(content, isAlreadyCompleted);
@@ -520,6 +553,11 @@
                 completed.push(lessonKey);
                 localStorage.setItem('astrolearn_completed_lessons', JSON.stringify(completed));
                 updateProgress();
+                
+                // Dispatch event for dashboard to update
+                window.dispatchEvent(new CustomEvent('progressUpdated', { 
+                    detail: { subject: 'reading', lessonKey: lessonKey, lessonTitle: lessonTitle }
+                }));
             }
         }
 
