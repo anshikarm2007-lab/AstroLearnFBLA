@@ -42,6 +42,22 @@
 
     <!-- Videos Header -->
     <section class="container mx-auto px-6 py-12">
+        <!-- Demo Disclaimer -->
+        <div class="glass-card p-6 mb-8 bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 border-2 border-yellow-500/50 rounded-lg">
+            <div class="flex items-start gap-4">
+                <div class="text-4xl flex-shrink-0">⚠️</div>
+                <div class="flex-1">
+                    <h2 class="text-2xl font-bold mb-2 text-yellow-400">Demo Purposes Only</h2>
+                    <p class="text-[#F5F7FA] mb-2">
+                        <strong>This educational videos section is for demonstrative purposes only.</strong> No actual video content is loaded or displayed due to copyright restrictions. The video listings and interface shown here demonstrate the full use case and functionality of the website, but do not contain playable video content.
+                    </p>
+                    <p class="text-sm text-[#F5F7FA]/80">
+                        In a production environment, this section would be populated with properly licensed educational video content.
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <div class="text-center mb-8">
             <div class="text-6xl mb-4">🎥</div>
             <h1 class="text-5xl md:text-7xl font-bold mb-4">
@@ -190,7 +206,7 @@
             selector.innerHTML = availableSubjects.map(subject => `
                 <button class="glass-card p-4 text-center hover:scale-105 transition-transform subject-btn" 
                         data-subject="${subject.id}"
-                        style="border: 2px solid ${subject.color}33;">
+                        style="border: 2px solid ${subject.color}50;">
                     <div class="text-4xl mb-2">${subject.icon}</div>
                     <div class="font-bold">${subject.name}</div>
                 </button>

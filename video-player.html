@@ -26,7 +26,7 @@
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
                 <a href="videos.html" class="nav-link protected-link">Videos</a>
-                <a href="games.html" class="nav-link protected-link">Games</a>
+                <a href="game.html" class="nav-link protected-link">Games</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
             </div>
             <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
@@ -38,7 +38,7 @@
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link protected-link">Resources</a>
                 <a href="videos.html" class="nav-link protected-link">Videos</a>
-                <a href="games.html" class="nav-link protected-link">Games</a>
+                <a href="game.html" class="nav-link protected-link">Games</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-center block" id="authBtnMobile">Sign In</a>
             </div>
         </div>
@@ -92,11 +92,20 @@
                 </div>
             </div>
 
-            <!-- Placeholder Notice -->
-            <div class="glass-card p-6 bg-[#4FC3F7]/10 border-2 border-[#4FC3F7]/30">
-                <p class="text-center text-sm text-[#F5F7FA]/80">
-                    <strong>Note:</strong> This is a demo prototype. The placeholder video files can be replaced with actual educational video content (MP4 format) in the <code class="bg-[#0B0F2F]/50 px-2 py-1 rounded">assets/videos/</code> folder for production use.
-                </p>
+            <!-- Demo Disclaimer -->
+            <div class="glass-card p-6 bg-gradient-to-r from-yellow-500/20 via-orange-500/20 to-red-500/20 border-2 border-yellow-500/50 rounded-lg">
+                <div class="flex items-start gap-4">
+                    <div class="text-4xl flex-shrink-0">⚠️</div>
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-bold mb-2 text-yellow-400">Demo Purposes Only - No Video Content</h2>
+                        <p class="text-[#F5F7FA] mb-2">
+                            <strong>This video player is for demonstrative purposes only.</strong> No actual video content is loaded or displayed due to copyright restrictions. The video player interface shown here demonstrates the full use case and functionality of the website, but does not contain playable video content.
+                        </p>
+                        <p class="text-sm text-[#F5F7FA]/80">
+                            In a production environment, this player would display properly licensed educational video content. The placeholder video files can be replaced with actual educational video content (MP4 format) in the <code class="bg-[#0B0F2F]/50 px-2 py-1 rounded">assets/videos/</code> folder for production use.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

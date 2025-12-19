@@ -38,7 +38,7 @@
                 <a href="dashboard.html" class="nav-link protected-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link protected-link">Schedule</a>
                 <a href="resources.html" class="nav-link active protected-link">Resources</a>
-                <a href="games.html" class="nav-link protected-link">Games</a>
+                <a href="game.html" class="nav-link protected-link">Games</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-sm" id="authBtn">Sign In</a>
             </div>
             <button class="md:hidden text-2xl" id="mobileMenuBtn">☰</button>
@@ -49,7 +49,7 @@
                 <a href="dashboard.html" class="nav-link">Dashboard</a>
                 <a href="schedule.html" class="nav-link">Schedule</a>
                 <a href="resources.html" class="nav-link">Resources</a>
-                <a href="games.html" class="nav-link">Games</a>
+                <a href="game.html" class="nav-link">Games</a>
                 <a href="login.html" class="btn-secondary py-2 px-4 text-center block" id="authBtnMobile">Sign In</a>
             </div>
         </div>
@@ -456,33 +456,20 @@
         // Downloadable materials data
         const downloadableMaterials = [
             // Math Materials
-            { id: 1, title: "Math Formula Sheet", subject: "Math", type: "Reference Guide", icon: "📐", color: "#4FC3F7", description: "Essential formulas for algebra, geometry, and calculus", filename: "math-formula-sheet.html" },
-            { id: 2, title: "Algebra Practice Worksheets", subject: "Math", type: "Worksheet", icon: "✏️", color: "#4FC3F7", description: "Practice problems for solving equations and expressions", filename: "algebra-worksheets.html" },
-            { id: 3, title: "Geometry Study Guide", subject: "Math", type: "Study Guide", icon: "📊", color: "#4FC3F7", description: "Complete guide to shapes, angles, and measurements", filename: "geometry-study-guide.html" },
-            { id: 4, title: "Calculus Quick Reference", subject: "Math", type: "Reference Guide", icon: "📈", color: "#4FC3F7", description: "Derivatives, integrals, and key calculus concepts", filename: "calculus-reference.html" },
+            { id: 1, title: "Algebra Study Guide", subject: "Math", type: "Study Guide", icon: "📐", color: "#4FC3F7", description: "Formulas, worked examples, and practice problems", filename: "Algebra_Study_Guide.pdf" },
+            { id: 2, title: "Math Practice Problems", subject: "Math", type: "Worksheet", icon: "✏️", color: "#4FC3F7", description: "Algebra and geometry practice problems with answer key", filename: "Math_Practice_Problems.pdf" },
             
             // Science Materials
-            { id: 5, title: "Periodic Table Reference", subject: "Science", type: "Reference Guide", icon: "⚗️", color: "#FF6EC7", description: "Complete periodic table with element properties", filename: "periodic-table.html" },
-            { id: 6, title: "Biology Study Guide", subject: "Science", type: "Study Guide", icon: "🧬", color: "#FF6EC7", description: "Cell structure, genetics, and biological processes", filename: "biology-study-guide.html" },
-            { id: 7, title: "Chemistry Lab Safety Guide", subject: "Science", type: "Reference Guide", icon: "🔬", color: "#FF6EC7", description: "Safety protocols and procedures for chemistry labs", filename: "lab-safety-guide.html" },
-            { id: 8, title: "Physics Formula Sheet", subject: "Science", type: "Reference Guide", icon: "🌌", color: "#FF6EC7", description: "Essential physics formulas and equations", filename: "physics-formulas.html" },
+            { id: 3, title: "Chemistry Formula Sheet", subject: "Science", type: "Reference Guide", icon: "⚗️", color: "#FF6EC7", description: "Essential chemistry formulas and common compounds", filename: "Chemistry_Formula_Sheet.pdf" },
+            { id: 4, title: "Science Experiment Guide", subject: "Science", type: "Study Guide", icon: "🔬", color: "#FF6EC7", description: "Step-by-step experiment instructions", filename: "Science_Experiment_Guide.pdf" },
             
-            // Reading Materials
-            { id: 9, title: "Literary Analysis Guide", subject: "Reading", type: "Study Guide", icon: "📖", color: "#482880", description: "How to analyze literature and identify themes", filename: "literary-analysis-guide.html" },
-            { id: 10, title: "Reading Comprehension Strategies", subject: "Reading", type: "Study Guide", icon: "📚", color: "#482880", description: "Techniques for improving reading comprehension", filename: "reading-strategies.html" },
-            { id: 11, title: "Vocabulary Building Workbook", subject: "Reading", type: "Worksheet", icon: "📝", color: "#482880", description: "Exercises to expand your vocabulary", filename: "vocabulary-workbook.html" },
-            { id: 12, title: "Essay Writing Template", subject: "Reading", type: "Template", icon: "✍️", color: "#482880", description: "Structured template for writing essays", filename: "essay-template.html" },
+            // Reading/History Materials
+            { id: 5, title: "History Timeline Chart", subject: "Reading", type: "Reference Guide", icon: "📚", color: "#482880", description: "Major historical events and key concepts", filename: "History_Timeline_Chart.pdf" },
+            { id: 6, title: "Vocabulary Flashcard Set", subject: "Reading", type: "Study Guide", icon: "📖", color: "#482880", description: "Important vocabulary words and definitions", filename: "Vocabulary_Flashcard_Set.pdf" },
             
-            // Language Materials
-            { id: 13, title: "Spanish Vocabulary Flashcards", subject: "Language", type: "Study Guide", icon: "🌍", color: "#4FC3F7", description: "Common Spanish words and phrases", filename: "spanish-vocabulary.html" },
-            { id: 14, title: "French Grammar Guide", subject: "Language", type: "Reference Guide", icon: "🇫🇷", color: "#4FC3F7", description: "Complete guide to French grammar rules", filename: "french-grammar.html" },
-            { id: 15, title: "Language Learning Tips", subject: "Language", type: "Study Guide", icon: "💡", color: "#4FC3F7", description: "Strategies for effective language learning", filename: "language-learning-tips.html" },
-            { id: 16, title: "Conversation Practice Sheets", subject: "Language", type: "Worksheet", icon: "🗣️", color: "#4FC3F7", description: "Practice dialogues and conversation exercises", filename: "conversation-practice.html" },
-            
-            // General Study Materials
-            { id: 17, title: "Study Schedule Template", subject: "General", type: "Template", icon: "📅", color: "#FF6EC7", description: "Plan your study time effectively", filename: "study-schedule-template.html" },
-            { id: 18, title: "Note-Taking Guide", subject: "General", type: "Study Guide", icon: "📋", color: "#FF6EC7", description: "Effective note-taking strategies and templates", filename: "note-taking-guide.html" },
-            { id: 19, title: "Test Preparation Checklist", subject: "General", type: "Reference Guide", icon: "✅", color: "#FF6EC7", description: "Checklist for preparing for exams", filename: "test-prep-checklist.html" }
+            // General/Business Materials
+            { id: 7, title: "Business Fundamentals", subject: "General", type: "Reference Guide", icon: "💼", color: "#FF6EC7", description: "Key business terms and real-world examples", filename: "Business_Fundamentals.pdf" },
+            { id: 8, title: "Practice Quiz", subject: "General", type: "Worksheet", icon: "📝", color: "#FF6EC7", description: "Multiple-choice questions with answer key", filename: "Practice_Quiz.pdf" }
         ];
 
         function getDifficultyColor(difficulty) {

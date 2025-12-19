@@ -126,7 +126,7 @@ function logout() {
 // Check authentication on protected pages
 function checkAuth() {
     const currentPage = window.location.pathname.split('/').pop() || window.location.pathname;
-    const protectedPages = ['dashboard.html', 'schedule.html', 'resources.html', 'math.html', 'science.html', 'reading.html', 'language.html'];
+    const protectedPages = ['dashboard.html', 'schedule.html', 'resources.html', 'math.html', 'science.html', 'reading.html', 'language.html', 'game.html'];
     
     // Check if current page is protected
     const isProtected = protectedPages.some(page => currentPage.includes(page));
