@@ -109,6 +109,21 @@
         </div>
     </div>
 
+        <!-- Lesson Modal -->
+        <div id="lessonModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div class="fixed inset-0 bg-black/70 backdrop-blur-sm" onclick="closeLessonModal()"></div>
+            <div class="relative glass-card p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto z-10">
+                <button onclick="closeLessonModal()" class="absolute top-4 right-4 text-2xl text-[#F5F7FA]/70 hover:text-[#F5F7FA]">✕</button>
+                <div id="lessonContent">
+                    <!-- Lesson content will be populated by JS -->
+                </div>
+                <div class="mt-6 flex gap-4 justify-end">
+                    <button onclick="closeLessonModal()" class="btn-secondary">Close</button>
+                    <button onclick="completeCurrentLesson()" class="btn-primary" id="completeLessonBtn">Mark as Complete</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Back to Dashboard -->
         <div class="text-center mb-8">
             <a href="dashboard.html" class="btn-secondary inline-block">
@@ -145,6 +160,14 @@
             }
             updateNavigation();
             initFloatingStars();
+            
+            // Load lessons after a short delay to ensure all data is defined
+            if (isLoggedIn()) {
+                setTimeout(() => {
+                    loadLessons();
+                    updateProgress();
+                }, 100);
+            }
             
             // Animate progress on load
             setTimeout(() => {

@@ -1805,14 +1805,18 @@
             const selectedSubjects = getSelectedSubjects();
             const availableSubjects = subjects.filter(s => selectedSubjects.includes(s.id));
             
-            selector.innerHTML = availableSubjects.map(subject => `
+            selector.innerHTML = availableSubjects.map(subject => {
+                // Use higher opacity for reading subject to ensure border visibility
+                const borderOpacity = subject.id === 'reading' ? 'CC' : '50';
+                return `
                 <button class="glass-card p-4 text-center hover:scale-105 transition-transform subject-btn" 
                         data-subject="${subject.id}"
-                        style="border: 2px solid ${subject.color}50;">
+                        style="border: 2px solid ${subject.color}${borderOpacity} !important; outline: ${subject.id === 'reading' ? '1px solid ' + subject.color + 'CC' : 'none'};">
                     <div class="text-4xl mb-2">${subject.icon}</div>
                     <div class="font-bold">${subject.name}</div>
                 </button>
-            `).join('');
+            `;
+            }).join('');
 
             document.querySelectorAll('.subject-btn').forEach(btn => {
                 btn.addEventListener('click', () => {

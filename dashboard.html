@@ -722,7 +722,8 @@
         function loadActivity(showAll = false) {
             const list = document.getElementById('activityList');
             const activities = JSON.parse(localStorage.getItem('astrolearn_recent_activities') || '[]');
-            const displayCount = showAll ? activities.length : 4;
+            // Show 4 initially, or 9 (4 + 5 more) when expanded
+            const displayCount = showAll ? Math.min(9, activities.length) : 4;
             const activitiesToShow = activities.slice(0, displayCount);
             
             if (activities.length === 0) {
@@ -768,7 +769,8 @@
                 const expandBtn = document.getElementById('expandActivityBtn');
                 if (expandBtn) {
                     expandBtn.style.display = 'block';
-                    expandBtn.textContent = showAll ? 'Show Less' : `Show All (${activities.length - 4} more)`;
+                    const remainingCount = Math.min(5, activities.length - 4);
+                    expandBtn.textContent = showAll ? 'Show Less' : `Show ${remainingCount} More`;
                     expandBtn.onclick = () => loadActivity(!showAll);
                 }
             } else {

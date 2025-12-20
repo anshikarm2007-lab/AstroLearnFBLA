@@ -111,6 +111,21 @@
         </div>
     </div>
 
+        <!-- Lesson Modal -->
+        <div id="lessonModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div class="fixed inset-0 bg-black/70 backdrop-blur-sm" onclick="closeLessonModal()"></div>
+            <div class="relative glass-card p-6 md:p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto z-10">
+                <button onclick="closeLessonModal()" class="absolute top-4 right-4 text-2xl text-[#F5F7FA]/70 hover:text-[#F5F7FA]">✕</button>
+                <div id="lessonContent">
+                    <!-- Lesson content will be populated by JS -->
+                </div>
+                <div class="mt-6 flex gap-4 justify-end">
+                    <button onclick="closeLessonModal()" class="btn-secondary">Close</button>
+                    <button onclick="completeCurrentLesson()" class="btn-primary" id="completeLessonBtn">Mark as Complete</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Back to Dashboard -->
         <div class="text-center mb-8">
             <a href="dashboard.html" class="btn-secondary inline-block">
@@ -144,6 +159,14 @@
             }
             updateNavigation();
             initFloatingStars();
+            
+            // Load lessons after a short delay to ensure all data is defined
+            if (isLoggedIn()) {
+                setTimeout(() => {
+                    loadLessons();
+                    updateProgress();
+                }, 100);
+            }
             
             // Animate progress on load
             setTimeout(() => {
@@ -239,6 +262,51 @@
         let currentLessonKey = null;
         let currentLessonTitle = null;
         let currentSubject = null;
+
+        // Generate default lesson content for lessons without specific content
+        function generateDefaultLessonContent(lessonTitle, subject, grade) {
+            return {
+                title: lessonTitle,
+                introduction: `Welcome to ${lessonTitle}! This lesson will help you understand key concepts and build your knowledge in ${subject}.`,
+                concepts: [
+                    {
+                        heading: "Introduction to " + lessonTitle,
+                        explanation: `This lesson covers important concepts related to ${lessonTitle}. We'll explore the fundamentals and build a strong foundation for understanding this topic.`,
+                        example: "Understanding these concepts will help you succeed in this subject and apply your knowledge to communicate effectively."
+                    },
+                    {
+                        heading: "Key Concepts and Principles",
+                        explanation: "We'll explore the main ideas and principles that are essential for mastering this topic. These concepts form the building blocks for more advanced learning.",
+                        example: "Practice and application are key to understanding and retaining these concepts."
+                    },
+                    {
+                        heading: "Real-World Applications",
+                        explanation: "Learn how these concepts apply in real-world situations and communication. Understanding practical applications helps make the material more meaningful and easier to remember.",
+                        example: "These skills are useful in many areas of study and everyday life."
+                    },
+                    {
+                        heading: "Practice and Mastery",
+                        explanation: "Regular practice is essential for mastering this topic. Work through examples, practice conversations, and review concepts regularly to build confidence and understanding.",
+                        example: "The more you practice, the more comfortable you'll become with these concepts."
+                    }
+                ],
+                practiceProblems: [
+                    {
+                        problem: `Think about what you've learned about ${lessonTitle}. What questions do you have?`,
+                        solution: "Review the concepts and try to apply them in practice. If you have questions, review the material or ask for help."
+                    },
+                    {
+                        problem: `How can you use your knowledge of ${lessonTitle} in real situations?`,
+                        solution: "Practice applying these concepts in different situations. Look for opportunities to use what you've learned in conversations or written communication."
+                    },
+                    {
+                        problem: "What are the most important points to remember from this lesson?",
+                        solution: "Focus on understanding the key concepts and how they connect to each other. Practice regularly to reinforce your learning."
+                    }
+                ],
+                summary: `You've completed ${lessonTitle}! Remember to review the key concepts regularly and practice applying them. Keep up the great work, and continue building your knowledge in ${subject}!`
+            };
+        }
 
         const lessonContentByGrade = {
             9: {
@@ -358,20 +426,7 @@
             const content = lessonContentByGrade[grade]?.[subject]?.[lessonTitle];
             
             if (!content) {
-                const defaultContent = {
-                    title: lessonTitle,
-                    notes: [
-                        `Welcome to ${lessonTitle}!`,
-                        "This lesson will help you understand key concepts.",
-                        "Take your time to read through the notes carefully.",
-                        "Practice the examples to reinforce your learning.",
-                        "Complete this lesson to unlock practice quizzes!"
-                    ],
-                    examples: [
-                        "Example 1: Practice problem",
-                        "Example 2: Another practice problem"
-                    ]
-                };
+                const defaultContent = generateDefaultLessonContent(lessonTitle, subject, grade);
                 displayLessonContent(defaultContent, isAlreadyCompleted);
             } else {
                 displayLessonContent(content, isAlreadyCompleted);
